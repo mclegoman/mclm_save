@@ -8,6 +8,7 @@
 package com.mclegoman.mclm_save.client;
 
 import com.mclegoman.mclm_save.api.entrypoint.SaveModInit;
+import com.mclegoman.mclm_save.api.event.TickEvents;
 import com.mclegoman.mclm_save.client.april_fools.AprilFools;
 import com.mclegoman.mclm_save.client.data.ClientData;
 import com.mclegoman.mclm_save.client.gui.InfoScreen;
@@ -34,12 +35,12 @@ public class Save implements SaveModInit {
 		if (!bootMessage.isEmpty()) ClientData.minecraft.m_6408915(new InfoScreen("Save", bootMessage, InfoScreen.Type.DIRT, true));
 		//SaveMinecraft.loadWorld("mclm_save-test_world");
 		SaveMinecraft.currentWorld = new SaveWorld.Builder("mclm_save-test_world").build();
-	}
-	public static void onTick(ModContainer mod) {
-		SaveMinecraft.tick(mod);
-		try {
-			if (Keyboard.isKeyDown(50)) SaveMinecraft.currentWorld.save();
-		} catch (Exception error) {}
+
+		TickEvents.register(TickEvents.Tick.END, () -> {
+			SaveMinecraft.tick();
+			try {
+				if (Keyboard.isKeyDown(50)) SaveMinecraft.currentWorld.save();
+			} catch (Exception ignored) {}
 //		if (LevelFile.shouldProcess) {
 //			LevelFile.shouldProcess = false;
 //			LevelFile.dialog.interrupt();
@@ -53,11 +54,12 @@ public class Save implements SaveModInit {
 //				LevelFile.loadWorld((boolean)loadData.getSecond());
 //			}
 //		}
-		if (ClientData.minecraft.f_0723335 instanceof DeathScreen) {
-			if (ClientData.minecraft.f_6058446.health > 0) {
-				ClientData.minecraft.f_6058446.deathTime = 0;
-				ClientData.minecraft.m_6408915(null);
+			if (ClientData.minecraft.f_0723335 instanceof DeathScreen) {
+				if (ClientData.minecraft.f_6058446.health > 0) {
+					ClientData.minecraft.f_6058446.deathTime = 0;
+					ClientData.minecraft.m_6408915(null);
+				}
 			}
-		}
+		});
 	}
 }

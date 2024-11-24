@@ -11,7 +11,6 @@ import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.chunk.WorldChunk;
-import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.io.File;
@@ -19,7 +18,7 @@ import java.io.File;
 public class SaveMinecraft {
 	public static SaveWorld currentWorld;
 	public static long ticks;
-	public static void tick(ModContainer mod) {
+	public static void tick() {
 		try {
 			if (currentWorld.getWorld() != null && !ClientData.minecraft.f_1118421) {
 				++ticks;
