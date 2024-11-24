@@ -8,10 +8,12 @@
 package com.mclegoman.mclm_save.client.april_fools;
 
 import com.mclegoman.mclm_save.config.SaveConfig;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.time.LocalDate;
 import java.time.Month;
 
+@ClientOnly
 public class AprilFools {
 	public static void init() {
 	}
@@ -20,6 +22,6 @@ public class AprilFools {
 		return (date.getMonth() == Month.APRIL && date.getDayOfMonth() == 1) || SaveConfig.instance.forceAprilFools.value();
 	}
 	public static String getVersionString(String fallback) {
-		return isAprilFools() ? "Terraria 3" : fallback;
+		return isAprilFools() ? SaveConfig.instance.aprilFoolsName.value() : fallback;
 	}
 }

@@ -10,11 +10,13 @@ package com.mclegoman.mclm_save.mixin.client;
 import com.mclegoman.mclm_save.client.april_fools.AprilFools;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.gui.GameGui;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
+@ClientOnly
 @Mixin(GameGui.class)
 public abstract class GameGuiMixin {
 	@Shadow private C_5664496 minecraft;

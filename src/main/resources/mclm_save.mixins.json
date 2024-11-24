@@ -5,18 +5,11 @@
 	"compatibilityLevel": "JAVA_8",
 	"client": [
 		"api.MinecraftClientMixin",
-		"client.GameGuiMixin",
-		"client.GameMenuScreenMixin",
-		"client.GameRendererMixin",
-		"client.LoadScreenMixin",
-		"client.OptionsScreenMixin",
-		"client.ResourcesMixin",
-		"client.accessors.EntityAccessor",
-		"client.accessors.PlayerEntityAccessor",
-		"client.accessors.ScreenAccessor",
 		"fixes.MinecraftAppletMixin",
-		"fixes.WorldRendererMixin",
-		"client.WorldMixin"
+		"api.ResourcesMixin",
+		"client.GameGuiMixin",
+		"client.OptionsScreenMixin",
+		"fixes.WorldRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

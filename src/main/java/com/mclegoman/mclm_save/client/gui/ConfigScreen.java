@@ -7,12 +7,14 @@
 
 package com.mclegoman.mclm_save.client.gui;
 
-import com.mclegoman.mclm_save.client.data.ClientData;
+import com.mclegoman.mclm_save.api.data.Resources;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import com.mclegoman.mclm_save.config.Theme;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.input.Keyboard;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
+@ClientOnly
 public class ConfigScreen extends Screen {
 	private final Screen parent;
 	public ConfigScreen(Screen screen) {
@@ -88,7 +90,7 @@ public class ConfigScreen extends Screen {
 				init();
 			}
 			if (button.id == 5) {
-				ClientData.minecraft.m_6408915(new CreditsScreen(new ConfigScreen(this.parent)));
+				if (Resources.minecraft != null) Resources.minecraft.m_6408915(new CreditsScreen(new ConfigScreen(this.parent)));
 			}
 			if (button.id == 6) {
 				SaveConfig.instance.skipSaveLoadScreen.setValue(SaveConfig.instance.skipSaveLoadScreen.getDefaultValue());
@@ -122,7 +124,7 @@ public class ConfigScreen extends Screen {
 			}
 			if (button.id == 7) {
 				SaveConfig.instance.save();
-				ClientData.minecraft.m_6408915(this.parent);
+				if (Resources.minecraft != null) Resources.minecraft.m_6408915(this.parent);
 			}
 		}
 	}
@@ -134,7 +136,7 @@ public class ConfigScreen extends Screen {
 	public void keyPressed(char chr, int key) {
 		if (key == 1) {
 			SaveConfig.instance.save();
-			ClientData.minecraft.m_6408915(this.parent);
+			if (Resources.minecraft != null) Resources.minecraft.m_6408915(this.parent);
 		}
 	}
 }

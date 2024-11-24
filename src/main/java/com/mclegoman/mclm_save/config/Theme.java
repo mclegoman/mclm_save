@@ -7,6 +7,9 @@
 
 package com.mclegoman.mclm_save.config;
 
+import org.quiltmc.loader.api.minecraft.ClientOnly;
+
+@ClientOnly
 public enum Theme {
 	light("IntelliJ (Light)"),
 	dark("Darcula (Dark)"),

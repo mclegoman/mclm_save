@@ -7,59 +7,33 @@
 
 package com.mclegoman.mclm_save.client;
 
+import com.mclegoman.mclm_save.rtu.common.util.LogType;
+import com.mclegoman.mclm_save.api.data.Resources;
 import com.mclegoman.mclm_save.api.entrypoint.SaveModInit;
 import com.mclegoman.mclm_save.api.event.TickEvents;
+import com.mclegoman.mclm_save.api.gui.InfoScreen;
 import com.mclegoman.mclm_save.client.april_fools.AprilFools;
-import com.mclegoman.mclm_save.client.data.ClientData;
-import com.mclegoman.mclm_save.client.gui.InfoScreen;
-import com.mclegoman.mclm_save.client.level.SaveMinecraft;
-import com.mclegoman.mclm_save.client.level.SaveWorld;
+import com.mclegoman.mclm_save.client.gui.SaveInfoScreen;
 import com.mclegoman.mclm_save.common.data.Data;
-import net.minecraft.client.gui.screen.DeathScreen;
-import org.lwjgl.input.Keyboard;
 import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ClientOnly
 public class Save implements SaveModInit {
 	public void init(ModContainer mod) {
 		AprilFools.init();
-		List<String> bootMessage = new ArrayList<>();
-		if (Data.version.isDevelopmentBuild()) bootMessage.add("This is a developer build of Save. Expect Bugs!");
+		List<String> bootMessages = new ArrayList<>();
+		if (Data.version.isDevelopmentBuild()) bootMessages.add("This is a developer build of Save. Expect Bugs!");
 		String useLegacyMergeSort = System.getProperty("java.util.Arrays.useLegacyMergeSort");
-		if (useLegacyMergeSort == null || useLegacyMergeSort.equalsIgnoreCase("false")) {
-			if (!bootMessage.isEmpty()) bootMessage.add("");
-			bootMessage.add("Please enable \"java.util.Arrays.useLegacyMergeSort\" for stability.");
+		if (useLegacyMergeSort == null || useLegacyMergeSort.equalsIgnoreCase("false")) bootMessages.add("Please enable \"java.util.Arrays.useLegacyMergeSort\" for stability.");
+		if (!bootMessages.isEmpty()) {
+			if (Resources.minecraft != null) Resources.minecraft.m_6408915(new SaveInfoScreen(Resources.minecraft.f_0723335, Data.version.getName(), bootMessages, InfoScreen.Type.DIRT, true));
+			else for (String message : bootMessages) Data.version.sendToLog(LogType.INFO, message);
 		}
-		if (!bootMessage.isEmpty()) ClientData.minecraft.m_6408915(new InfoScreen("Save", bootMessage, InfoScreen.Type.DIRT, true));
-		//SaveMinecraft.loadWorld("mclm_save-test_world");
-		SaveMinecraft.currentWorld = new SaveWorld.Builder("mclm_save-test_world").build();
-
 		TickEvents.register(TickEvents.Tick.END, () -> {
-			SaveMinecraft.tick();
-			try {
-				if (Keyboard.isKeyDown(50)) SaveMinecraft.currentWorld.save();
-			} catch (Exception ignored) {}
-//		if (LevelFile.shouldProcess) {
-//			LevelFile.shouldProcess = false;
-//			LevelFile.dialog.interrupt();
-//			LevelFile.dialog = null;
-//			LevelFile.processWorld();
-//		}
-//		if (LevelFile.shouldLoad != null) {
-//			Couple loadData = LevelFile.shouldLoad;
-//			if ((boolean) loadData.getFirst()) {
-//				LevelFile.shouldLoad = new Couple(false, true);
-//				LevelFile.loadWorld((boolean)loadData.getSecond());
-//			}
-//		}
-			if (ClientData.minecraft.f_0723335 instanceof DeathScreen) {
-				if (ClientData.minecraft.f_6058446.health > 0) {
-					ClientData.minecraft.f_6058446.deathTime = 0;
-					ClientData.minecraft.m_6408915(null);
-				}
-			}
 		});
 	}
 }

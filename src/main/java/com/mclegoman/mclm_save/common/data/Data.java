@@ -7,14 +7,16 @@
 
 package com.mclegoman.mclm_save.common.data;
 
+import com.mclegoman.mclm_save.rtu.common.util.LogType;
+import com.mclegoman.mclm_save.rtu.common.versioning.Version;
 import com.mclegoman.mclm_save.config.SaveConfig;
-import com.mclegoman.luminance.common.util.LogType;
-import com.mclegoman.luminance.common.util.Version;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.quiltmc.loader.api.QuiltLoader;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
+@ClientOnly
 public class Data {
 	public static String mcVersion = "inf-20100325-2";
 	public static Version version = Version.parse(QuiltLoader.getModContainer("mclm_save").get().metadata());
@@ -27,10 +29,10 @@ public class Data {
 				Data.version.sendToLog(LogType.WARN, "Failed to save world on exit: " + error);
 			}
 		}
+		Thread.currentThread().interrupt();
 		if (Mouse.isCreated()) Mouse.destroy();
 		if (Keyboard.isCreated()) Keyboard.destroy();
 		if (AL.isCreated()) AL.destroy();
-		Thread.currentThread().interrupt();
 		Runtime.getRuntime().halt(status);
 	}
 }

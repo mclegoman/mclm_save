@@ -13,13 +13,17 @@ import org.quiltmc.config.api.annotations.Comment;
 import org.quiltmc.config.api.values.TrackedValue;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.loader.api.config.v2.QuiltConfig;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
+@ClientOnly
 public class SaveConfig extends ReflectiveConfig {
 	public static final SaveConfig instance = QuiltConfig.create(Data.version.getID(), Data.version.getID(), SaveConfig.class);
 	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")
 	public final TrackedValue<Boolean> skipSaveLoadScreen = this.value(true);
 	@Comment("When set to true, the game will think it's always april fools'.")
 	public final TrackedValue<Boolean> forceAprilFools = this.value(false);
+	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")
+	public final TrackedValue<String> aprilFoolsName = this.value("Terraria 3");
 	@Comment("This sets the theme of the save/load dialog")
 	public final TrackedValue<Theme> dialogTheme = this.value(Theme.system);
 	@Comment("This sets where the save/load dialog opens")
@@ -74,4 +78,8 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> logErrorCatching = this.value(false);
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);
+	@Comment("Sets the proxy server. (Don't put http(s)://!)")
+	public final TrackedValue<String> proxyUrl = this.value("betacraft.uk");
+	@Comment("Sets the proxy server port.")
+	public final TrackedValue<Integer> proxyPort = this.value(0);
 }

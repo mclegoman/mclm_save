@@ -7,6 +7,9 @@
 
 package com.mclegoman.mclm_save.client.gui;
 
+import org.quiltmc.loader.api.minecraft.ClientOnly;
+
+@ClientOnly
 public class ButtonWidget extends net.minecraft.client.gui.widget.ButtonWidget {
 	public ButtonWidget(int id, int x, int y, String message) {
 		super(id, x, y, message);

@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.mixin.client;
 
-import com.mclegoman.mclm_save.client.data.ClientData;
+import com.mclegoman.mclm_save.api.data.Resources;
 import com.mclegoman.mclm_save.client.gui.ButtonWidget;
 import com.mclegoman.mclm_save.client.gui.ConfigScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -29,7 +29,7 @@ public abstract class OptionsScreenMixin extends Screen {
 	private void save$buttonClicked(net.minecraft.client.gui.widget.ButtonWidget button, CallbackInfo ci) {
 		if (button.active) {
 			if (button.id == 1001) {
-				ClientData.minecraft.m_6408915(new ConfigScreen(new OptionsScreen(this.parent, ClientData.minecraft.f_9967940)));
+				this.minecraft.m_6408915(new ConfigScreen(new OptionsScreen(this.parent, this.minecraft.f_9967940)));
 			}
 		}
 	}

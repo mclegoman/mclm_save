@@ -1,9 +1,19 @@
+/*
+    mclm_save
+    Contributor(s): MCLegoMan
+    Github: https://github.com/MCLegoMan/mclm_save
+    Licence: GNU LGPLv3
+*/
+
 package com.mclegoman.mclm_save.client.util;
+
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.util.Locale;
 
+@ClientOnly
 public final class FileNameFilter extends FileFilter {
 	private final String description;
 	private final String[] filenames;

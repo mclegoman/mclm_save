@@ -1,6 +1,6 @@
 plugins {
-	id 'org.quiltmc.loom' version '1.6.5'
-	id 'ploceus' version '1.6-SNAPSHOT'
+	id 'org.quiltmc.loom' version '1.8.5'
+	id 'ploceus' version '1.8-SNAPSHOT'
 	id "com.github.breadmoirai.github-release" version "2.4.1"
 	id "com.modrinth.minotaur" version "2.+"
 	id 'java'
@@ -30,17 +30,6 @@ ploceus {
 }
 
 repositories {
-	exclusiveContent {
-		forRepository {
-			maven {
-				name = "MCLegoMan"
-				url = "https://maven.mclegoman.com/releases"
-			}
-		}
-		filter {
-			includeGroup "com.mclegoman"
-		}
-	}
 	mavenCentral()
 }
 
@@ -51,12 +40,7 @@ dependencies {
 		mappings "net.ornithemc:calamus-intermediary:${project.minecraft_version}${project.mappings_type}"
 	}
 	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
-
-	// Save/Load Dialog Themes
 	include(implementation "com.formdev:flatlaf:3.4.1")
-
-	// Development Environment Only
-	//modImplementation "com.mclegoman:mclm_debug:1.1.0-release.1+in-20100110"
 }
 
 project.sourceSets {
@@ -140,9 +124,4 @@ if (rootProject.file(".env").exists()) {
 		dependsOn(tasks.githubRelease)
 		if (!project.development) dependsOn(tasks.modrinth)
 	}
-}
-tasks.register("cleanBuild") {
-	group = project.archives_base_name.toLowerCase()
-	description = 'Clean build dir, and build a new version.'
-	dependsOn(tasks.clean).finalizedBy(tasks.build)
 }

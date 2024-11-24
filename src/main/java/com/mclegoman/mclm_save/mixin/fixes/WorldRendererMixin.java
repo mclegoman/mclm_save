@@ -1,13 +1,13 @@
 /*
-    mclm_debug
+    mclm_save
     Contributor(s): MCLegoMan
-    Github: https://github.com/MCLegoMan/mclm_debug
+    Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
 */
 
 package com.mclegoman.mclm_save.mixin.fixes;
 
-import com.mclegoman.luminance.common.util.LogType;
+import com.mclegoman.mclm_save.rtu.common.util.LogType;
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import net.minecraft.client.C_5664496;
@@ -21,6 +21,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,68 +31,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.nio.IntBuffer;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+@ClientOnly
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
 	@Shadow private RenderChunk[] compiledChunks;
-
 	@Shadow protected abstract void updateRenderBoundaries(int i, int j, int k);
-
 	@Shadow private World world;
-
-	@Shadow private RenderChunk[] chunkStorage;
-
 	@Shadow private int chunkGridSizeY;
-
-	@Shadow private int chunkGridSizeX;
-
+	@Shadow private RenderChunk[] chunkStorage;
 	@Shadow private List pendingChunks;
-
+	@Shadow private int chunkGridSizeX;
 	@Shadow private int chunkGridSizeZ;
-
 	@Shadow private boolean glArbOcclusion;
-
-	@Shadow private int chunkGridMinX;
-
-	@Shadow private int chunkGridMinY;
-
-	@Shadow private int chunkGridMinZ;
-
-	@Shadow private int chunkGridMaxY;
-
-	@Shadow private int chunkGridMaxX;
-
-	@Shadow private int chunkGridMaxZ;
-
-	@Shadow private int viewDistance;
-
-	@Shadow private C_5664496 minecraft;
-
-	@Shadow private int translucentGlList;
-
 	@Shadow private IntBuffer arbOcclusionBuffer;
-
-	@Shadow protected abstract int render(int i, int j, int k, double d);
-
-	@Shadow protected abstract void queryGlArbOcclusion(int i, int j);
-
-	@Shadow private double cameraZ;
-
-	@Shadow private double cameraY;
-
-	@Shadow private double cameraX;
-
-	@Shadow private int compiledChunkCount;
-
-	@Shadow private int glArbOccludedChunkCount;
-
-	@Shadow private int invisibleChunkCount;
-
-	@Shadow private int chunkCount;
-
+	@Shadow private int chunkGridMinX;
+	@Shadow private int chunkGridMinY;
+	@Shadow private int chunkGridMinZ;
+	@Shadow private int chunkGridMaxX;
+	@Shadow private int chunkGridMaxY;
+	@Shadow private int chunkGridMaxZ;
+	@Shadow private int viewDistance;
+	@Shadow private C_5664496 minecraft;
+	@Shadow private int translucentGlList;
 	@Shadow protected abstract void m_6748042();
-
+	@Shadow private int chunkCount;
+	@Shadow private int invisibleChunkCount;
+	@Shadow private int glArbOccludedChunkCount;
+	@Shadow private int compiledChunkCount;
+	@Shadow private double cameraX;
+	@Shadow private double cameraY;
+	@Shadow private double cameraZ;
+	@Shadow protected abstract void queryGlArbOcclusion(int i, int j);
+	@Shadow protected abstract int render(int i, int j, int k, double d);
 	@Shadow private int ticks;
 
 	@Inject(method = "m_6748042", at = @At(value = "HEAD"), cancellable = true)
@@ -154,12 +128,13 @@ public abstract class WorldRendererMixin {
 			this.updateRenderBoundaries(MathHelper.floor(var6.x), MathHelper.floor(var6.y), MathHelper.floor(var6.z));
 			Arrays.sort(this.compiledChunks, new CompiledChunkComparator(var6));
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.WARN, "An error occourred whilst executing WorldRenderer/m_6748042: " + error.getLocalizedMessage());
+			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		ci.cancel();
 	}
+
 	@Inject(method = "render(Lnet/minecraft/entity/living/player/PlayerEntity;ID)I", at = @At(value = "HEAD"), cancellable = true)
-	private void mclm_save$render(PlayerEntity playerEntity, int i, double d, CallbackInfoReturnable<Integer> cir) {
+	public void mclm_save$render(PlayerEntity playerEntity, int i, double d, CallbackInfoReturnable<Integer> cir) {
 		try {
 			if (this.minecraft.f_9967940.f_7110074 != this.viewDistance) {
 				this.m_6748042();
@@ -261,17 +236,17 @@ public abstract class WorldRendererMixin {
 			} else {
 				var21 = 0 + this.render(0, this.compiledChunks.length, i, d);
 			}
-
 			cir.setReturnValue(var21);
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.WARN, "An error occourred whilst executing WorldRenderer/render: " + error.getLocalizedMessage());
+			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
-		cir.cancel();
+		cir.setReturnValue(16);
 	}
-	@Inject(method = "m_8580944", at = @At(value = "HEAD"), cancellable = true)
-	private void mclm_save$m_8580944(PlayerEntity playerEntity, CallbackInfo ci) {
+
+	@Inject(method = "m_8580944", at = @At("HEAD"), cancellable = true)
+	public void mclm_save$m_8580944(PlayerEntity playerEntity, CallbackInfo ci) {
 		try {
-			this.pendingChunks.sort(new PendingChunkComparator(playerEntity));
+			Collections.sort(this.pendingChunks, new PendingChunkComparator(playerEntity));
 			int var2 = this.pendingChunks.size() - 1;
 			int var3 = this.pendingChunks.size();
 
@@ -286,7 +261,7 @@ public abstract class WorldRendererMixin {
 				var5.dirty = false;
 			}
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.WARN, "An error occourred whilst executing WorldRenderer/m_8580944: " + error.getLocalizedMessage());
+			if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		ci.cancel();
 	}

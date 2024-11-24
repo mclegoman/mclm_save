@@ -5,13 +5,12 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.mclm_save.api.entrypoint;
+package com.mclegoman.mclm_save.api.data;
 
-import org.quiltmc.loader.api.ModContainer;
+import net.minecraft.client.C_5664496;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
-public interface SaveModInit {
-	String key = "mclm_save_init";
-	void init(ModContainer mod);
+public class Resources {
+	public static C_5664496 minecraft;
 }
