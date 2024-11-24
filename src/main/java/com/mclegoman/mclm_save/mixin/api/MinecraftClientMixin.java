@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.mixin.api;
 
-import com.mclegoman.mclm_save.rtu.common.util.LogType;
+import com.mclegoman.mclm_save.rtu.util.LogType;
 import com.mclegoman.mclm_save.api.entrypoint.SaveModInit;
 import com.mclegoman.mclm_save.api.event.TickEvents;
 import com.mclegoman.mclm_save.common.data.Data;

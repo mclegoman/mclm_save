@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.mixin.fixes;
 
-import com.mclegoman.mclm_save.rtu.common.util.LogType;
+import com.mclegoman.mclm_save.rtu.util.LogType;
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import net.minecraft.client.MinecraftApplet;

@@ -5,21 +5,14 @@
     Licence: CC0-1.0
 */
 
-package com.mclegoman.mclm_save.rtu.common.versioning;
+package com.mclegoman.mclm_save.rtu.versioning;
 
-import com.mclegoman.mclm_save.rtu.common.util.LogType;
-
-// If you are using Fabric, uncomment the following imports
-//import net.fabricmc.loader.FabricLoader;
-//import net.fabricmc.loader.api.ModContainer;
-//import net.fabricmc.loader.api.metadata.ModMetadata;
-
+import com.mclegoman.mclm_save.rtu.util.LogType;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.ModMetadata;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Optional;
 
 public class Version implements Comparable<Version> {
@@ -59,8 +52,6 @@ public class Version implements Comparable<Version> {
 		return new Version(name, id, major, minor, patch, type, build, false, false, "");
 	}
 	public static Version parse(ModMetadata metadata) {
-		// If you are using Fabric, uncomment out the following line
-		//String version = metadata.getVersion().getFriendlyString();
 		String version = metadata.version().toString();
 		String[] versionData = version.split("-");
 		String[] versionVer = versionData[0].split("\\.");
@@ -77,8 +68,6 @@ public class Version implements Comparable<Version> {
 		return this.modrinthId;
 	}
 	public Optional<ModContainer> getModContainer() {
-		// If you are using Fabric, uncomment out the following line.
-		//return FabricLoader.getInstance().getModContainer(getID());
 		return QuiltLoader.getModContainer(getID());
 	}
 	public String getName() {

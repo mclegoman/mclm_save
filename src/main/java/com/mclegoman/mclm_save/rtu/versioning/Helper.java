@@ -5,7 +5,7 @@
     Licence: CC0-1.0
 */
 
-package com.mclegoman.mclm_save.rtu.common.versioning;
+package com.mclegoman.mclm_save.rtu.versioning;
 
 public class Helper {
 	public static ReleaseType stringToType(String type) {

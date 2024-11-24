@@ -5,7 +5,7 @@
     Licence: CC0-1.0
 */
 
-package com.mclegoman.mclm_save.rtu.common.util;
+package com.mclegoman.mclm_save.rtu.util;
 
 public class Couple<a, b> {
 	private a first;

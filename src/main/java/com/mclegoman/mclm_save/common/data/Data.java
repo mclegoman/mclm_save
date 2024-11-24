@@ -7,8 +7,8 @@
 
 package com.mclegoman.mclm_save.common.data;
 
-import com.mclegoman.mclm_save.rtu.common.util.LogType;
-import com.mclegoman.mclm_save.rtu.common.versioning.Version;
+import com.mclegoman.mclm_save.rtu.util.LogType;
+import com.mclegoman.mclm_save.rtu.versioning.Version;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

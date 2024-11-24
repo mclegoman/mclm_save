@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.api.gui;
 
-import com.mclegoman.mclm_save.rtu.common.util.LogType;
+import com.mclegoman.mclm_save.rtu.util.LogType;
 import com.mclegoman.mclm_save.api.data.Resources;
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mojang.blaze3d.vertex.BufferBuilder;
