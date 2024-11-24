@@ -39,10 +39,4 @@ public abstract class MinecraftClientMixin {
 		Optional<ModContainer> modContainer = QuiltLoader.getModContainer(Data.version.getID());
 		modContainer.ifPresent(Save::onTick);
 	}
-	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GameGui;<init>(Lnet/minecraft/client/C_5664496;)V"))
-	private void save$run(CallbackInfo ci) {
-		// Runs our Save::onInitialize function.
-		Optional<ModContainer> modContainer = QuiltLoader.getModContainer(Data.version.getID());
-		modContainer.ifPresent(Save::onInitialize);
-	}
 }

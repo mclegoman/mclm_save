@@ -7,6 +7,7 @@
 
 package com.mclegoman.mclm_save.client;
 
+import com.mclegoman.mclm_save.api.entrypoint.SaveModInit;
 import com.mclegoman.mclm_save.client.april_fools.AprilFools;
 import com.mclegoman.mclm_save.client.data.ClientData;
 import com.mclegoman.mclm_save.client.gui.InfoScreen;
@@ -20,8 +21,8 @@ import org.quiltmc.loader.api.ModContainer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Save {
-	public static void onInitialize(ModContainer mod) {
+public class Save implements SaveModInit {
+	public void init(ModContainer mod) {
 		AprilFools.init();
 		List<String> bootMessage = new ArrayList<>();
 		if (Data.version.isDevelopmentBuild()) bootMessage.add("This is a developer build of Save. Expect Bugs!");

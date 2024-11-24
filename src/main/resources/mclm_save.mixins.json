@@ -21,6 +21,7 @@
 		"defaultRequire": 1
 	},
 	"mixins": [
+		"api.MinecraftClientMixin",
 		"client.WorldMixin"
 	]
 }

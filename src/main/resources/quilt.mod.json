@@ -20,6 +20,9 @@
       },
       "icon": "assets/save/icon.png"
     },
+    "entrypoints": {
+      "mclm_save_init": "com.mclegoman.mclm_save.client.Save"
+    },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "depends": [
       {
