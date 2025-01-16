@@ -8,7 +8,7 @@
 package com.mclegoman.mclm_save.client.gui;
 
 import com.mclegoman.mclm_save.api.gui.InfoScreen;
-import com.mclegoman.mclm_save.client.util.StringHelper;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import net.minecraft.client.gui.screen.Screen;

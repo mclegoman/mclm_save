@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.mclm_save.client.util;
+package com.mclegoman.mclm_save.api.util;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 

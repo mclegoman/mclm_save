@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.client.gui;
 
-import com.mclegoman.mclm_save.client.util.StringHelper;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import com.mclegoman.mclm_save.rtu.util.Couple;
 import com.mclegoman.mclm_save.api.data.Resources;
 import com.mojang.blaze3d.vertex.BufferBuilder;

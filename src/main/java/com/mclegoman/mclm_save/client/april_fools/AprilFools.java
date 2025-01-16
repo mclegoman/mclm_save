@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.client.april_fools;
 
-import com.mclegoman.mclm_save.client.util.StringHelper;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 

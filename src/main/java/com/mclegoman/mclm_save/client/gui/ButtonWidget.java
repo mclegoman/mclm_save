@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.client.gui;
 
-import com.mclegoman.mclm_save.client.util.StringHelper;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly

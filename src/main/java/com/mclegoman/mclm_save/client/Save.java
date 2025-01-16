@@ -7,7 +7,7 @@
 
 package com.mclegoman.mclm_save.client;
 
-import com.mclegoman.mclm_save.client.util.StringHelper;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import com.mclegoman.mclm_save.rtu.util.LogType;
 import com.mclegoman.mclm_save.api.data.Resources;
 import com.mclegoman.mclm_save.api.entrypoint.SaveModInit;

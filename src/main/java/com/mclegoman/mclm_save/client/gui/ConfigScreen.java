@@ -8,6 +8,7 @@
 package com.mclegoman.mclm_save.client.gui;
 
 import com.mclegoman.mclm_save.api.data.Resources;
+import com.mclegoman.mclm_save.api.util.StringHelper;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import com.mclegoman.mclm_save.config.Theme;
 import net.minecraft.client.gui.screen.Screen;
@@ -130,7 +131,7 @@ public class ConfigScreen extends Screen {
 	}
 	public final void render(int i, int j, float f) {
 		this.drawBackgroundTexture();
-		drawCenteredString(this.textRenderer, "Save Config", this.width / 2, 20, 16777215);
+		drawCenteredString(this.textRenderer, StringHelper.getFormattedString("[save] Config"), this.width / 2, 20, 16777215);
 		super.render(i, j, f);
 	}
 	public void keyPressed(char chr, int key) {
