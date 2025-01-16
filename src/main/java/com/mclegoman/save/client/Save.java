@@ -11,7 +11,7 @@ import com.mclegoman.save.api.util.StringHelper;
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.api.data.Resources;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
-import com.mclegoman.save.api.event.TickEvents;
+import com.mclegoman.save.api.event.tick.TickEvents;
 import com.mclegoman.save.api.gui.InfoScreen;
 import com.mclegoman.save.client.april_fools.AprilFools;
 import com.mclegoman.save.client.gui.SaveInfoScreen;
@@ -35,7 +35,7 @@ public class Save implements SaveModInit {
 			if (Resources.minecraft != null) Resources.minecraft.m_6408915(new SaveInfoScreen(Resources.minecraft.f_0723335, "[save]", bootMessages, InfoScreen.Type.DIRT, true));
 			else for (String message : bootMessages) Data.version.sendToLog(LogType.INFO, message);
 		}
-		TickEvents.register(TickEvents.Tick.END, (client) -> {
+		TickEvents.register(TickEvents.Tick.END, Data.version.getID(), (client) -> {
 		});
 	}
 }
