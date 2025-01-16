@@ -8,6 +8,7 @@
 package com.mclegoman.mclm_save.client.gui;
 
 import com.mclegoman.mclm_save.api.gui.InfoScreen;
+import com.mclegoman.mclm_save.client.util.StringHelper;
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mclegoman.mclm_save.config.SaveConfig;
 import net.minecraft.client.gui.screen.Screen;
@@ -39,8 +40,8 @@ public final class SaveInfoScreen extends InfoScreen {
 	@Override
 	public void renderModInfo() {
 		if (Data.version.isDevelopmentBuild() || SaveConfig.instance.debug.value()) {
-			textRenderer.drawWithShadow(Data.version.getName() + " " + Data.version.getFriendlyString() + " (" + Data.mcVersion + ")", 2, this.height - (Data.version.isDevelopmentBuild() ? 23 : 12), 16777215);
-			if (Data.version.isDevelopmentBuild()) textRenderer.drawWithShadow("Development Build", 2, this.height - 12, 0xFFAA00);
+			textRenderer.drawWithShadow(StringHelper.getFormattedString("[save] [save_version] ([minecraft_version])"), 2, this.height - (Data.version.isDevelopmentBuild() ? 23 : 12), 16777215);
+			if (Data.version.isDevelopmentBuild()) textRenderer.drawWithShadow(StringHelper.getFormattedString("Development Build"), 2, this.height - 12, 0xFFAA00);
 		}
 	}
 }

@@ -7,6 +7,7 @@
 
 package com.mclegoman.mclm_save.client.gui;
 
+import com.mclegoman.mclm_save.client.util.StringHelper;
 import com.mclegoman.mclm_save.rtu.util.Couple;
 import com.mclegoman.mclm_save.api.data.Resources;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -89,7 +90,10 @@ public class CreditsScreen extends Screen {
 			var4.vertex(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 			var4.end();
 		}
-		credits.forEach(credit -> textRenderer.drawWithShadow(credit.getFirst(), (this.width / 2) - (textRenderer.getWidth(credit.getFirst()) / 2), (this.height + (credits.indexOf(credit) * 10)) - time, credit.getSecond()));
+		credits.forEach(credit -> {
+			String message = StringHelper.getFormattedString(credit.getFirst());
+			textRenderer.drawWithShadow(message, (this.width / 2) - (textRenderer.getWidth(message) / 2), (this.height + (credits.indexOf(credit) * 10)) - time, credit.getSecond());
+		});
 		super.render(i, j, f);
 	}
 	public void keyPressed(char chr, int key) {
