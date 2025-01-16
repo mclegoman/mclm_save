@@ -28,13 +28,12 @@ public class CreditsScreen extends Screen {
 		this.parent = screen;
 	}
 	public void init() {
-		this.credits.add(new Couple<>("Save", 0xFFAA00));
+		this.credits.add(new Couple<>("[save]", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
-		this.credits.add(new Couple<>("A quilt mod that adds saving to older versions of Minecraft", 0xAAAAAA));
+		this.credits.add(new Couple<>("[save_description]", 0xAAAAAA));
 		this.credits.add(new Couple<>("Authors:", 0xAAAAAA));
-		this.credits.add(new Couple<>("Phantazap (Owner)", 0xAAAAAA));
-		this.credits.add(new Couple<>("MCLegoMan (Lead Developer)", 0xAAAAAA));
-		this.credits.add(new Couple<>("License: LGPL-3.0-or-later", 0xAAAAAA));
+		for (String contributor : StringHelper.getFormattedContributors()) this.credits.add(new Couple<>(contributor, 0xAAAAAA));
+		this.credits.add(new Couple<>("Licence: [save_license]", 0xAAAAAA));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
 		this.credits.add(new Couple<>("Attribution", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));

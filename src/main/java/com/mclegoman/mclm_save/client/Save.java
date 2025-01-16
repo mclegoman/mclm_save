@@ -28,11 +28,11 @@ public class Save implements SaveModInit {
 		StringHelper.init();
 		AprilFools.init();
 		List<String> bootMessages = new ArrayList<>();
-		if (Data.version.isDevelopmentBuild()) bootMessages.add("This is a developer build of Save. Expect Bugs!");
+		if (Data.version.isDevelopmentBuild()) bootMessages.add("This is a developer build of [save]. Expect Bugs!");
 		String useLegacyMergeSort = System.getProperty("java.util.Arrays.useLegacyMergeSort");
 		if (useLegacyMergeSort == null || useLegacyMergeSort.equalsIgnoreCase("false")) bootMessages.add("Please enable \"java.util.Arrays.useLegacyMergeSort\" for stability.");
 		if (!bootMessages.isEmpty()) {
-			if (Resources.minecraft != null) Resources.minecraft.m_6408915(new SaveInfoScreen(Resources.minecraft.f_0723335, Data.version.getName(), bootMessages, InfoScreen.Type.DIRT, true));
+			if (Resources.minecraft != null) Resources.minecraft.m_6408915(new SaveInfoScreen(Resources.minecraft.f_0723335, "[save]", bootMessages, InfoScreen.Type.DIRT, true));
 			else for (String message : bootMessages) Data.version.sendToLog(LogType.INFO, message);
 		}
 		TickEvents.register(TickEvents.Tick.END, () -> {

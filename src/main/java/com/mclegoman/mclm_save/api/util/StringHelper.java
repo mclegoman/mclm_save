@@ -9,8 +9,12 @@ package com.mclegoman.mclm_save.api.util;
 
 import com.mclegoman.mclm_save.common.data.Data;
 import com.mclegoman.mclm_save.rtu.util.LogType;
+import org.quiltmc.loader.api.ModContributor;
+import org.quiltmc.loader.api.ModLicense;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StringHelper {
@@ -25,7 +29,29 @@ public class StringHelper {
     public static void init() {
         addVariable("save", Data.version.getName());
         addVariable("save_version", Data.version.getFriendlyString());
+        if (Data.version.getModContainer().isPresent()) {
+            addVariable("save_description", Data.version.getModContainer().get().metadata().description());
+            StringBuilder licenses = new StringBuilder();
+            for (ModLicense license : Data.version.getModContainer().get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
+            addVariable("save_license", licenses.toString());
+        }
         addVariable("minecraft_version", Data.mcVersion);
+    }
+    public static List<ModContributor> getContributors() {
+        List<ModContributor> contributors = new ArrayList<>();
+        if (Data.version.getModContainer().isPresent()) {
+            for (ModContributor person : Data.version.getModContainer().get().metadata().contributors()) contributors.add(person);
+        }
+        return contributors;
+    }
+    public static List<String> getFormattedContributors() {
+        List<String> contributors = new ArrayList<>();
+        for (ModContributor person : getContributors()) {
+            StringBuilder data = new StringBuilder();
+            for (String role : person.roles()) data.append((data.length() == 0) ? "" : ", ").append(role);
+            contributors.add(person.name() + " (" + data + ")");
+        }
+        return contributors;
     }
     public static String getFormattedString(String string) {
         boolean finished = false;

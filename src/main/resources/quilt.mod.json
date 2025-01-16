@@ -9,14 +9,14 @@
       "description": "Adds saving to versions of Minecraft that don't have it.",
       "contributors": {
         "Phantazap": "Owner",
-        "MCLegoMan": "Lead Developer"
+        "dannytaylor": "Lead Developer"
       },
       "license": [
         "LGPL-3.0-or-later"
       ],
       "contact": {
-        "github": "https://github.com/MCLegoMan",
-        "email": "daniel@mclegoman.com"
+        "github": "https://github.com/mclegoman",
+        "email": "taylor@mclegoman.com"
       },
       "icon": "assets/save/icon.png"
     },
