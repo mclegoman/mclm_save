@@ -2,7 +2,7 @@
   "schema_version": 1,
   "quilt_loader": {
     "group": "com.mclegoman",
-    "id": "mclm_save",
+    "id": "save",
     "version": "${version}",
     "metadata": {
       "name": "Save",
@@ -21,7 +21,7 @@
       "icon": "assets/save/icon.png"
     },
     "entrypoints": {
-      "mclm_save_init": "com.mclegoman.mclm_save.client.Save"
+      "save_init": "com.mclegoman.save.client.Save"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "depends": [
@@ -35,6 +35,6 @@
       }
     ]
   },
-  "mixin": "mclm_save.mixins.json",
-  "access_widener" : "mclm_save.accesswidener"
+  "mixin": "save.mixins.json",
+  "access_widener" : "save.accesswidener"
 }

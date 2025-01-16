@@ -22,7 +22,7 @@ loom {
 			sourceSet("main")
 		}
 	}
-	accessWidenerPath = file("src/main/resources/mclm_save.accesswidener")
+	accessWidenerPath = file("src/main/resources/save.accesswidener")
 }
 
 ploceus {
