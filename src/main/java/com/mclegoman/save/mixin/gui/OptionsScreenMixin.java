@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.mixin.client;
+package com.mclegoman.save.mixin.gui;
 
 import com.mclegoman.save.api.gui.widget.ButtonWidget;
 import com.mclegoman.save.client.gui.screen.config.ConfigScreen;

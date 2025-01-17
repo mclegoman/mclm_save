@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MinecraftClientMixin {
 	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GameGui;<init>(Lnet/minecraft/client/C_5664496;)V"))
 	private void save$init(CallbackInfo ci) {
+		System.getProperties().setProperty("java.util.Arrays.useLegacyMergeSort", "true");
 		EntrypointUtil.invoke(SaveModInit.key, SaveModInit.class, SaveModInit::init);
 	}
 	@Inject(method = "m_8832598", at = @At(value = "HEAD"))

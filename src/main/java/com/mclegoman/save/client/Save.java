@@ -30,7 +30,7 @@ public class Save implements SaveModInit {
 		List<String> bootMessages = new ArrayList<>();
 		if (Data.getVersion().isDevelopmentBuild()) bootMessages.add("This is a developer build of [save]. Expect Bugs!");
 		String useLegacyMergeSort = System.getProperty("java.util.Arrays.useLegacyMergeSort");
-		if (useLegacyMergeSort == null || useLegacyMergeSort.equalsIgnoreCase("false")) bootMessages.add("Please enable \"java.util.Arrays.useLegacyMergeSort\" for stability.");
+		if (useLegacyMergeSort == null || useLegacyMergeSort.equalsIgnoreCase("false")) bootMessages.add("Please enable \"-Djava.util.Arrays.useLegacyMergeSort\" for stability.");
 		if (!bootMessages.isEmpty()) {
 			if (Resources.minecraft != null) Resources.minecraft.m_6408915(new SaveInfoScreen(Resources.minecraft.f_0723335, "[save]", bootMessages, InfoScreen.Type.DIRT, true));
 			else for (String message : bootMessages) Data.getVersion().sendToLog(LogType.INFO, message);

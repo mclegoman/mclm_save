@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.mixin.client;
+package com.mclegoman.save.mixin.gui;
 
 import com.mclegoman.save.client.april_fools.AprilFools;
 import net.minecraft.client.C_5664496;

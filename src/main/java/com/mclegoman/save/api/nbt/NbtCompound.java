@@ -4,33 +4,25 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class NbtCompound extends NbtElement {
-	private Map elements = new HashMap();
+	private final Map<String, NbtElement> elements = new HashMap<>();
 
 	public NbtCompound() {
 	}
 
 	final void write(DataOutput dataOutput) throws IOException {
-		Iterator var2 = this.elements.values().iterator();
-
-		while(var2.hasNext()) {
-			NbtElement.serialize((NbtElement)var2.next(), dataOutput);
-		}
-
+		for (NbtElement element : this.elements.values()) NbtElement.serialize(element, dataOutput);
 		dataOutput.writeByte(0);
 	}
 
 	final void read(DataInput dataInput) throws IOException {
 		this.elements.clear();
-
 		NbtElement var2;
-		while((var2 = NbtElement.deserialize(dataInput)).getType() != 0) {
+		while ((var2 = NbtElement.deserialize(dataInput)).getType() != 0) {
 			this.elements.put(var2.getName(), var2);
 		}
-
 	}
 
 	public final byte getType() {
@@ -57,7 +49,7 @@ public class NbtCompound extends NbtElement {
 		this.elements.put(string, (new NbtLong(l)).m_4457344(string));
 	}
 
-	public final void m_2391638(String string, float f) {
+	public final void putFloat(String string, float f) {
 		this.elements.put(string, (new NbtFloat(f)).m_4457344(string));
 	}
 
@@ -77,7 +69,7 @@ public class NbtCompound extends NbtElement {
 		this.putByte(string, (byte)(bl ? 1 : 0));
 	}
 
-	public final boolean m_0016466(String string) {
+	public final boolean containsKey(String string) {
 		return this.elements.containsKey(string);
 	}
 

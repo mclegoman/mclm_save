@@ -1,4 +1,4 @@
-package com.mclegoman.save.api.minecraft;
+package com.mclegoman.save.api.level;
 
 import com.mclegoman.save.api.nbt.NbtCompound;
 import com.mclegoman.save.api.nbt.NbtElement;

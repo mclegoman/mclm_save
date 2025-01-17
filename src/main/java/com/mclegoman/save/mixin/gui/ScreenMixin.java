@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.mixin.client;
+package com.mclegoman.save.mixin.gui;
 
 import com.mclegoman.save.api.gui.screen.SaveModScreen;
 import net.minecraft.client.gui.screen.Screen;

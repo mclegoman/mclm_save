@@ -1,7 +1,7 @@
 package com.mclegoman.save.client.gui.screen.world_select;
 
-import com.mclegoman.save.api.minecraft.SaveModMinecraft;
-import com.mclegoman.save.api.minecraft.SaveModWorld;
+import com.mclegoman.save.api.level.SaveModMinecraft;
+import com.mclegoman.save.api.level.SaveModWorld;
 import com.mclegoman.save.api.nbt.NbtCompound;
 import com.mclegoman.save.common.util.SaveHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -68,7 +68,8 @@ public class SelectWorldScreen extends Screen {
 		}
 	}
 	public void loadWorld(int i) {
-		SaveModMinecraft.save$setWorld("World" + i);
+		while (!this.buttons.isEmpty()) this.buttons.clear();
+		((SaveModMinecraft)this.minecraft).save$set("World" + i);
 		this.minecraft.m_6408915(null);
 	}
 

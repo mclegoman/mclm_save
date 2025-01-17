@@ -6,17 +6,22 @@
 	"client": [
 		"api.MinecraftClientMixin",
 		"api.ResourcesMixin",
-		"client.GameGuiMixin",
-		"client.OptionsScreenMixin",
-		"client.ScreenMixin",
-		"client.TitleScreenMixin",
+		"entity.EntityMixin",
+		"entity.LivingEntityMixin",
+		"entity.PlayerEntityMixin",
 		"fixes.MinecraftAppletMixin",
-		"fixes.WorldRendererMixin"
+		"fixes.WorldRendererMixin",
+		"gui.GameGuiMixin",
+		"gui.GameMenuScreenMixin",
+		"gui.OptionsScreenMixin",
+		"gui.ScreenMixin",
+		"gui.TitleScreenMixin",
+		"level.MinecraftClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"client.GameMenuScreenMixin"
+		"entity.InputPlayerEntityMixin"
 	]
 }

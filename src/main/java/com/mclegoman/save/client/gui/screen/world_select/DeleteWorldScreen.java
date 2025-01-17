@@ -1,7 +1,7 @@
 package com.mclegoman.save.client.gui.screen.world_select;
 
 import com.mclegoman.save.api.gui.screen.ConfirmScreen;
-import com.mclegoman.save.api.minecraft.SaveModWorld;
+import com.mclegoman.save.api.level.SaveModWorld;
 import com.mclegoman.save.common.util.SaveHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
