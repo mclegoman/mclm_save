@@ -1,3 +1,27 @@
 accessWidener v2 named
 extendable class net/minecraft/client/C_5664496
 extendable class net/minecraft/world/World
+extendable class net/minecraft/world/gen/chunk/OverworldChunkGenerator
+extendable class net/minecraft/world/gen/noise/OctaveNoiseGenerator
+accessible field net/minecraft/world/World chunkSource Lnet/minecraft/world/chunk/ChunkSource;
+accessible field net/minecraft/world/chunk/WorldChunk chunkX I
+accessible field net/minecraft/world/chunk/WorldChunk chunkZ I
+accessible field net/minecraft/world/chunk/WorldChunk world Lnet/minecraft/world/World;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator random Ljava/util/Random;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator f_3952515 Ljava/util/Random;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator minLimitPerlinNoise Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator maxLimitPerlinNoise Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator mainPerlinNoise Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator f_4682337 Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator f_8421429 Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator f_1600301 Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator forestNoise Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
+accessible method net/minecraft/world/gen/noise/OctaveNoiseGenerator <init> (Ljava/util/Random;I)V
+accessible field net/minecraft/world/chunk/WorldChunk blockIds [B
+accessible field net/minecraft/world/chunk/WorldChunk blockMetadata Lnet/minecraft/world/chunk/ChunkNibbleStorage;
+accessible field net/minecraft/world/chunk/WorldChunk skyLight Lnet/minecraft/world/chunk/ChunkNibbleStorage;
+accessible field net/minecraft/world/chunk/WorldChunk blockLight Lnet/minecraft/world/chunk/ChunkNibbleStorage;
+accessible field net/minecraft/world/chunk/WorldChunk heightMap [B
+accessible field net/minecraft/world/chunk/WorldChunk blockEntities Ljava/util/Map;
+accessible field net/minecraft/world/chunk/ChunkNibbleStorage data [B
+accessible field net/minecraft/world/World ticks I

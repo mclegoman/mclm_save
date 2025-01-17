@@ -22,6 +22,10 @@
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"entity.InputPlayerEntityMixin"
+		"entity.InputPlayerEntityMixin",
+		"entity.block.BlockEntityMixin",
+		"entity.block.ChestBlockEntityMixin",
+		"entity.block.FurnaceBlockEntityMixin",
+		"fixes.WorldMixin"
 	]
 }

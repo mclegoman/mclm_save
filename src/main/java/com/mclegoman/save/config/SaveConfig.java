@@ -11,6 +11,7 @@ import com.mclegoman.save.common.data.Data;
 import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.annotations.Comment;
 import org.quiltmc.config.api.values.TrackedValue;
+import org.quiltmc.config.api.values.ValueList;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.loader.api.config.v2.QuiltConfig;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -76,6 +77,9 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> debug = this.value(false);
 	@Comment("Enables error catching logs.")
 	public final TrackedValue<Boolean> logErrorCatching = this.value(false);
+	@Comment("Disables ItemEntity with flower item stack.")
+	public final TrackedValue<Boolean> shouldDisableFlowerItems = this.value(true);
+	public final TrackedValue<ValueList<String>> flowerItems = this.list("", "37", "38");
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);
 	@Comment("Sets the proxy server. (Don't put http(s)://!)")

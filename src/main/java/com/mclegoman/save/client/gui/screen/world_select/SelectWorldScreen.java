@@ -57,7 +57,9 @@ public class SelectWorldScreen extends Screen {
 	public void buttonClicked(ButtonWidget buttonWidget) {
 		if (buttonWidget.active) {
 			if (buttonWidget.id < 5) {
-				this.loadWorld(buttonWidget.id + 1);
+				int world = buttonWidget.id + 1;
+				this.buttons.clear();
+				this.loadWorld(world);
 			} else if (buttonWidget.id == 5) {
 				this.minecraft.m_6408915(new DeleteWorldScreen(this));
 			} else if (buttonWidget.id == 6) {
@@ -68,7 +70,6 @@ public class SelectWorldScreen extends Screen {
 		}
 	}
 	public void loadWorld(int i) {
-		while (!this.buttons.isEmpty()) this.buttons.clear();
 		((SaveModMinecraft)this.minecraft).save$set("World" + i);
 		this.minecraft.m_6408915(null);
 	}

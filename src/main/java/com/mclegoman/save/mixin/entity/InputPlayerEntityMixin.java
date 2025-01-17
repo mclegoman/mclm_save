@@ -8,6 +8,7 @@
 package com.mclegoman.save.mixin.entity;
 
 import com.mclegoman.save.api.entity.SaveModEntity;
+import com.mclegoman.save.api.level.SaveModWorld;
 import com.mclegoman.save.api.nbt.NbtCompound;
 import com.mclegoman.save.api.nbt.NbtList;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;
@@ -33,8 +34,7 @@ public abstract class InputPlayerEntityMixin extends PlayerEntity implements Sav
 		this.inventory.armorSlots = new ItemStack[4];
 		for (int index = 0; index < inventoryNbt.size(); ++index) {
 			NbtCompound item = (NbtCompound) inventoryNbt.get(index);
-			ItemStack stack = new ItemStack(item.getShort("id"), item.getByte("Count"));
-			stack.metadata = item.getShort("Damage");
+			ItemStack stack = SaveModWorld.readItem((NbtCompound) inventoryNbt.get(index));
 			int slot = item.getByte("Slot");
 			if ((slot & 255) >= 100) this.inventory.armorSlots[slot - 100] = stack;
 			else this.inventory.inventorySlots[slot] = stack;
@@ -48,21 +48,21 @@ public abstract class InputPlayerEntityMixin extends PlayerEntity implements Sav
 
 		nbtCompound.putInt("Score", this.playerScore);
 		NbtList inventory = new NbtList();
-		for (int i = 0; i < this.inventory.inventorySlots.length; i++) {
-			NbtCompound slot = new NbtCompound();
-			slot.putByte("Count", (byte) this.inventory.inventorySlots[i].size);
-			slot.putShort("Damage", (byte) this.inventory.inventorySlots[i].metadata);
-			slot.putShort("id", (byte) this.inventory.inventorySlots[i].itemId);
-			slot.putByte("Slot", (byte) i);
-			inventory.add(slot);
+		for (int index = 0; index < this.inventory.inventorySlots.length; ++index) {
+			if (this.inventory.inventorySlots[index] != null) {
+				NbtCompound item = new NbtCompound();
+				item.putByte("Slot", (byte)index);
+				SaveModWorld.saveItem(this.inventory.inventorySlots[index], item);
+				inventory.add(item);
+			}
 		}
-		for (int i = 0; i < this.inventory.armorSlots.length; i++) {
-			NbtCompound slot = new NbtCompound();
-			slot.putByte("Count", (byte) this.inventory.armorSlots[i].size);
-			slot.putShort("Damage", (byte) this.inventory.armorSlots[i].metadata);
-			slot.putShort("id", (byte) this.inventory.armorSlots[i].itemId);
-			slot.putByte("Slot", (byte) (i + 100));
-			inventory.add(slot);
+		for (int index = 0; index < this.inventory.armorSlots.length; ++index) {
+			if (this.inventory.armorSlots[index] != null) {
+				NbtCompound item = new NbtCompound();
+				item.putByte("Slot", (byte)(index + 100));
+				SaveModWorld.saveItem(this.inventory.armorSlots[index], item);
+				inventory.add(item);
+			}
 		}
 		nbtCompound.put("Inventory", inventory);
 	}

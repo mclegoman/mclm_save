@@ -8,6 +8,7 @@
 package com.mclegoman.save.client;
 
 import com.mclegoman.save.api.util.StringHelper;
+import com.mclegoman.save.common.util.SaveHelper;
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.api.data.Resources;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
@@ -25,6 +26,7 @@ import java.util.List;
 @ClientOnly
 public class Save implements SaveModInit {
 	public void init(ModContainer mod) {
+		SaveHelper.init();
 		StringHelper.init();
 		AprilFools.init();
 		List<String> bootMessages = new ArrayList<>();

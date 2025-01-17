@@ -8,7 +8,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class SaveModLevel {
-	public static NbtCompound save$load(InputStream inputStream) throws IOException {
+	public static NbtCompound load(InputStream inputStream) throws IOException {
 		DataInputStream dataInputStream = new DataInputStream(new GZIPInputStream(inputStream));
 		NbtCompound var5;
 		try {
@@ -20,7 +20,7 @@ public class SaveModLevel {
 		}
 		return var5;
 	}
-	public void save$save(NbtCompound nbtCompound, OutputStream outputStream) throws IOException {
+	public static void save(NbtCompound nbtCompound, OutputStream outputStream) throws IOException {
 		try (DataOutputStream dataOutputStream = new DataOutputStream(new GZIPOutputStream(outputStream))) {
 			NbtElement.serialize(nbtCompound, dataOutputStream);
 		}
