@@ -47,9 +47,9 @@ public class StringHelper {
             // [modId_version]
             addVariable(modId, "version", modContainer.get().metadata().version().raw());
             // [modId_description]
-            addVariable(modId, "description", Data.version.getModContainer().get().metadata().description());
+            addVariable(modId, "description", modContainer.get().metadata().description());
             StringBuilder licenses = new StringBuilder();
-            for (ModLicense license : Data.version.getModContainer().get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
+            for (ModLicense license : modContainer.get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
             // [modId_licenses]
             addVariable("save", "licenses", licenses.toString());
         }
