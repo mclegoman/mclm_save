@@ -19,10 +19,10 @@ import java.util.*;
 public class StringHelper {
     private static final Map<String, StringVariable> variables = new HashMap<>();
     public static void addVariable(String namespace, String input, String output) {
-        addVariable(namespace + "_" + input, output, false);
+        addVariable(namespace + ":" + input, output, false);
     }
     public static void addVariable(String namespace, String input, String output, boolean replace) {
-        addVariable(namespace + "_" + input, output, replace);
+        addVariable(namespace + ":" + input, output, replace);
     }
     private static void addVariable(String input, String output) {
         addVariable(input, output, false);
@@ -31,10 +31,17 @@ public class StringHelper {
         if (!variables.containsKey(input) || replace) variables.put(input, new StringVariable("[" + input + "]", output));
         else Data.getVersion().sendToLog(LogType.WARN, input + " was already registered as a string variable!");
     }
+    public static void addUnderscoredSeperatedVariable(String namespace, String input, String output) {
+        addVariable(namespace + "_" + input, output, false);
+    }
+    public static void addUnderscoredSeperatedVariable(String namespace, String input, String output, boolean replace) {
+        addVariable(namespace + "_" + input, output, replace);
+    }
     public static void init() {
         addQuiltMods();
         // We need to replace the [minecraft_version] otherwise it becomes UNKNOWN.minecraft-client...
-        addVariable("minecraft", "version", Data.mcVersion, true);
+        addUnderscoredSeperatedVariable("minecraft", "version", Data.mcVersion, true);
+        addVariable(Data.getVersion().getID(), "return_to_game", "Press ESC to return to the game");
     }
     private static void addQuiltMods() {
         for (ModContainer modContainer : QuiltLoader.getAllMods()) addModVariables(modContainer.metadata().id());
@@ -45,15 +52,15 @@ public class StringHelper {
             // [modId]
             addVariable(modId, modContainer.get().metadata().name());
             // [modId]
-            addVariable(modId, "id", modContainer.get().metadata().id());
+            addUnderscoredSeperatedVariable(modId, "id", modContainer.get().metadata().id());
             // [modId_version]
-            addVariable(modId, "version", modContainer.get().metadata().version().raw());
+            addUnderscoredSeperatedVariable(modId, "version", modContainer.get().metadata().version().raw());
             // [modId_description]
-            addVariable(modId, "description", modContainer.get().metadata().description());
+            addUnderscoredSeperatedVariable(modId, "description", modContainer.get().metadata().description());
             StringBuilder licenses = new StringBuilder();
             for (ModLicense license : modContainer.get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
             // [modId_licenses]
-            addVariable(modId, "licenses", licenses.toString());
+            addUnderscoredSeperatedVariable(modId, "licenses", licenses.toString());
         }
     }
     public static List<ModContributor> getContributors(ModContainer modContainer) {

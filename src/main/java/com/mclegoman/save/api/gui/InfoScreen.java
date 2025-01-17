@@ -58,16 +58,16 @@ public class InfoScreen extends Screen {
 		Data.getVersion().sendToLog(this.type.equals(Type.ERROR) ? LogType.WARN : LogType.INFO, StringHelper.getFormattedString(status));
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, List<String> status, Type type, boolean canBeClosed, String extraInfoMessage) {
-		this(parentScreen, title, status, type, canBeClosed ? "Press ESC to return to the game" : "", extraInfoMessage);
+		this(parentScreen, title, status, type, canBeClosed ? "[save:return_to_game]" : "", extraInfoMessage);
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, List<String> status, Type type, boolean canBeClosed) {
-		this(parentScreen, title, status, type, canBeClosed ? "Press ESC to return to the game" : "", "");
+		this(parentScreen, title, status, type, canBeClosed ? "[save:return_to_game]" : "", "");
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, String status, Type type, boolean canBeClosed, String extraInfoMessage) {
-		this(parentScreen, title, status, type, canBeClosed ? "Press ESC to return to the game" : "", extraInfoMessage);
+		this(parentScreen, title, status, type, canBeClosed ? "[save:return_to_game]" : "", extraInfoMessage);
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, String status, Type type, boolean canBeClosed) {
-		this(parentScreen, title, status, type, canBeClosed ? "Press ESC to return to the game" : "", "");
+		this(parentScreen, title, status, type, canBeClosed ? "[save:return_to_game]" : "", "");
 	}
 	public void render(int i, int j, float f) {
 		if (this.type == Type.DIRT) {
