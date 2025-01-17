@@ -1,6 +1,6 @@
 /*
     mclm_save
-    Contributor(s): MCLegoMan
+    Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
 */
@@ -41,6 +41,7 @@ public class StringHelper {
         addQuiltMods();
         // We need to replace the [minecraft_version] otherwise it becomes UNKNOWN.minecraft-client...
         addUnderscoredSeperatedVariable("minecraft", "version", Data.mcVersion, true);
+        // [save:return_to_game]
         addVariable(Data.getVersion().getID(), "return_to_game", "Press ESC to return to the game");
     }
     private static void addQuiltMods() {
@@ -61,6 +62,8 @@ public class StringHelper {
             for (ModLicense license : modContainer.get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
             // [modId_licenses]
             addUnderscoredSeperatedVariable(modId, "licenses", licenses.toString());
+            // [modId_licences]
+            addUnderscoredSeperatedVariable(modId, "licences", licenses.toString());
         }
     }
     public static List<ModContributor> getContributors(ModContainer modContainer) {

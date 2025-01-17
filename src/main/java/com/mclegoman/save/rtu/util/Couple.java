@@ -1,6 +1,6 @@
 /*
     ReleaseTypeUtils
-    Contributor(s): MCLegoMan
+    Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/ReleaseTypeUtils
     Licence: CC0-1.0
 */
