@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -73,15 +73,12 @@ public class InfoScreen extends Screen {
 		if (this.type == Type.DIRT) {
 			if (Resources.minecraft != null) {
 				BufferBuilder var4 = BufferBuilder.INSTANCE;
-				int var5 = Resources.minecraft.f_9413506.load("/dirt.png");
-				int var8 = Resources.minecraft.f_0545414 * 240 / Resources.minecraft.f_5990000;
-				int var3 = Resources.minecraft.f_5990000 * 240 / Resources.minecraft.f_5990000;
-				GL11.glBindTexture(3553, var5);
+				GL11.glBindTexture(3553, Resources.minecraft.f_9413506.load("/dirt.png"));
 				var4.start();
 				var4.color(4210752);
-				var4.vertex(0.0F, (float) var3, 0.0F, 0.0F, (float) var3 / 32.0F);
-				var4.vertex((float) var8, (float) var3, 0.0F, (float) var8 / 32.0F, (float) var3 / 32.0F);
-				var4.vertex((float) var8, 0.0F, 0.0F, (float) var8 / 32.0F, 0.0F);
+				var4.vertex(0.0F, (float) this.height, 0.0F, 0.0F, (float) this.height / 32.0F);
+				var4.vertex((float) this.width, (float) this.height, 0.0F, (float) this.width / 32.0F, (float) this.height / 32.0F);
+				var4.vertex((float) this.width, 0.0F, 0.0F, (float) this.width / 32.0F, 0.0F);
 				var4.vertex(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 				var4.end();
 			} else {
@@ -91,18 +88,24 @@ public class InfoScreen extends Screen {
 		if (this.type == Type.ERROR) {
 			fillGradient(0, 0, this.width, this.height, -12574688, -11530224);
 		}
+		renderLogo();
 		int y = Math.max((this.height / 2) - ((this.status.size() * 11) / 2), 22);
-		drawCenteredString(this.textRenderer, StringHelper.getFormattedString(title), this.width / 2, y - 20, 0xFFAA00);
+		if (shouldRenderTitle()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(title), this.width / 2, y - 20, 0xFFAA00);
 		for (String string : this.status) {
 			drawCenteredString(this.textRenderer, StringHelper.getFormattedString(string), this.width / 2, y, 16777215);
 			y += 11;
 		}
-		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.canBeClosedMessage), this.width / 2, this.height - 20, 16777215);
-		if (this.extraInfoMessage != null && !this.extraInfoMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.extraInfoMessage), this.width / 2, this.height - 31, 16777215);
+		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.canBeClosedMessage), this.width / 2, this.height - 42, 16777215);
+		if (this.extraInfoMessage != null && !this.extraInfoMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.extraInfoMessage), this.width / 2, this.height - 53, 16777215);
 		renderModInfo();
 		super.render(i, j,f );
 	}
 	public void renderModInfo() {
+	}
+	public void renderLogo() {
+	}
+	public boolean shouldRenderTitle() {
+		return true;
 	}
 	public void keyPressed(char chr, int key) {
 		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) {

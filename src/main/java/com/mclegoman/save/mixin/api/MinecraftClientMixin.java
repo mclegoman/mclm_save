@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(C_5664496.class)
 public abstract class MinecraftClientMixin {
 	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GameGui;<init>(Lnet/minecraft/client/C_5664496;)V"))
-	private void mclm_save$init(CallbackInfo ci) {
+	private void save$init(CallbackInfo ci) {
 		EntrypointUtil.invoke(SaveModInit.key, SaveModInit.class, SaveModInit::init);
 	}
 	@Inject(method = "m_8832598", at = @At(value = "HEAD"))

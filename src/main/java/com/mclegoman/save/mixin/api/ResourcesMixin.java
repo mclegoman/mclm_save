@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ResourcesMixin {
 	@Shadow private C_5664496 f_6145320;
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
-	private void mclm_save$init(CallbackInfo ci) {
+	private void save$init(CallbackInfo ci) {
 		Resources.minecraft = this.f_6145320;
 	}
 }

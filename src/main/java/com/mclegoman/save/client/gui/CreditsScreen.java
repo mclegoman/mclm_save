@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -72,7 +72,7 @@ public class CreditsScreen extends Screen {
 		this.credits.add(new Couple<>("Special Thanks", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
 		this.credits.add(new Couple<>("bluecrab2", 0xFFFFFF));
-		this.credits.add(new Couple<>("Thank you for allowing us to include ClassicExplorer in mclm_save!", 0xAAAAAA));
+		this.credits.add(new Couple<>("Thank you for allowing us to include ClassicExplorer in Save!", 0xAAAAAA));
 	}
 	public final void render(int i, int j, float f) {
 		if (Resources.minecraft == null || Resources.minecraft.f_5854988 != null) fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);

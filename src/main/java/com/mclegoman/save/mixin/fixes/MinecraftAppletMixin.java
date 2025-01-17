@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -24,15 +24,15 @@ import java.net.URL;
 @Mixin(MinecraftApplet.class)
 public abstract class MinecraftAppletMixin {
 	@Redirect(method = "init", at = @At(value = "INVOKE", target = "Ljava/net/URL;getHost()Ljava/lang/String;"))
-	private String mclm_save$setProxy(URL instance) {
+	private String save$setProxy(URL instance) {
 		return SaveConfig.instance.proxyUrl.value();
 	}
 	@Redirect(method = "init", at = @At(value = "INVOKE", target = "Ljava/net/URL;getPort()I"))
-	private int mclm_save$setProxyPort(URL instance) {
+	private int save$setProxyPort(URL instance) {
 		return SaveConfig.instance.proxyPort.value();
 	}
 	@Inject(method = "stop", at = @At(value = "HEAD"))
-	private void mclm_save$stop(CallbackInfo ci) {
+	private void save$stop(CallbackInfo ci) {
 		if (SaveConfig.instance.logErrorCatching.value()) Data.getVersion().sendToLog(LogType.INFO, "Forcing the game to close.");
 		Data.exit(0);
 	}

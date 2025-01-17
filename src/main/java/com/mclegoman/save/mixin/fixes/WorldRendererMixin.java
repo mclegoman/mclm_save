@@ -1,5 +1,5 @@
 /*
-    mclm_save
+    Save
     Contributor(s): dannytaylor
     Github: https://github.com/MCLegoMan/mclm_save
     Licence: GNU LGPLv3
@@ -69,7 +69,7 @@ public abstract class WorldRendererMixin {
 	@Shadow private int ticks;
 
 	@Inject(method = "m_6748042", at = @At(value = "HEAD"), cancellable = true)
-	private void mclm_save$m_6748042(CallbackInfo ci) {
+	private void save$m_6748042(CallbackInfo ci) {
 		try {
 			this.viewDistance = this.minecraft.f_9967940.f_7110074;
 			int var1;
@@ -134,7 +134,7 @@ public abstract class WorldRendererMixin {
 	}
 
 	@Inject(method = "render(Lnet/minecraft/entity/living/player/PlayerEntity;ID)I", at = @At(value = "HEAD"), cancellable = true)
-	public void mclm_save$render(PlayerEntity playerEntity, int i, double d, CallbackInfoReturnable<Integer> cir) {
+	public void save$render(PlayerEntity playerEntity, int i, double d, CallbackInfoReturnable<Integer> cir) {
 		try {
 			if (this.minecraft.f_9967940.f_7110074 != this.viewDistance) {
 				this.m_6748042();
@@ -244,7 +244,7 @@ public abstract class WorldRendererMixin {
 	}
 
 	@Inject(method = "m_8580944", at = @At("HEAD"), cancellable = true)
-	public void mclm_save$m_8580944(PlayerEntity playerEntity, CallbackInfo ci) {
+	public void save$m_8580944(PlayerEntity playerEntity, CallbackInfo ci) {
 		try {
 			Collections.sort(this.pendingChunks, new PendingChunkComparator(playerEntity));
 			int var2 = this.pendingChunks.size() - 1;
