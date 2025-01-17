@@ -7,9 +7,16 @@
 		"api.MinecraftClientMixin",
 		"api.ResourcesMixin",
 		"entity.EntityMixin",
+		"entity.InputPlayerEntityMixin",
 		"entity.LivingEntityMixin",
+		"entity.PigEntityMixin",
 		"entity.PlayerEntityMixin",
+		"entity.SheepEntityMixin",
+		"entity.block.BlockEntityMixin",
+		"entity.block.ChestBlockEntityMixin",
+		"entity.block.FurnaceBlockEntityMixin",
 		"fixes.MinecraftAppletMixin",
+		"fixes.WorldMixin",
 		"fixes.WorldRendererMixin",
 		"gui.GameGuiMixin",
 		"gui.GameMenuScreenMixin",
@@ -22,10 +29,6 @@
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"entity.InputPlayerEntityMixin",
-		"entity.block.BlockEntityMixin",
-		"entity.block.ChestBlockEntityMixin",
-		"entity.block.FurnaceBlockEntityMixin",
-		"fixes.WorldMixin"
+		"gui.DeathScreenMixin"
 	]
 }

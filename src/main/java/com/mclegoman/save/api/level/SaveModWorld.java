@@ -6,9 +6,12 @@ import com.mclegoman.save.api.nbt.NbtCompound;
 import com.mclegoman.save.api.nbt.NbtList;
 import com.mclegoman.save.common.data.Data;
 import com.mclegoman.save.common.util.SaveHelper;
+import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.rtu.util.LogType;
+import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
@@ -21,11 +24,13 @@ public class SaveModWorld extends World {
 	private NbtCompound f_4300305;
 	private long seed = 0L;
 	public long sizeOnDisk = 0L;
+	private boolean isNewWorld;
 	public SaveModWorld(File file, String string) {
 		file.mkdirs();
 		this.dir = new File(file, string);
 		this.dir.mkdirs();
 		File levelFile = new File(this.dir, "level.dat");
+		this.isNewWorld = !levelFile.exists() && SaveConfig.instance.starterItems.value();
 		if (levelFile.exists()) {
 			try {
 				NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(levelFile.toPath())).getCompound("Data");
@@ -80,6 +85,29 @@ public class SaveModWorld extends World {
 			((SaveModEntity)this.f_6053391).save$readEntityNbt(this.f_4300305);
 			this.f_4300305 = null;
 		}
+		if (this.isNewWorld) {
+			// When generating a world using vanilla, these items would be added to your hotbar. I couldn't find the function that added them, so i made it myself.
+			Integer[] itemIds = new Integer[]{
+					Item.DIAMOND_AXE.id,
+					Item.DIAMOND_SHOVEL.id,
+					Item.DIAMOND_PICKAXE.id,
+					Block.TORCH.id,
+					Item.FLINT_AND_STEEL.id,
+					Block.TNT.id,
+					Block.GLASS.id,
+					Item.BOW.id,
+					Item.ARROW.id
+			};
+			int index = 0;
+			for (Integer id : itemIds) {
+				((PlayerEntity) this.f_6053391).inventory.inventorySlots[index] = new ItemStack(id, 64);
+				index++;
+			}
+			this.isNewWorld = false;
+		}
+	}
+	public final void removePlayer() {
+		this.entities.remove(this.f_6053391);
 	}
 	private void save(boolean bl) {
 		File level = new File(this.dir, "level.dat");

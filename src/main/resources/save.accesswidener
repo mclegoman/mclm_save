@@ -25,3 +25,4 @@ accessible field net/minecraft/world/chunk/WorldChunk heightMap [B
 accessible field net/minecraft/world/chunk/WorldChunk blockEntities Ljava/util/Map;
 accessible field net/minecraft/world/chunk/ChunkNibbleStorage data [B
 accessible field net/minecraft/world/World ticks I
+accessible field net/minecraft/world/World entities Ljava/util/List;

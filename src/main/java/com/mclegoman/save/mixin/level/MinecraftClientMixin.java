@@ -88,4 +88,24 @@ public abstract class MinecraftClientMixin implements SaveModMinecraft {
 			for (int b = -256; b <= 256; b += 16) this.f_5854988.m_9893076(x + chunk, 64, z + b);
 		}
 	}
+	public void save$respawn() {
+		if (this.f_5854988 != null) {
+			((SaveModWorld)this.f_5854988).removePlayer();
+			this.f_6058446 = null;
+			this.f_5854988.f_6053391 = null;
+
+			this.f_6058446 = new InputPlayerEntity(save$getInstance(), this.f_5854988, this.f_2424468);
+			this.f_6058446.postSpawn();
+			if (this.f_5854988 != null) {
+				this.f_5854988.addEntity(this.f_6058446);
+				this.f_5854988.f_6053391 = this.f_6058446;
+				((SaveModWorld)this.f_5854988).addPlayer();
+			}
+			this.f_6058446.input = new GameInput(this.f_9967940);
+			this.f_1273243.spawn(this.f_6058446);
+			if (this.f_4021716 != null) this.f_4021716.setWorld(this.f_5854988);
+			if (this.f_9322491 != null) this.f_9322491.setWorld(this.f_5854988);
+			save$load();
+		}
+	}
 }

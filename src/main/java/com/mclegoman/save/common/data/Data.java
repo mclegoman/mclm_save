@@ -9,7 +9,6 @@ package com.mclegoman.save.common.data;
 
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.rtu.versioning.Version;
-import com.mclegoman.save.config.SaveConfig;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
@@ -27,13 +26,6 @@ public class Data {
 	}
 	public static void exit(int status) {
 		version.sendToLog(LogType.INFO, "Halting with status code: " + status + "!");
-		if (SaveConfig.instance.saveWorldOnExit.value()) {
-			try {
-				//new World().save(ClientData.minecraft.f_5854988, new File(QuiltLoader.getGameDir() + (QuiltLoader.getGameDir().endsWith("/") ? "" : "/") + "level.mclevel"));
-			} catch (Exception error) {
-				Data.getVersion().sendToLog(LogType.WARN, "Failed to save world on exit: " + error);
-			}
-		}
 		Thread.currentThread().interrupt();
 		if (Mouse.isCreated()) Mouse.destroy();
 		if (Keyboard.isCreated()) Keyboard.destroy();

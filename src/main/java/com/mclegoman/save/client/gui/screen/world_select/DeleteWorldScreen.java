@@ -13,7 +13,7 @@ public class DeleteWorldScreen extends SelectWorldScreen {
 	}
 
 	public void m_7555169() {
-		this.buttons.add(new ButtonWidget(7, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
+		this.buttons.add(new ButtonWidget(8, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
 	public boolean isWorldButtonsActive() {
 		return false;
@@ -21,7 +21,7 @@ public class DeleteWorldScreen extends SelectWorldScreen {
 	public void loadWorld(int i) {
 		if (this.getWorldName(i) != null) {
 			this.minecraft.m_6408915(new ConfirmScreen(this, "Are you sure you want to delete this world?", "'" + this.getWorldName(i) + "' will be lost forever!", i));
-		} else System.out.println(":DarknessWhat: " + i);
+		}
 	}
 
 	public void save$confirmResult(boolean value, int i) {

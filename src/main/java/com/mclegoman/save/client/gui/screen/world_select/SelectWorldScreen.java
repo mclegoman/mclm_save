@@ -3,10 +3,13 @@ package com.mclegoman.save.client.gui.screen.world_select;
 import com.mclegoman.save.api.level.SaveModMinecraft;
 import com.mclegoman.save.api.level.SaveModWorld;
 import com.mclegoman.save.api.nbt.NbtCompound;
+import com.mclegoman.save.common.data.Data;
 import com.mclegoman.save.common.util.SaveHelper;
+import com.mclegoman.save.rtu.util.LogType;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 
+import java.awt.*;
 import java.io.File;
 
 public class SelectWorldScreen extends Screen {
@@ -51,7 +54,8 @@ public class SelectWorldScreen extends Screen {
 		ButtonWidget convert = new com.mclegoman.save.api.gui.widget.ButtonWidget(6, this.width / 2 + 2, this.height / 6 + 120 + 12, 98, 20, "Convert...");
 		convert.active = false;
 		this.buttons.add(convert);
-		this.buttons.add(new ButtonWidget(7, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
+		this.buttons.add(new com.mclegoman.save.api.gui.widget.ButtonWidget(7, this.width / 2 + 102, this.height / 6 + 120 + 12, 20, 20, "..."));
+		this.buttons.add(new ButtonWidget(8, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
 
 	public void buttonClicked(ButtonWidget buttonWidget) {
@@ -65,6 +69,13 @@ public class SelectWorldScreen extends Screen {
 			} else if (buttonWidget.id == 6) {
 				this.minecraft.m_6408915(new ConvertWorldScreen(this));
 			} else if (buttonWidget.id == 7) {
+				try {
+					Desktop.getDesktop().open(SaveHelper.getSavesDir());
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
+					buttonWidget.active = false;
+				}
+			} else if (buttonWidget.id == 8) {
 				this.minecraft.m_6408915(this.parent);
 			}
 		}

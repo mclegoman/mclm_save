@@ -30,9 +30,10 @@ public class ConfigScreen extends Screen {
 		this.buttons.add(new ButtonWidget(0, this.width / 2 - 150, getY(0), 300, 20, "Force April Fools: " + SaveConfig.instance.forceAprilFools.value()));
 		this.buttons.add(new ButtonWidget(1, this.width / 2 - 150, getY(1), 300, 20, "Dialog Theme: " + SaveConfig.instance.dialogTheme.value().getName()));
 		this.buttons.add(new ButtonWidget(2, this.width / 2 - 150, getY(2), 300, 20, "Prevent Flower Drop: " + SaveConfig.instance.shouldDisableFlowerItems.value()));
-		this.buttons.add(new ButtonWidget(3, this.width / 2 - 100, this.height / 6 + 144, 200, 20, "Credits and Attribution"));
-		this.buttons.add(new ButtonWidget(4, this.width / 2 - 100, this.height / 6 + 168, 98, 20, "Reset to Default"));
-		this.buttons.add(new ButtonWidget(5, this.width / 2 + 2, this.height / 6 + 168, 98, 20, "Done"));
+		this.buttons.add(new ButtonWidget(3, this.width / 2 - 150, getY(3), 300, 20, "Starter Items: " + SaveConfig.instance.starterItems.value()));
+		this.buttons.add(new ButtonWidget(10, this.width / 2 - 100, this.height / 6 + 144, 200, 20, "Credits and Attribution"));
+		this.buttons.add(new ButtonWidget(11, this.width / 2 - 100, this.height / 6 + 168, 98, 20, "Reset to Default"));
+		this.buttons.add(new ButtonWidget(12, this.width / 2 + 2, this.height / 6 + 168, 98, 20, "Done"));
 	}
 
 	protected void buttonClicked(net.minecraft.client.gui.widget.ButtonWidget button) {
@@ -78,14 +79,19 @@ public class ConfigScreen extends Screen {
 				init();
 			}
 			if (button.id == 3) {
+				SaveConfig.instance.starterItems.setValue(!SaveConfig.instance.starterItems.value());
+				buttons.clear();
+				init();
+			}
+			if (button.id == 10) {
 				if (Resources.minecraft != null) Resources.minecraft.m_6408915(new CreditsScreen(new ConfigScreen(this.parent)));
 			}
-			if (button.id == 4) {
+			if (button.id == 11) {
 				reset();
 				buttons.clear();
 				init();
 			}
-			if (button.id == 5) {
+			if (button.id == 12) {
 				SaveConfig.instance.save();
 				if (Resources.minecraft != null) Resources.minecraft.m_6408915(this.parent);
 			}

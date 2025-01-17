@@ -11,4 +11,5 @@ public interface SaveModMinecraft {
 	void save$save();
 	void save$set(SaveModWorld world);
 	void save$load();
+	void save$respawn();
 }

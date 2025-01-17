@@ -128,7 +128,7 @@ public abstract class WorldRendererMixin {
 			this.updateRenderBoundaries(MathHelper.floor(var6.x), MathHelper.floor(var6.y), MathHelper.floor(var6.z));
 			Arrays.sort(this.compiledChunks, new CompiledChunkComparator(var6));
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
+			if (SaveConfig.instance.debug.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		ci.cancel();
 	}
@@ -238,7 +238,7 @@ public abstract class WorldRendererMixin {
 			}
 			cir.setReturnValue(var21);
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
+			if (SaveConfig.instance.debug.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		cir.setReturnValue(16);
 	}
@@ -261,7 +261,7 @@ public abstract class WorldRendererMixin {
 				var5.dirty = false;
 			}
 		} catch (Exception error) {
-			if (SaveConfig.instance.logErrorCatching.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
+			if (SaveConfig.instance.debug.value()) Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		ci.cancel();
 	}

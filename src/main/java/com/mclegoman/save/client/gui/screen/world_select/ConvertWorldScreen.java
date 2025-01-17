@@ -13,7 +13,7 @@ public class ConvertWorldScreen extends SelectWorldScreen {
 	}
 
 	public void m_7555169() {
-		this.buttons.add(new ButtonWidget(7, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
+		this.buttons.add(new ButtonWidget(8, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
 
 	public void loadWorld(int i) {
