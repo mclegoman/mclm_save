@@ -26,6 +26,6 @@ public abstract class GameGuiMixin {
 	}
 	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/TextRenderer;drawWithShadow(Ljava/lang/String;III)V", ordinal = 0))
 	private String save$version_showfps(String text) {
-		return AprilFools.getVersionString(text) + " (" + this.minecraft.f_0489718 + ")";
+		return AprilFools.isAprilFools() ? AprilFools.getVersionString(text) + " (" + this.minecraft.f_0489718 + ")" : text;
 	}
 }
