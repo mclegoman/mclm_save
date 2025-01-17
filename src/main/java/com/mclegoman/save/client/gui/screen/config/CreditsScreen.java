@@ -5,10 +5,9 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.client.gui;
+package com.mclegoman.save.client.gui.screen.config;
 
 import com.mclegoman.save.api.util.StringHelper;
-import com.mclegoman.save.common.data.Data;
 import com.mclegoman.save.rtu.util.Couple;
 import com.mclegoman.save.api.data.Resources;
 import com.mojang.blaze3d.vertex.BufferBuilder;

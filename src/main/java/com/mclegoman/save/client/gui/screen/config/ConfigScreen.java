@@ -5,9 +5,10 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.client.gui;
+package com.mclegoman.save.client.gui.screen.config;
 
 import com.mclegoman.save.api.data.Resources;
+import com.mclegoman.save.api.gui.widget.ButtonWidget;
 import com.mclegoman.save.api.util.StringHelper;
 import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.config.Theme;

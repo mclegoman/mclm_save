@@ -5,9 +5,9 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.client.gui;
+package com.mclegoman.save.client.gui.screen;
 
-import com.mclegoman.save.api.gui.InfoScreen;
+import com.mclegoman.save.api.gui.screen.InfoScreen;
 import com.mclegoman.save.api.util.StringHelper;
 import com.mclegoman.save.common.data.Data;
 import com.mclegoman.save.config.SaveConfig;
@@ -54,7 +54,7 @@ public final class SaveInfoScreen extends InfoScreen {
 		this.drawTexture((this.width - 256) / 2, 22, 0, 0, 256, 64);
 
 		GL11.glPushMatrix();
-		GL11.glTranslatef((float)(this.width / 2 + 32), 82.0F, 0.0F);
+		GL11.glTranslatef((float)(this.width / 2 + 32), 70.0F, 0.0F);
 		GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
 		float scale;
 		GL11.glScalef(scale = (1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * 3.1415927F * 2.0F) * 0.1F)) * 100.0F / (float)(this.textRenderer.getWidth(StringHelper.getFormattedString(title)) + 32), scale, scale);

@@ -8,6 +8,8 @@
 		"api.ResourcesMixin",
 		"client.GameGuiMixin",
 		"client.OptionsScreenMixin",
+		"client.ScreenMixin",
+		"client.TitleScreenMixin",
 		"fixes.MinecraftAppletMixin",
 		"fixes.WorldRendererMixin"
 	],
@@ -15,6 +17,6 @@
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"client.TitleScreenMixin"
+		"client.GameMenuScreenMixin"
 	]
 }

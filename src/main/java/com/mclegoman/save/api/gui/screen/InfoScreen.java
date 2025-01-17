@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.api.gui;
+package com.mclegoman.save.api.gui.screen;
 
 import com.mclegoman.save.api.util.StringHelper;
 import com.mclegoman.save.rtu.util.LogType;
@@ -109,10 +109,7 @@ public class InfoScreen extends Screen {
 	}
 	public void keyPressed(char chr, int key) {
 		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) {
-			if (key == 1) {
-				Resources.minecraft.m_6408915(this.parentScreen);
-				Resources.minecraft.m_5690108();
-			}
+			if (key == 1) Resources.minecraft.m_6408915(this.parentScreen);
 		}
 	}
 	public enum Type {

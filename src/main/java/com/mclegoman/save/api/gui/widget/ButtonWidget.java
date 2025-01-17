@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.client.gui;
+package com.mclegoman.save.api.gui.widget;
 
 import com.mclegoman.save.api.util.StringHelper;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
