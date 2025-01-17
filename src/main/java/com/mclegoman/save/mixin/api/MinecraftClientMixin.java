@@ -32,7 +32,7 @@ public abstract class MinecraftClientMixin {
 			try {
 				tickable.run((C_5664496) (Object)this);
 			} catch (Exception error) {
-				Data.version.sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at start tick, removing from registry:" + error.getLocalizedMessage());
+				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at start tick, removing from registry:" + error.getLocalizedMessage());
 				TickEvents.getStartRegistry().remove(identifer);
 			}
 		});
@@ -43,7 +43,7 @@ public abstract class MinecraftClientMixin {
 			try {
 				tickable.run((C_5664496) (Object)this);
 			} catch (Exception error) {
-				Data.version.sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at end tick, removing from registry:" + error.getLocalizedMessage());
+				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at end tick, removing from registry:" + error.getLocalizedMessage());
 				TickEvents.getEndRegistry().remove(identifer);
 			}
 		});

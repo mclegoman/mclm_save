@@ -17,7 +17,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class SaveConfig extends ReflectiveConfig {
-	public static final SaveConfig instance = QuiltConfig.create(Data.version.getID(), Data.version.getID(), SaveConfig.class);
+	public static final SaveConfig instance = QuiltConfig.create(Data.getVersion().getID(), Data.getVersion().getID(), SaveConfig.class);
 	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")
 	public final TrackedValue<Boolean> skipSaveLoadScreen = this.value(true);
 	@Comment("When set to true, the game will think it's always april fools'.")

@@ -39,9 +39,9 @@ public final class SaveInfoScreen extends InfoScreen {
 	}
 	@Override
 	public void renderModInfo() {
-		if (Data.version.isDevelopmentBuild() || SaveConfig.instance.debug.value()) {
-			textRenderer.drawWithShadow(StringHelper.getFormattedString("[save] [save_version] ([minecraft_version])"), 2, this.height - (Data.version.isDevelopmentBuild() ? 23 : 12), 16777215);
-			if (Data.version.isDevelopmentBuild()) textRenderer.drawWithShadow(StringHelper.getFormattedString("Development Build"), 2, this.height - 12, 0xFFAA00);
+		if (Data.getVersion().isDevelopmentBuild() || SaveConfig.instance.debug.value()) {
+			textRenderer.drawWithShadow(StringHelper.getFormattedString("[save] [save_version] ([minecraft_version])"), 2, this.height - (Data.getVersion().isDevelopmentBuild() ? 23 : 12), 16777215);
+			if (Data.getVersion().isDevelopmentBuild()) textRenderer.drawWithShadow(StringHelper.getFormattedString("Development Build"), 2, this.height - 12, 0xFFAA00);
 		}
 	}
 }

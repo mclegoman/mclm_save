@@ -19,14 +19,19 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 public class Data {
 	public static String mcVersion = "inf-20100325-2";
-	public static Version version = Version.parse(QuiltLoader.getModContainer("save").get().metadata());
+	private static Version version;
+	public static Version getVersion() {
+		if (version == null) QuiltLoader.getModContainer("save").ifPresent(container -> version = Version.parse(container.metadata()));
+		if (version != null) return version;
+		else throw new NullPointerException("save mod can't find it's own version. send help!");
+	}
 	public static void exit(int status) {
 		version.sendToLog(LogType.INFO, "Halting with status code: " + status + "!");
 		if (SaveConfig.instance.saveWorldOnExit.value()) {
 			try {
 				//new World().save(ClientData.minecraft.f_5854988, new File(QuiltLoader.getGameDir() + (QuiltLoader.getGameDir().endsWith("/") ? "" : "/") + "level.mclevel"));
 			} catch (Exception error) {
-				Data.version.sendToLog(LogType.WARN, "Failed to save world on exit: " + error);
+				Data.getVersion().sendToLog(LogType.WARN, "Failed to save world on exit: " + error);
 			}
 		}
 		Thread.currentThread().interrupt();

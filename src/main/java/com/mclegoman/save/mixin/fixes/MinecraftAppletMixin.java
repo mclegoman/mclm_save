@@ -33,7 +33,7 @@ public abstract class MinecraftAppletMixin {
 	}
 	@Inject(method = "stop", at = @At(value = "HEAD"))
 	private void mclm_save$stop(CallbackInfo ci) {
-		if (SaveConfig.instance.logErrorCatching.value()) Data.version.sendToLog(LogType.INFO, "Forcing the game to close.");
+		if (SaveConfig.instance.logErrorCatching.value()) Data.getVersion().sendToLog(LogType.INFO, "Forcing the game to close.");
 		Data.exit(0);
 	}
 }

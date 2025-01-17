@@ -29,7 +29,7 @@ public class StringHelper {
     }
     private static void addVariable(String input, String output, boolean replace) {
         if (!variables.containsKey(input) || replace) variables.put(input, new StringVariable("[" + input + "]", output));
-        else Data.version.sendToLog(LogType.WARN, input + " was already registered as a string variable!");
+        else Data.getVersion().sendToLog(LogType.WARN, input + " was already registered as a string variable!");
     }
     public static void init() {
         addQuiltMods();
@@ -60,7 +60,7 @@ public class StringHelper {
 	    return new ArrayList<>(modContainer.metadata().contributors());
     }
     public static List<String> getFormattedContributors() {
-        Optional<ModContainer> modContainer = Data.version.getModContainer();
+        Optional<ModContainer> modContainer = Data.getVersion().getModContainer();
         return modContainer.map(StringHelper::getFormattedContributors).orElseGet(ArrayList::new);
     }
     public static List<String> getFormattedContributors(ModContainer modContainer) {

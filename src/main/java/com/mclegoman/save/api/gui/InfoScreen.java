@@ -35,7 +35,7 @@ public class InfoScreen extends Screen {
 		this.canBeClosedMessage = canBeClosedMessage;
 		this.extraInfoMessage = extraInfoMessage;
 		this.parentScreen = parentScreen;
-		for (String message : status) Data.version.sendToLog(this.type.equals(Type.ERROR) ? LogType.WARN : LogType.INFO, StringHelper.getFormattedString(message));
+		for (String message : status) Data.getVersion().sendToLog(this.type.equals(Type.ERROR) ? LogType.WARN : LogType.INFO, StringHelper.getFormattedString(message));
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, String status, Type type, String canBeClosedMessage, String extraInfoMessage) {
 		this.title = title;
@@ -55,7 +55,7 @@ public class InfoScreen extends Screen {
 		this.canBeClosedMessage = canBeClosedMessage;
 		this.extraInfoMessage = extraInfoMessage;
 		this.parentScreen = parentScreen;
-		Data.version.sendToLog(this.type.equals(Type.ERROR) ? LogType.WARN : LogType.INFO, StringHelper.getFormattedString(status));
+		Data.getVersion().sendToLog(this.type.equals(Type.ERROR) ? LogType.WARN : LogType.INFO, StringHelper.getFormattedString(status));
 	}
 	public InfoScreen(@Nullable Screen parentScreen, String title, List<String> status, Type type, boolean canBeClosed, String extraInfoMessage) {
 		this(parentScreen, title, status, type, canBeClosed ? "Press ESC to return to the game" : "", extraInfoMessage);
@@ -97,15 +97,15 @@ public class InfoScreen extends Screen {
 			drawCenteredString(this.textRenderer, StringHelper.getFormattedString(string), this.width / 2, y, 16777215);
 			y += 11;
 		}
-		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.equals("")) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.canBeClosedMessage), this.width / 2, this.height - 20, 16777215);
-		if (this.extraInfoMessage != null && !this.extraInfoMessage.equals("")) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.extraInfoMessage), this.width / 2, this.height - 31, 16777215);
+		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.canBeClosedMessage), this.width / 2, this.height - 20, 16777215);
+		if (this.extraInfoMessage != null && !this.extraInfoMessage.isEmpty()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString(this.extraInfoMessage), this.width / 2, this.height - 31, 16777215);
 		renderModInfo();
 		super.render(i, j,f );
 	}
 	public void renderModInfo() {
 	}
 	public void keyPressed(char chr, int key) {
-		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.equals("")) {
+		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) {
 			if (key == 1) {
 				Resources.minecraft.m_6408915(this.parentScreen);
 				Resources.minecraft.m_5690108();
