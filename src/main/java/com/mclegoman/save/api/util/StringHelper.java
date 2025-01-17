@@ -32,10 +32,12 @@ public class StringHelper {
         else Data.version.sendToLog(LogType.WARN, input + " was already registered as a string variable!");
     }
     public static void init() {
-        addModVariables("minecraft");
+        addQuiltMods();
         // We need to replace the [minecraft_version] otherwise it becomes UNKNOWN.minecraft-client...
         addVariable("minecraft", "version", Data.mcVersion, true);
-        addModVariables("save");
+    }
+    private static void addQuiltMods() {
+        for (ModContainer modContainer : QuiltLoader.getAllMods()) addModVariables(modContainer.metadata().id());
     }
     public static void addModVariables(String modId) {
         Optional<ModContainer> modContainer = QuiltLoader.getModContainer(modId);
@@ -51,19 +53,19 @@ public class StringHelper {
             StringBuilder licenses = new StringBuilder();
             for (ModLicense license : modContainer.get().metadata().licenses()) licenses.append((licenses.length() == 0) ? "" : ", ").append(license.id());
             // [modId_licenses]
-            addVariable("save", "licenses", licenses.toString());
+            addVariable(modId, "licenses", licenses.toString());
         }
     }
-    public static List<ModContributor> getContributors() {
-        List<ModContributor> contributors = new ArrayList<>();
-        if (Data.version.getModContainer().isPresent()) {
-            for (ModContributor person : Data.version.getModContainer().get().metadata().contributors()) contributors.add(person);
-        }
-        return contributors;
+    public static List<ModContributor> getContributors(ModContainer modContainer) {
+	    return new ArrayList<>(modContainer.metadata().contributors());
     }
     public static List<String> getFormattedContributors() {
+        Optional<ModContainer> modContainer = Data.version.getModContainer();
+        return modContainer.map(StringHelper::getFormattedContributors).orElseGet(ArrayList::new);
+    }
+    public static List<String> getFormattedContributors(ModContainer modContainer) {
         List<String> contributors = new ArrayList<>();
-        for (ModContributor person : getContributors()) {
+        for (ModContributor person : getContributors(modContainer)) {
             StringBuilder data = new StringBuilder();
             for (String role : person.roles()) data.append((data.length() == 0) ? "" : ", ").append(role);
             contributors.add(person.name() + " (" + data + ")");

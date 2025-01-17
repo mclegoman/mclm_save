@@ -8,6 +8,7 @@
 package com.mclegoman.save.client.gui;
 
 import com.mclegoman.save.api.util.StringHelper;
+import com.mclegoman.save.common.data.Data;
 import com.mclegoman.save.rtu.util.Couple;
 import com.mclegoman.save.api.data.Resources;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -31,7 +32,7 @@ public class CreditsScreen extends Screen {
 		this.credits.add(new Couple<>("[save]", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
 		this.credits.add(new Couple<>("[save_description]", 0xAAAAAA));
-		this.credits.add(new Couple<>("Authors:", 0xAAAAAA));
+		this.credits.add(new Couple<>("Contributors:", 0xAAAAAA));
 		for (String contributor : StringHelper.getFormattedContributors()) this.credits.add(new Couple<>(contributor, 0xAAAAAA));
 		this.credits.add(new Couple<>("Licence: [save_licenses]", 0xAAAAAA));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
