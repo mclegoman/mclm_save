@@ -153,6 +153,15 @@ public class SaveModWorld extends World {
 		nbtCompound.putByteArray("SkyLight", worldChunk.skyLight.data);
 		nbtCompound.putByteArray("BlockLight", worldChunk.blockLight.data);
 		nbtCompound.putByteArray("HeightMap", worldChunk.heightMap);
+
+		// Entities aren't saved in the next vanilla infdev, so we don't save them.
+		// If it's wanted at some stage, we could add a config option for entity saving.
+		// ((SaveModEntity)entity).save$writeEntityNbt(new NbtCompound());
+		// The following entities will need to be updated with read/write customNbt functions and id's if this does end up happening:
+		// HostileEntity, ZombieEntity, SkeletonEntity, GiantEntity, SpiderEntity, CreeperEntity, ItemEntity, PrimedTntEntity, ArrowEntity.
+
+
+		// Tile entities on the other hand are saved.
 		NbtList tileEntities = new NbtList();
 
 		for (Object blockEntityObject : worldChunk.blockEntities.values()) {
