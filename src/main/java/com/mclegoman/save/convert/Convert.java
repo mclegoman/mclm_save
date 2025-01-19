@@ -54,11 +54,11 @@ public class Convert {
 	}
 	public static void convertClassic(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		// TODO: Actually Convert.
-		done(minecraft, parent, worldName);
+		error(minecraft, parent, "Converter is not yet ready!");
 	}
 	public static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		// TODO: Actually Convert.
-		done(minecraft, parent, worldName);
+		error(minecraft, parent, "Converter is not yet ready!");
 	}
 	public static void done(C_5664496 minecraft, Screen parent, String worldName) {
 		minecraft.m_6408915(new SaveInfoScreen(parent, "Convert World", "Successfully converted world to '" + worldName + "'!", InfoScreen.Type.DIRT, true));
