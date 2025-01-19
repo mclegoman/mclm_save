@@ -7,8 +7,8 @@
 
 package com.mclegoman.save.mixin.gui;
 
-import com.mclegoman.save.api.level.SaveModMinecraft;
-import com.mclegoman.save.client.gui.screen.world_select.SelectWorldScreen;
+import com.mclegoman.save.level.SaveModMinecraft;
+import com.mclegoman.save.gui.screen.world_select.SelectWorldScreen;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;

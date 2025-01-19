@@ -7,9 +7,9 @@
 
 package com.mclegoman.save.mixin.entity.block;
 
-import com.mclegoman.save.api.entity.SaveModBlockEntity;
-import com.mclegoman.save.api.nbt.NbtCompound;
-import com.mclegoman.save.common.util.SaveHelper;
+import com.mclegoman.save.entity.SaveModBlockEntity;
+import com.mclegoman.save.nbt.NbtCompound;
+import com.mclegoman.save.util.SaveHelper;
 import net.minecraft.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

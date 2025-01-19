@@ -10,7 +10,7 @@ package com.mclegoman.save.mixin.api;
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
 import com.mclegoman.save.api.event.tick.TickEvents;
-import com.mclegoman.save.common.data.Data;
+import com.mclegoman.save.data.Data;
 import net.minecraft.client.C_5664496;
 import org.quiltmc.loader.api.entrypoint.EntrypointUtil;
 import org.quiltmc.loader.api.minecraft.ClientOnly;

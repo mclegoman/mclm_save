@@ -7,10 +7,9 @@
 
 package com.mclegoman.save.api.gui.screen;
 
-import com.mclegoman.save.api.util.StringHelper;
+import com.mclegoman.save.util.StringHelper;
 import com.mclegoman.save.rtu.util.LogType;
-import com.mclegoman.save.api.data.Resources;
-import com.mclegoman.save.common.data.Data;
+import com.mclegoman.save.data.Data;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -71,9 +70,9 @@ public class InfoScreen extends Screen {
 	}
 	public void render(int i, int j, float f) {
 		if (this.type == Type.DIRT) {
-			if (Resources.minecraft != null) {
+			if (Data.Resources.minecraft != null) {
 				BufferBuilder var4 = BufferBuilder.INSTANCE;
-				GL11.glBindTexture(3553, Resources.minecraft.f_9413506.load("/dirt.png"));
+				GL11.glBindTexture(3553, Data.Resources.minecraft.f_9413506.load("/dirt.png"));
 				var4.start();
 				var4.color(4210752);
 				var4.vertex(0.0F, (float) this.height, 0.0F, 0.0F, (float) this.height / 32.0F);
@@ -109,7 +108,7 @@ public class InfoScreen extends Screen {
 	}
 	public void keyPressed(char chr, int key) {
 		if (this.canBeClosedMessage != null && !this.canBeClosedMessage.isEmpty()) {
-			if (key == 1) Resources.minecraft.m_6408915(this.parentScreen);
+			if (key == 1) Data.Resources.minecraft.m_6408915(this.parentScreen);
 		}
 	}
 	public enum Type {

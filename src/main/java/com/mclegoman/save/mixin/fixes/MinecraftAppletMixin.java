@@ -8,7 +8,7 @@
 package com.mclegoman.save.mixin.fixes;
 
 import com.mclegoman.save.rtu.util.LogType;
-import com.mclegoman.save.common.data.Data;
+import com.mclegoman.save.data.Data;
 import com.mclegoman.save.config.SaveConfig;
 import net.minecraft.client.MinecraftApplet;
 import org.quiltmc.loader.api.minecraft.ClientOnly;

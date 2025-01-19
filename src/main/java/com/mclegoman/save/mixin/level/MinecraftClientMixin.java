@@ -8,11 +8,11 @@
 package com.mclegoman.save.mixin.level;
 
 import com.mclegoman.save.api.gui.screen.InfoScreen;
-import com.mclegoman.save.api.level.SaveModMinecraft;
-import com.mclegoman.save.api.level.SaveModWorld;
-import com.mclegoman.save.client.gui.screen.SaveInfoScreen;
-import com.mclegoman.save.common.data.Data;
-import com.mclegoman.save.common.util.SaveHelper;
+import com.mclegoman.save.level.SaveModMinecraft;
+import com.mclegoman.save.level.SaveModWorld;
+import com.mclegoman.save.gui.screen.SaveInfoScreen;
+import com.mclegoman.save.data.Data;
+import com.mclegoman.save.util.SaveHelper;
 import com.mclegoman.save.rtu.util.LogType;
 import net.minecraft.client.*;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;

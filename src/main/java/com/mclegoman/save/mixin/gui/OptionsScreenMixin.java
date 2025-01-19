@@ -8,7 +8,7 @@
 package com.mclegoman.save.mixin.gui;
 
 import com.mclegoman.save.api.gui.widget.ButtonWidget;
-import com.mclegoman.save.client.gui.screen.config.ConfigScreen;
+import com.mclegoman.save.gui.screen.config.ConfigScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.options.OptionsScreen;
 import org.spongepowered.asm.mixin.Mixin;

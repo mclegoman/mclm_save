@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.mixin.entity;
 
-import com.mclegoman.save.api.entity.SaveModEntity;
+import com.mclegoman.save.entity.SaveModEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.living.LivingEntity;

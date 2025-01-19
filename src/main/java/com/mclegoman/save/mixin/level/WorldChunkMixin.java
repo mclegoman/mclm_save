@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.mixin.level;
 
-import com.mclegoman.save.api.level.SaveModWorldChunk;
+import com.mclegoman.save.level.SaveModWorldChunk;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.LightType;
 import net.minecraft.world.chunk.WorldChunk;

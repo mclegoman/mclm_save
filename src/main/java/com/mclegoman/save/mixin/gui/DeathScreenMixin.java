@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.mixin.gui;
 
-import com.mclegoman.save.api.level.SaveModMinecraft;
+import com.mclegoman.save.level.SaveModMinecraft;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;

@@ -8,7 +8,7 @@
 package com.mclegoman.save.mixin.fixes;
 
 import com.mclegoman.save.rtu.util.LogType;
-import com.mclegoman.save.common.data.Data;
+import com.mclegoman.save.data.Data;
 import com.mclegoman.save.config.SaveConfig;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.render.CompiledChunkComparator;

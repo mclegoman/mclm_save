@@ -7,10 +7,10 @@
 
 package com.mclegoman.save.mixin.entity.block;
 
-import com.mclegoman.save.api.entity.SaveModBlockEntity;
-import com.mclegoman.save.api.level.SaveModWorld;
-import com.mclegoman.save.api.nbt.NbtCompound;
-import com.mclegoman.save.api.nbt.NbtList;
+import com.mclegoman.save.entity.SaveModBlockEntity;
+import com.mclegoman.save.level.SaveModWorld;
+import com.mclegoman.save.nbt.NbtCompound;
+import com.mclegoman.save.nbt.NbtList;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;

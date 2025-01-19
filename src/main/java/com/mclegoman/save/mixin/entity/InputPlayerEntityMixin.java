@@ -7,10 +7,10 @@
 
 package com.mclegoman.save.mixin.entity;
 
-import com.mclegoman.save.api.entity.SaveModEntity;
-import com.mclegoman.save.api.level.SaveModWorld;
-import com.mclegoman.save.api.nbt.NbtCompound;
-import com.mclegoman.save.api.nbt.NbtList;
+import com.mclegoman.save.entity.SaveModEntity;
+import com.mclegoman.save.level.SaveModWorld;
+import com.mclegoman.save.nbt.NbtCompound;
+import com.mclegoman.save.nbt.NbtList;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

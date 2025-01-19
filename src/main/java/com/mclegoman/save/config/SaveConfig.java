@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.config;
 
-import com.mclegoman.save.common.data.Data;
+import com.mclegoman.save.data.Data;
 import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.annotations.Comment;
 import org.quiltmc.config.api.values.TrackedValue;

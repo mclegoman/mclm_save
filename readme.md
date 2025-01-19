@@ -10,7 +10,7 @@ Save allows the player to save, load, and convert worlds in older versions that 
 ## Attributions  
 - [ClassicExplorer](https://github.com/bluecrab2/ClassicExplorer).  
   - We include some code from ClassicExplorer with permission from bluecrab2 for our classic converter.  
-- [ReleaseTypeUtils](https://github.com/mclegoMan/releasetypeutils).  
+- [ReleaseTypeUtils](https://github.com/mclegoman/releasetypeutils).  
   - Licensed under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt).  
 - [FlatLaf](https://github.com/JFormDesigner/FlatLaf/).
   - Licensed under [Apache 2.0](https://github.com/JFormDesigner/FlatLaf/blob/main/LICENSE).  

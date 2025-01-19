@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.mixin.api;
 
-import com.mclegoman.save.api.data.Resources;
+import com.mclegoman.save.data.Data;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.C_9029783;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -23,6 +23,6 @@ public abstract class ResourcesMixin {
 	@Shadow private C_5664496 f_6145320;
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
 	private void save$init(CallbackInfo ci) {
-		Resources.minecraft = this.f_6145320;
+		Data.Resources.minecraft = this.f_6145320;
 	}
 }

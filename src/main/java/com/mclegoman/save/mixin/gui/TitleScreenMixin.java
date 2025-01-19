@@ -7,8 +7,8 @@
 
 package com.mclegoman.save.mixin.gui;
 
-import com.mclegoman.save.client.april_fools.AprilFools;
-import com.mclegoman.save.client.gui.screen.world_select.SelectWorldScreen;
+import com.mclegoman.save.april_fools.AprilFools;
+import com.mclegoman.save.gui.screen.world_select.SelectWorldScreen;
 import net.minecraft.client.C_8938952;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
