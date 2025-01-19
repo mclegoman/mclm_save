@@ -3,7 +3,7 @@ Save allows the player to save, load, and convert worlds in older versions that 
 
 ## Dependencies  
 - [Quilt Loader](https://quiltmc.org/).  
-  - You will need to use [OrnitheMC](https://ornithemc.net/) to use Quilt with Minecraft in-20100110.  
+  - You will need to use [OrnitheMC](https://ornithemc.net/) to use Quilt with Minecraft inf-20100325.  
 - [Java 8](https://adoptium.net/temurin/releases/?version=8). (Built using Eclipse Temurin 8.0.412+8)  
 - [Minecraft Infdev inf-20100325](https://minecraft.wiki/w/Java_Edition_Infdev_20100325).  
 
