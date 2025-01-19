@@ -152,9 +152,7 @@ public class SaveModWorld extends World {
 			if (coord > 134217727) return (-268435455 + coord) - 1;
 		} else {
 			// When actual is set to false, convert negative values to the values the game uses in place of negatives.
-			if (coord < 0) {
-				return 268435456 - (coord * -1);
-			}
+			if (coord < 0) return 268435456 - (coord * -1);
 		}
 		return coord;
 	}
