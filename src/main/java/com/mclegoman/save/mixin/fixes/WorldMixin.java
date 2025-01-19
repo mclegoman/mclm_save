@@ -25,7 +25,8 @@ public abstract class WorldMixin {
 		if (SaveConfig.instance.shouldDisableFlowerItems.value()) {
 			if (entity instanceof ItemEntity) {
 				for (String value : SaveConfig.instance.flowerItems.value()) {
-					if (Integer.parseInt(value) == ((ItemEntity) entity).item.itemId) ci.cancel();
+					if (value.equals("*")) ci.cancel();
+					else if (Integer.parseInt(value) == ((ItemEntity) entity).item.itemId) ci.cancel();
 				}
 			}
 		}

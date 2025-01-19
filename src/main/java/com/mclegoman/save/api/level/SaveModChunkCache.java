@@ -35,17 +35,17 @@ public class SaveModChunkCache implements ChunkSource {
 		return false;
 	}
 
-	public final WorldChunk getChunk(int i, int j) {
-		int var3 = i & 31 | (j & 31) << 5;
-		if (!this.hasChunk(i, j)) {
+	public final WorldChunk getChunk(int x, int y) {
+		int var3 = x & 31 | (y & 31) << 5;
+		if (!this.hasChunk(x, y)) {
 			if (this.chunks[var3] != null) {
 				this.chunks[var3].m_1033437();
 				this.saveChunk(this.chunks[var3]);
 			}
 
 			WorldChunk var4;
-			if ((var4 = this.loadChunk(i, j)) == null) {
-				var4 = this.generator.getChunk(i, j);
+			if ((var4 = this.loadChunk(x, y)) == null) {
+				var4 = this.generator.getChunk(x, y);
 				this.saveChunk(var4);
 			}
 
@@ -54,36 +54,40 @@ public class SaveModChunkCache implements ChunkSource {
 				this.chunks[var3].m_6736297();
 			}
 
-			if (this.hasChunk(i + 1, j + 1) && this.hasChunk(i, j + 1) && this.hasChunk(i + 1, j)) {
-				this.populateChunk(this, i, j);
+			if (this.hasChunk(x + 1, y + 1) && this.hasChunk(x, y + 1) && this.hasChunk(x + 1, y)) {
+				this.populateChunk(this, x, y);
 			}
 
-			if (this.hasChunk(i - 1, j + 1) && this.hasChunk(i, j + 1) && this.hasChunk(i - 1, j)) {
-				this.populateChunk(this, i - 1, j);
+			if (this.hasChunk(x - 1, y + 1) && this.hasChunk(x, y + 1) && this.hasChunk(x - 1, y)) {
+				this.populateChunk(this, x - 1, y);
 			}
 
-			if (this.hasChunk(i + 1, j - 1) && this.hasChunk(i, j - 1) && this.hasChunk(i + 1, j)) {
-				this.populateChunk(this, i, j - 1);
+			if (this.hasChunk(x + 1, y - 1) && this.hasChunk(x, y - 1) && this.hasChunk(x + 1, y)) {
+				this.populateChunk(this, x, y - 1);
 			}
 
-			if (this.hasChunk(i - 1, j - 1) && this.hasChunk(i, j - 1) && this.hasChunk(i - 1, j)) {
-				this.populateChunk(this, i - 1, j - 1);
+			if (this.hasChunk(x - 1, y - 1) && this.hasChunk(x, y - 1) && this.hasChunk(x - 1, y)) {
+				this.populateChunk(this, x - 1, y - 1);
 			}
 		}
 
 		return this.chunks[var3];
 	}
+	private static String toBase36(int i, boolean folder) {
+		int value = getUnsignedValue((byte) i);
+		return folder ? Integer.toString(value % 64, 36) : (i < 0 ? "-" : "") + Integer.toString(value, 36);
+	}
 
-	private File getChunkFile(int i, int j) {
-		// What is wrong with this?
-		// Why is i/j set to really high values?
-		// TODO: Fix this.
-		String chunk = "c." + Integer.toString(i, 36) + "." + Integer.toString(j, 36) + ".dat";
-		String x = Integer.toString(i & 63, 36);
-		String y = Integer.toString(j & 63, 36);
-		File file = new File(new File(this.file, x), y);
-		file.mkdirs();
-		return new File(file, chunk);
+	private static int getUnsignedValue(byte value) {
+		return value & 0xFF;
+	}
+
+	private File getChunkFile(int x, int y) {
+		int convertedX = SaveModWorld.convertChunkCoord(x, true);
+		int convertedY = SaveModWorld.convertChunkCoord(y, true);
+		File folder = new File(new File(this.file, toBase36(convertedX, true)), toBase36(convertedY, true));
+		folder.mkdirs();
+		return new File(folder, "c." + ((convertedX < 0) ? "-" : "") + toBase36((convertedX < 0) ? (convertedX * -1) : convertedX, false) + "."  + ((convertedY < 0) ? "-" : "") + toBase36((convertedY < 0) ? (convertedY * -1) : convertedY, false) + ".dat");
 	}
 
 	private WorldChunk loadChunk(int i, int j) {
@@ -100,7 +104,7 @@ public class SaveModChunkCache implements ChunkSource {
 	}
 	public static WorldChunk readChunk(World world, NbtCompound nbtCompound) {
 		byte[] blocks = nbtCompound.getByteArray("Blocks");
-		WorldChunk worldChunk = new WorldChunk(world, blocks, nbtCompound.getInt("xPos"), nbtCompound.getInt("zPos"));
+		WorldChunk worldChunk = new WorldChunk(world, blocks, SaveModWorld.convertChunkCoord(nbtCompound.getInt("xPos"), false), SaveModWorld.convertChunkCoord(nbtCompound.getInt("zPos"), false));
 		worldChunk.blockMetadata = new ChunkNibbleStorage(blocks.length);
 		worldChunk.blockMetadata.data = nbtCompound.getByteArray("Data");
 		worldChunk.skyLight = new ChunkNibbleStorage(blocks.length);

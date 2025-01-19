@@ -18,6 +18,8 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SaveModWorld extends World {
 	private File dir;
@@ -144,9 +146,21 @@ public class SaveModWorld extends World {
 		nbtCompound.putByte("Count", (byte)item.size);
 		nbtCompound.putShort("Damage", (short)item.metadata);
 	}
+	public static int convertChunkCoord(int coord, boolean actual) {
+		if (actual) {
+			// When actual is set to true, convert values that are meant to be negative to negative.
+			if (coord > 134217727) return (-268435455 + coord) - 1;
+		} else {
+			// When actual is set to false, convert negative values to the values the game uses in place of negatives.
+			if (coord < 0) {
+				return 268435456 - (coord * -1);
+			}
+		}
+		return coord;
+	}
 	public static void saveChunk(WorldChunk worldChunk, NbtCompound nbtCompound) {
-		nbtCompound.putInt("xPos", worldChunk.chunkX);
-		nbtCompound.putInt("zPos", worldChunk.chunkZ);
+		nbtCompound.putInt("xPos", convertChunkCoord(worldChunk.chunkX, true));
+		nbtCompound.putInt("zPos", convertChunkCoord(worldChunk.chunkZ, true));
 		nbtCompound.putLong("LastUpdate", worldChunk.world.ticks);
 		nbtCompound.putByteArray("Blocks", worldChunk.blockIds);
 		nbtCompound.putByteArray("Data", worldChunk.blockMetadata.data);

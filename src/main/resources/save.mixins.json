@@ -23,13 +23,13 @@
 		"gui.OptionsScreenMixin",
 		"gui.ScreenMixin",
 		"gui.TitleScreenMixin",
-		"level.MinecraftClientMixin"
+		"level.MinecraftClientMixin",
+		"entity.PaintingEntityMixin",
+		"gui.DeathScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"entity.PaintingEntityMixin",
-		"gui.DeathScreenMixin"
 	]
 }
