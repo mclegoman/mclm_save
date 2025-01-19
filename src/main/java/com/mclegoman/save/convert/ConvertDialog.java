@@ -26,11 +26,11 @@ import java.io.File;
 
 public class ConvertDialog extends Thread {
 	private final C_5664496 minecraft;
-	private final Screen screen;
+	private final Screen parent;
 	private final int slot;
-	public ConvertDialog(C_5664496 minecraft, Screen screen, int slot) {
+	public ConvertDialog(C_5664496 minecraft, Screen parent, int slot) {
 		this.minecraft = minecraft;
-		this.screen = screen;
+		this.parent = parent;
 		this.slot = slot;
 	}
 	public void run() {
@@ -67,7 +67,8 @@ public class ConvertDialog extends Thread {
 			} else if (SaveConfig.instance.convertDialogFilter.value() == Filter.classic) {
 				fileChooser.setFileFilter(filters[2]);
 			}
-			if (fileChooser.showOpenDialog(Data.Resources.minecraft.f_0769488) == 0) {
+			int dialog = fileChooser.showOpenDialog(Data.Resources.minecraft.f_0769488);
+			if (dialog == JFileChooser.APPROVE_OPTION) {
 				SaveConfig.instance.dialogDir.setValue(String.valueOf(fileChooser.getSelectedFile()));
 				if (fileChooser.getFileFilter() == filters[0]) {
 					SaveConfig.instance.convertDialogFilter.setValue(Filter.minecraft);
@@ -78,7 +79,12 @@ public class ConvertDialog extends Thread {
 				} else {
 					SaveConfig.instance.convertDialogFilter.setValue(Filter.all);
 				}
-				Convert.process(this.minecraft, this.screen, this.slot, fileChooser.getSelectedFile());
+				Convert.process(this.minecraft, this.parent, this.slot, fileChooser.getSelectedFile());
+			} else if (dialog == JFileChooser.CANCEL_OPTION) {
+				Data.getVersion().sendToLog(LogType.INFO, "World conversion was cancelled.");
+				this.minecraft.m_6408915(this.parent);
+			} else {
+				this.minecraft.m_6408915(new SaveInfoScreen(this.parent, "Error!", "An error occurred.", InfoScreen.Type.ERROR, true));
 			}
 			interrupt();
 		} else {

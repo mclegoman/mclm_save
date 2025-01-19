@@ -35,30 +35,25 @@ public class Convert {
 		}
 	}
 	public static void convert(C_5664496 minecraft, Version version, Screen parent, String worldName, File input) {
-		if (version == Version.classic) {
-			minecraft.m_6408915(new ConvertWorldInfoScreen(parent, "Converting classic world...", worldName, input));
-			minecraft.m_6408915(new ConfirmScreen(minecraft.f_0723335, "Do you want to keep your player data?", "This includes your inventory, and location!", 1));
-		} else if (version == Version.indev) {
-			minecraft.m_6408915(new ConvertWorldInfoScreen(parent, "Converting indev world...", worldName, input));
-			minecraft.m_6408915(new ConfirmScreen(minecraft.f_0723335, "Do you want to keep your player data?", "This includes your inventory, and location!", 2));
-		} else {
-			// This should never actually be run unless modified.
-			error(minecraft, parent, "Invalid version type!");
-		}
+		minecraft.m_6408915(new ConvertWorldInfoScreen(version, parent, "Converting indev world...", worldName, input));
+		minecraft.m_6408915(new ConfirmScreen(minecraft.f_0723335, "Do you want to keep your player data?", "This includes your inventory, and location!", 1));
 	}
-	public static void result(C_5664496 minecraft, Screen parent, String worldName, File input, int id, boolean value) {
-		// 1: Convert Classic Player Data
-		// 2: Convert Indev Player Data
-		if (id == 1) convertClassic(minecraft, parent, worldName, value, input);
-		else if (id == 2) convertIndev(minecraft, parent, worldName, value, input);
+	public static void result(C_5664496 minecraft, Version version, Screen parent, String worldName, File input, int id, boolean value) {
+		// 1: Convert Player Data
+		if (id == 1) {
+			if (version == Version.classic) convertClassic(minecraft, parent, worldName, value, input);
+			else if (version == Version.indev) convertIndev(minecraft, parent, worldName, value, input);
+			// This won't be executed unless the Version enum has been modified.
+			else error(minecraft, parent, "Invalid version type!");
+		}
 	}
 	public static void convertClassic(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		// TODO: Actually Convert.
-		error(minecraft, parent, "Converter is not yet ready!");
+		error(minecraft, parent, "Classic conversion is not yet ready!");
 	}
 	public static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		// TODO: Actually Convert.
-		error(minecraft, parent, "Converter is not yet ready!");
+		error(minecraft, parent, "Indev conversion is not yet ready!");
 	}
 	public static void done(C_5664496 minecraft, Screen parent, String worldName) {
 		minecraft.m_6408915(new SaveInfoScreen(parent, "Convert World", "Successfully converted world to '" + worldName + "'!", InfoScreen.Type.DIRT, true));
