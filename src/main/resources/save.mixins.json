@@ -9,6 +9,7 @@
 		"entity.EntityMixin",
 		"entity.InputPlayerEntityMixin",
 		"entity.LivingEntityMixin",
+		"entity.PaintingEntityMixin",
 		"entity.PigEntityMixin",
 		"entity.PlayerEntityMixin",
 		"entity.SheepEntityMixin",
@@ -18,18 +19,18 @@
 		"fixes.MinecraftAppletMixin",
 		"fixes.WorldMixin",
 		"fixes.WorldRendererMixin",
+		"gui.DeathScreenMixin",
 		"gui.GameGuiMixin",
 		"gui.GameMenuScreenMixin",
 		"gui.OptionsScreenMixin",
 		"gui.ScreenMixin",
 		"gui.TitleScreenMixin",
-		"level.MinecraftClientMixin",
-		"entity.PaintingEntityMixin",
-		"gui.DeathScreenMixin"
+		"level.MinecraftClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
+		"level.WorldChunkMixin"
 	]
 }

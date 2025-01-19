@@ -158,10 +158,9 @@ public class SaveModChunkCache implements ChunkSource {
 	public final void save(boolean bl) {
 		int index = 0;
 		for (WorldChunk chunk : this.chunks) {
-			// TODO: Add save$dirty boolean to chunk and make chunk dirty when edited.
-			if (chunk != null) {// && chunk.dirty) {
+			if (chunk != null && ((SaveModWorldChunk)chunk).save$getDirty()) {
 				this.saveChunk(chunk);
-				//this.chunks[var3].dirty = false;
+				((SaveModWorldChunk)this.chunks[index]).save$setDirty(false);
 				index++;
 				if (index == 10 && !bl) return;
 			}

@@ -1,6 +1,7 @@
 accessWidener v2 named
 extendable class net/minecraft/client/C_5664496
 extendable class net/minecraft/world/World
+extendable class net/minecraft/world/chunk/WorldChunk
 extendable class net/minecraft/world/gen/chunk/OverworldChunkGenerator
 extendable class net/minecraft/world/gen/noise/OctaveNoiseGenerator
 accessible field net/minecraft/world/World chunkSource Lnet/minecraft/world/chunk/ChunkSource;
