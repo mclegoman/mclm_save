@@ -35,7 +35,7 @@ public class CreditsScreen extends Screen {
 		for (String contributor : StringHelper.getFormattedContributors()) this.credits.add(new Couple<>(contributor, 0xAAAAAA));
 		this.credits.add(new Couple<>("Licence: [save_licenses]", 0xAAAAAA));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
-		this.credits.add(new Couple<>("Attribution", 0xFFAA00));
+		this.credits.add(new Couple<>("Attributions", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
 		this.credits.add(new Couple<>("ClassicExplorer", 0xFFFFFF));
 		this.credits.add(new Couple<>("Read Minecraft world files from Classic versions", 0xAAAAAA));
@@ -101,10 +101,7 @@ public class CreditsScreen extends Screen {
 		}
 	}
 	public void tick() {
-		if (time > ((this.credits.size() * 10) + this.height)) {
-			if (Data.Resources.minecraft != null) Data.Resources.minecraft.m_6408915(this.parent);
-		} else {
-			time += (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) ? (Keyboard.isKeyDown(Keyboard.KEY_UP) ? -4 : 4) : (Keyboard.isKeyDown(Keyboard.KEY_UP) ? -1 : 1);
-		}
+		if (time > ((this.credits.size() * 10) + this.height)) if (Data.Resources.minecraft != null) Data.Resources.minecraft.m_6408915(this.parent);
+		else time += (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) ? (Keyboard.isKeyDown(Keyboard.KEY_UP) ? -4 : 4) : (Keyboard.isKeyDown(Keyboard.KEY_UP) ? -1 : 1);
 	}
 }

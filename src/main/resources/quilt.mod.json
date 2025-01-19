@@ -21,7 +21,7 @@
       "icon": "assets/save/icon.png"
     },
     "entrypoints": {
-      "save_init": "com.mclegoman.save.client.Save"
+      "save_init": "com.mclegoman.save.Save"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "depends": [

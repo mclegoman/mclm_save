@@ -20,7 +20,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 import java.util.List;
 
 @ClientOnly
-public final class SaveInfoScreen extends InfoScreen {
+public class SaveInfoScreen extends InfoScreen {
 	public SaveInfoScreen(@Nullable Screen parentScreen, String title, List<String> status, Type type, String canBeClosedMessage, String extraInfoMessage) {
 		super(parentScreen, title, status, type, canBeClosedMessage, extraInfoMessage);
 	}

@@ -22,15 +22,12 @@ import java.io.File;
 public class SelectWorldScreen extends Screen {
 	public Screen parent;
 	public String title = "Select world";
-
 	public SelectWorldScreen(Screen screen) {
 		this.parent = screen;
 	}
-
 	public void init() {
 		this.buttons.clear();
 		File file = SaveHelper.getMinecraftDir();
-
 		for(int var2 = 0; var2 < 5; ++var2) {
 			NbtCompound var3;
 			if ((var3 = SaveModWorld.get(file, "World" + (var2 + 1))) == null) {
@@ -44,18 +41,14 @@ public class SelectWorldScreen extends Screen {
 				this.buttons.add(new net.minecraft.client.gui.widget.ButtonWidget(var2, this.width / 2 - 100, this.height / 6 + var2 * 24, var4));
 			}
 		}
-
 		this.m_7555169();
 	}
-
 	public boolean isWorldButtonsActive() {
 		return true;
 	}
-	
 	public String getWorldName(int i) {
 		return SaveModWorld.get(SaveHelper.getMinecraftDir(), "World" + i) != null ? "World" + i : null;
 	}
-
 	public void m_7555169() {
 		this.buttons.add(new com.mclegoman.save.api.gui.widget.ButtonWidget(5, this.width / 2 - 100, this.height / 6 + 120 + 12, 98, 20, "Delete world..."));
 		ButtonWidget convert = new com.mclegoman.save.api.gui.widget.ButtonWidget(6, this.width / 2 + 2, this.height / 6 + 120 + 12, 98, 20, "Convert...");
@@ -64,7 +57,6 @@ public class SelectWorldScreen extends Screen {
 		this.buttons.add(new com.mclegoman.save.api.gui.widget.ButtonWidget(7, this.width / 2 + 102, this.height / 6 + 120 + 12, 20, 20, "..."));
 		this.buttons.add(new ButtonWidget(8, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
-
 	public void buttonClicked(ButtonWidget buttonWidget) {
 		if (buttonWidget.active) {
 			if (buttonWidget.id < 5) {
@@ -91,7 +83,6 @@ public class SelectWorldScreen extends Screen {
 		((SaveModMinecraft)this.minecraft).save$set("World" + i);
 		this.minecraft.m_6408915(null);
 	}
-
 	public void render(int i, int j, float f) {
 		this.drawBackgroundTexture();
 		drawCenteredString(this.textRenderer, this.title, this.width / 2, 20, 16777215);
