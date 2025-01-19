@@ -18,8 +18,6 @@ import net.minecraft.world.chunk.WorldChunk;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SaveModWorld extends World {
 	private File dir;
@@ -112,6 +110,7 @@ public class SaveModWorld extends World {
 		this.entities.remove(this.f_6053391);
 	}
 	private void save(boolean bl) {
+		Data.getVersion().sendToLog(LogType.INFO, "Saving the world to disk!");
 		File level = new File(this.dir, "level.dat");
 		NbtCompound data = new NbtCompound();
 		data.putLong("RandomSeed", this.seed);
@@ -135,6 +134,7 @@ public class SaveModWorld extends World {
 			Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 		((SaveModChunkCache)this.chunkSource).save(bl);
+		saveTicks = 0;
 	}
 	public static ItemStack readItem(NbtCompound nbtCompound) {
 		ItemStack stack = new ItemStack(nbtCompound.getShort("id"), nbtCompound.getByte("Count"));
@@ -200,5 +200,13 @@ public class SaveModWorld extends World {
 	}
 	public void waitIfSaving() {
 		this.save(true);
+	}
+	private int saveTicks = 0;
+	public void tick() {
+		super.tick();
+		if (saveTicks >= SaveConfig.instance.autoSaveTicks.value()) {
+			save(true);
+			saveTicks = 0;
+		} else saveTicks++;
 	}
 }
