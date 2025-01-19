@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @ClientOnly
 @Mixin(DeathScreen.class)
 public abstract class DeathScreenMixin extends Screen {
-	// TODO: Drop Inventory on Death. (Doesn't belong in this class, but was close enough lol.)
 	@Inject(method = "init", at = @At("TAIL"))
 	private void save$init(CallbackInfo ci) {
 		this.buttons.set(0, new ButtonWidget(1, this.width / 2 - 100, this.height / 4 + 72, "Respawn"));
