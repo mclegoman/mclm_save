@@ -69,6 +69,7 @@ public class SaveModWorld extends World {
 		return null;
 	}
 	public static void delete(File file, String string) {
+		Data.getVersion().sendToLog(LogType.INFO, "Deleted world: '" + string + "'!");
 		if ((file = new File(file, string)).exists()) {
 			delete(file.listFiles());
 			file.delete();
