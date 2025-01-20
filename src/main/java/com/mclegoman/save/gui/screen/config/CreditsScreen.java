@@ -28,6 +28,7 @@ public class CreditsScreen extends Screen {
 		this.parent = screen;
 	}
 	public void init() {
+		this.buttons.clear();
 		this.credits.add(new Couple<>("[save]", 0xFFAA00));
 		this.credits.add(new Couple<>("", 0xFFFFFF));
 		this.credits.add(new Couple<>("[save_description]", 0xAAAAAA));

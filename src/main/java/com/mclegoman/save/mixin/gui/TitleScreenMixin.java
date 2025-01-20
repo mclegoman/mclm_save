@@ -31,13 +31,16 @@ public abstract class TitleScreenMixin extends Screen {
 	}
 	@Inject(method = "init", at = @At("TAIL"))
 	private void save$init(CallbackInfo ci) {
-		// Disables the Generate new level... button,
-		// as we're going to replace the load world with a select world, plus no save screen as it's gonna auto save.
-		((ButtonWidget)this.buttons.get(0)).active = false;
+		// We replace the title screen buttons as just disabling the generate new world button was causing confusion.
+		this.buttons.set(0, new ButtonWidget(1, this.width / 2 - 100, this.height / 4 + 48, "Select world.."));
+		// Disables the load level button, as we have our own level selection screen.
+		ButtonWidget disabled = new ButtonWidget(2, this.width / 2 - 100, this.height / 4 + 72, "---");
+		disabled.active = false;
+		this.buttons.set(1, disabled);
 	}
 	@Inject(method = "buttonClicked", at = @At("HEAD"), cancellable = true)
 	private void save$buttonClicked(ButtonWidget buttonWidget, CallbackInfo ci) {
-		if (buttonWidget.id == 2) {
+		if (buttonWidget.id == 1) {
 			this.minecraft.m_6408915(new SelectWorldScreen(this));
 			ci.cancel();
 		}

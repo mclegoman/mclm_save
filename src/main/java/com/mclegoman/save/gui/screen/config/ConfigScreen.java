@@ -27,6 +27,7 @@ public class ConfigScreen extends Screen {
 		return (this.height / 6) + (index * 24);
 	}
 	public final void init() {
+		this.buttons.clear();
 		this.buttons.add(new ButtonWidget(0, this.width / 2 - 150, getY(0), 300, 20, "Force April Fools: " + SaveConfig.instance.forceAprilFools.value()));
 		this.buttons.add(new ButtonWidget(1, this.width / 2 - 150, getY(1), 300, 20, "Dialog Theme: " + SaveConfig.instance.dialogTheme.value().getName()));
 		this.buttons.add(new ButtonWidget(2, this.width / 2 - 150, getY(2), 300, 20, "Prevent Flower Drop: " + SaveConfig.instance.shouldDisableFlowerItems.value()));
@@ -104,6 +105,7 @@ public class ConfigScreen extends Screen {
 	public final void render(int i, int j, float f) {
 		this.drawBackgroundTexture();
 		drawCenteredString(this.textRenderer, StringHelper.getFormattedString("[save] Config"), this.width / 2, 20, 16777215);
+		if (!SaveConfig.instance.shouldDisableFlowerItems.value()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString("WARNING: Prevent Flower Drop is recommended for performance purposes."), this.width / 2, 2, 0xFF5555);
 		super.render(i, j, f);
 	}
 	public void keyPressed(char chr, int key) {
