@@ -8,6 +8,7 @@ accessible field net/minecraft/world/World chunkSource Lnet/minecraft/world/chun
 accessible field net/minecraft/world/chunk/WorldChunk chunkX I
 accessible field net/minecraft/world/chunk/WorldChunk chunkZ I
 accessible field net/minecraft/world/chunk/WorldChunk world Lnet/minecraft/world/World;
+accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator world Lnet/minecraft/world/World;
 accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator random Ljava/util/Random;
 accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator f_3952515 Ljava/util/Random;
 accessible field net/minecraft/world/gen/chunk/OverworldChunkGenerator minLimitPerlinNoise Lnet/minecraft/world/gen/noise/OctaveNoiseGenerator;
@@ -28,3 +29,4 @@ accessible field net/minecraft/world/chunk/ChunkNibbleStorage data [B
 accessible field net/minecraft/world/World ticks I
 accessible field net/minecraft/world/World entities Ljava/util/List;
 extendable method net/minecraft/world/World tick ()V
+extendable method net/minecraft/world/gen/chunk/OverworldChunkGenerator getChunk (II)Lnet/minecraft/world/chunk/WorldChunk;

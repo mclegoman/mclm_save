@@ -34,6 +34,9 @@ public class ConvertWorldScreen extends SelectWorldScreen {
 			Convert.start(this.minecraft, this.parent, i);
 		} else this.minecraft.m_6408915(this.parent);
 	}
+	public boolean isLoadedWorldActive() {
+		return false;
+	}
 	public void save$confirmResult(boolean confirm, int i) {
 		convert(confirm, i);
 	}

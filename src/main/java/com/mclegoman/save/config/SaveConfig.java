@@ -28,8 +28,10 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> starterItems = this.value(true);
 	@Comment("Enables development debug.")
 	public final TrackedValue<Boolean> debug = this.value(false);
-	@Comment("Disables ItemEntity with flower item stack.")
-	public final TrackedValue<Boolean> shouldDisableFlowerItems = this.value(true);
+	@Comment("Fixes flower generation to prevent flowers from spawning on blocks they can't survive on.")
+	public final TrackedValue<Boolean> fixFlowerGen = this.value(true);
+	@Comment("Disables ItemEntity with flower item stack. (This is meant as an alternative to fixFlowerGen)")
+	public final TrackedValue<Boolean> shouldDisableFlowerItems = this.value(false);
 	public final TrackedValue<ValueList<String>> flowerItems = this.list("", "37", "38");
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);

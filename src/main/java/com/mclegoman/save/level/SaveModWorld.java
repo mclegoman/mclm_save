@@ -27,12 +27,14 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class SaveModWorld extends World {
+	public String name;
 	private File dir;
 	private NbtCompound f_4300305;
 	private long seed = 0L;
 	public long sizeOnDisk = 0L;
 	private boolean isNewWorld;
 	public SaveModWorld(File file, String string) {
+		this.name = string;
 		file.mkdirs();
 		this.dir = new File(file, string);
 		this.dir.mkdirs();

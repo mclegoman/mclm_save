@@ -38,12 +38,17 @@ public class SelectWorldScreen extends Screen {
 				String var4 = "World " + (var2 + 1);
 				long var5 = var3.getLong("SizeOnDisk");
 				var4 = var4 + " (" + (float)(var5 / 1024L * 100L / 1024L) / 100.0F + " MB)";
-				this.buttons.add(new net.minecraft.client.gui.widget.ButtonWidget(var2, this.width / 2 - 100, this.height / 6 + var2 * 24, var4));
+				ButtonWidget world = new net.minecraft.client.gui.widget.ButtonWidget(var2, this.width / 2 - 100, this.height / 6 + var2 * 24, var4);
+				if (this.minecraft.f_5854988 != null && ((SaveModWorld)this.minecraft.f_5854988).name.equals("World" + (var2 + 1))) world.active = isLoadedWorldActive();
+				this.buttons.add(world);
 			}
 		}
 		this.m_7555169();
 	}
 	public boolean isWorldButtonsActive() {
+		return true;
+	}
+	public boolean isLoadedWorldActive() {
 		return true;
 	}
 	public String getWorldName(int i) {

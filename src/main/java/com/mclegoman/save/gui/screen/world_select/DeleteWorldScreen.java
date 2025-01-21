@@ -30,6 +30,9 @@ public class DeleteWorldScreen extends SelectWorldScreen {
 			this.minecraft.m_6408915(new ConfirmScreen(this, "Are you sure you want to delete this world?", "'" + this.getWorldName(i) + "' will be lost forever!", i));
 		}
 	}
+	public boolean isLoadedWorldActive() {
+		return false;
+	}
 
 	public void save$confirmResult(boolean value, int i) {
 		if (value) SaveModWorld.delete(SaveHelper.getSavesDir(), this.getWorldName(i));
