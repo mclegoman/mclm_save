@@ -7,6 +7,7 @@
 
 package com.mclegoman.save.convert;
 
+import com.mclegoman.save.api.exception.ConvertFailException;
 import com.mclegoman.save.api.gui.screen.ConfirmScreen;
 import com.mclegoman.save.api.gui.screen.InfoScreen;
 import com.mclegoman.save.classicexplorer.fields.*;
@@ -176,9 +177,8 @@ public class Convert {
 							});
 						}
 					}
-				} else error(minecraft, parent, "Invalid block amount!");
-				// TODO: Convert and save chunks, and recalculate sizeOnDisk after converting.
-				long sizeOnDisk = input.length();
+				} else throw new ConvertFailException("Invalid block amount!");
+				long sizeOnDisk = convertBlocks(width, height, length, blocks);
 				createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, playerData[0]);
 				done(minecraft, parent, worldName);
 			}
@@ -186,23 +186,7 @@ public class Convert {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static @NotNull NbtList getInventory(ItemData[] items) {
-		NbtList inventory = new NbtList();
-		for (ItemData itemData : items) {
-			NbtCompound item = new NbtCompound();
-			short slot = (short)itemData.slot;
-			short itemId = (short)itemData.id;
-			byte count = itemData.count;
-			item.putShort("Slot", slot);
-			item.putShort("id", itemId);
-			item.putByte("Count", count);
-			item.putShort("Damage", (short) 0);
-			if (((slot >= 0 && slot <= 36) || (slot >= 100 && slot <= 104)) && itemId > 0) inventory.add(item);
-		}
-		return inventory;
-	}
 	private static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
-		// TODO: Actually Convert.
 		try {
 			NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(input.toPath()));
 			long seed = nbtCompound.getCompound("About").getLong("CreatedOn");
@@ -211,8 +195,6 @@ public class Convert {
 			short spawnY = ((NbtShort) map.getList("Spawn").get(1)).value;
 			short spawnZ = ((NbtShort) map.getList("Spawn").get(2)).value;
 			long time = nbtCompound.getCompound("Map").getShort("TimeOfDay");
-			// TODO: Recalculate sizeOnDisk after converting.
-			long sizeOnDisk = input.length();
 			NbtCompound player = null;
 			if (convertPlayerData) {
 				for (int i = 0; i < nbtCompound.getList("Entities").size(); i++) {
@@ -235,11 +217,18 @@ public class Convert {
 					player.put("Pos", newPos);
 				}
 			}
+			long sizeOnDisk = convertBlocks(map.getShort("Width"), map.getShort("Height"), map.getShort("Length"), map.getByteArray("Blocks"));
 			createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, player);
 			done(minecraft, parent, worldName);
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
+	}
+	private static long convertBlocks(short width, short height, short length, byte[] blocks) throws ConvertFailException {
+		if (blocks.length == width * height * length) {
+			// TODO: Convert and save chunks. Add each chunk file's length together and return that.
+			return blocks.length;
+		} else throw new ConvertFailException("Invalid block amount!");
 	}
 	private static void createLevel(C_5664496 minecraft, Screen parent, File dir, long seed, int spawnX, int spawnY, int spawnZ, long time, long sizeOnDisk, @Nullable NbtCompound player) {
 		try {
@@ -266,7 +255,7 @@ public class Convert {
 		minecraft.m_6408915(new SaveInfoScreen(parent, "Convert World", "Successfully converted world to '" + worldName + "'!", InfoScreen.Type.DIRT, true));
 	}
 	private static void error(C_5664496 minecraft, Screen parent, String error) {
-		minecraft.m_6408915(new SaveInfoScreen(parent, "Error!", "Failed to convert world!" + ((error == null || error.isEmpty()) ? "" : " " + error), InfoScreen.Type.ERROR, true));
+		minecraft.m_6408915(new SaveInfoScreen(parent, "Error!", ((error == null || error.isEmpty()) ? "Failed to convert world!" : error), InfoScreen.Type.ERROR, true));
 	}
 	public enum Version {
 		classic("classic"),
