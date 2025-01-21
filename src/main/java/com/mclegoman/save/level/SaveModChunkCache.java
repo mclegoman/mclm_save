@@ -163,14 +163,16 @@ public class SaveModChunkCache implements ChunkSource {
 	}
 
 	public final void save(boolean bl) {
-		int index = 0;
-		for (WorldChunk chunk : this.chunks) {
-			if (chunk != null && ((SaveModWorldChunk)chunk).save$getDirty()) {
-				this.saveChunk(chunk);
-				((SaveModWorldChunk)this.chunks[index]).save$setDirty(false);
-				index++;
-				if (index == 10 && !bl) return;
+		try {
+			for (int i = 0; i < this.chunks.length; i++) {
+				if (this.chunks[i] != null && ((SaveModWorldChunk)this.chunks[i]).save$getDirty()) {
+					this.saveChunk(this.chunks[i]);
+					((SaveModWorldChunk)this.chunks[i]).save$setDirty(false);
+					if (i == 10 && !bl) return;
+				}
 			}
+		} catch (Exception error) {
+			Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 		}
 	}
 }

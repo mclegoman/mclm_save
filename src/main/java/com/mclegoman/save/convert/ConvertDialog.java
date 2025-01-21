@@ -69,7 +69,7 @@ public class ConvertDialog extends Thread {
 			}
 			int dialog = fileChooser.showOpenDialog(Data.Resources.minecraft.f_0769488);
 			if (dialog == JFileChooser.APPROVE_OPTION) {
-				SaveConfig.instance.dialogDir.setValue(String.valueOf(fileChooser.getSelectedFile()));
+				SaveConfig.instance.dialogDir.setValue(String.valueOf(fileChooser.getSelectedFile().getParent()));
 				if (fileChooser.getFileFilter() == filters[0]) {
 					SaveConfig.instance.convertDialogFilter.setValue(Filter.minecraft);
 				} else if (fileChooser.getFileFilter() == filters[1]) {
@@ -79,8 +79,10 @@ public class ConvertDialog extends Thread {
 				} else {
 					SaveConfig.instance.convertDialogFilter.setValue(Filter.all);
 				}
+				SaveConfig.instance.save();
 				Convert.process(this.minecraft, this.parent, this.slot, fileChooser.getSelectedFile());
 			} else if (dialog == JFileChooser.CANCEL_OPTION) {
+				SaveConfig.instance.save();
 				Data.getVersion().sendToLog(LogType.INFO, "World conversion was cancelled.");
 				this.minecraft.m_6408915(this.parent);
 			} else {

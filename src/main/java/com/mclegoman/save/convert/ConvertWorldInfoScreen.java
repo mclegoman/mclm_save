@@ -5,9 +5,9 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.gui.screen.convert;
+package com.mclegoman.save.convert;
 
-import com.mclegoman.save.convert.Convert;
+import com.mclegoman.save.data.Data;
 import com.mclegoman.save.gui.screen.SaveInfoScreen;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -18,6 +18,7 @@ public class ConvertWorldInfoScreen extends SaveInfoScreen {
 	private final Screen parent;
 	private final String worldName;
 	private final File file;
+	public boolean render;
 	public ConvertWorldInfoScreen(Screen parent, String message) {
 		super(parent, "Convert World", message, Type.DIRT, false);
 		this.version = null;
@@ -32,7 +33,18 @@ public class ConvertWorldInfoScreen extends SaveInfoScreen {
 		this.worldName = worldName;
 		this.file = input;
 	}
+	public ConvertWorldInfoScreen(Screen parent, String message, String worldName, File input) {
+		super(parent, "Convert World", message, Type.DIRT, false);
+		this.version = null;
+		this.parent = parent;
+		this.worldName = worldName;
+		this.file = input;
+	}
 	public void save$confirmResult(boolean confirm, int i) {
-		Convert.result(this.minecraft, this.version, this.parent, this.worldName, this.file, i, confirm);
+		Convert.result(Data.Resources.minecraft, i == 0 ? (confirm ? Convert.Version.classic : Convert.Version.indev) : this.version, this.parent, this.worldName, this.file, i, confirm);
+	}
+	public void render(int i, int j, float f) {
+		super.render(i, j, f);
+		this.render = true;
 	}
 }

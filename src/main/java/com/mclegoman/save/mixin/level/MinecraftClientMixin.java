@@ -51,7 +51,12 @@ public abstract class MinecraftClientMixin implements SaveModMinecraft {
 		save$exit(null);
 	}
 	public void save$exit(Screen screen) {
-		if (this.f_5854988 != null) save$save();
+		if (this.f_5854988 != null) {
+			SaveHelper.infoOverlay.setTitle("Saving level");
+			SaveHelper.infoOverlay.setDescription("Please wait...");
+			SaveHelper.infoOverlay.setLoading(-1);
+			save$save();
+		}
 		this.f_5854988 = null;
 		System.gc();
 		this.m_6408915(screen);
@@ -83,9 +88,10 @@ public abstract class MinecraftClientMixin implements SaveModMinecraft {
 		}
 	}
 	public void save$load() {
-		this.f_7424826.m_0983733("Loading level");
-		this.f_7424826.m_1154571("Loading chunks");
+		SaveHelper.infoOverlay.setTitle("Loading level");
+		SaveHelper.infoOverlay.setDescription("Loading chunks");
 		for (int chunk = -256; chunk <= 256; chunk += 16) {
+			SaveHelper.infoOverlay.setLoading((chunk + 256) * 100 / 512);
 			int x = MathHelper.floor(this.f_6058446.x);
 			int z = MathHelper.floor(this.f_6058446.z);
 			for (int b = -256; b <= 256; b += 16) this.f_5854988.m_9893076(x + chunk, 64, z + b);

@@ -8,11 +8,11 @@
 package com.mclegoman.save.config;
 
 import com.mclegoman.save.data.Data;
+import com.mclegoman.save.util.SaveHelper;
 import org.quiltmc.config.api.ReflectiveConfig;
 import org.quiltmc.config.api.annotations.Comment;
 import org.quiltmc.config.api.values.TrackedValue;
 import org.quiltmc.config.api.values.ValueList;
-import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.loader.api.config.v2.QuiltConfig;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
@@ -36,7 +36,7 @@ public class SaveConfig extends ReflectiveConfig {
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);
 	@Comment("This sets where the save/load dialog opens")
-	public final TrackedValue<String> dialogDir = this.value(QuiltLoader.getGameDir().toString());
+	public final TrackedValue<String> dialogDir = this.value(SaveHelper.getSavesDir().toString());
 	@Comment("This sets the load dialog filter.")
 	public final TrackedValue<Filter> convertDialogFilter = this.value(Filter.minecraft);
 	@Comment("Sets the proxy server. (Don't put http(s)://!)")
@@ -46,40 +46,19 @@ public class SaveConfig extends ReflectiveConfig {
 	@Comment("Settings for Classic/Indev world conversion. These are considered to be advanced settings. Only adjust if you know what you're doing, doing so is at your own risk.")
 	public final ConvertSettings conversionSettings = new ConvertSettings();
 	public static class ConvertSettings extends Section {
-		//TODO: The converter should be a bit more user friendly with a gui.
-		//@Comment("This sets weather or not the player should be converted from a classic save.")
-		//public final TrackedValue<Boolean> convertClassicPlayer = this.value(true);
-		@Comment("This sets the default creator of a classic world if it can't be found in the save.")
-		public final TrackedValue<String> convertClassicDefaultCreator = this.value("Player");
-		@Comment("This sets the default cloud color of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultCloudColor = this.value(0xFFFFFF);
-		@Comment("This sets the default cloud height of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultCloudHeight = this.value(66);
-		@Comment("This sets the default fog color of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultFogColor = this.value(0xFFFFFF);
-		@Comment("This sets the default sky brightness of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSkyBrightness = this.value(100);
-		@Comment("This sets the default sky color of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSkyColor = this.value(10079487);
-		@Comment("This sets the default surrounding ground height of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSurroundingGroundHeight = this.value(23);
-		@Comment("This sets the default surrounding ground type of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSurroundingGroundType = this.value(2);
-		@Comment("This sets the default surrounding water height of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSurroundingWaterHeight = this.value(32);
-		@Comment("This sets the default surrounding water type of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSurroundingWaterType = this.value(8);
-		@Comment("This sets the default spawnX of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSpawnX = this.value(128);
-		@Comment("This sets the default spawnY of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSpawnY = this.value(36);
-		@Comment("This sets the default spawnZ of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultSpawnZ = this.value(128);
-		@Comment("This sets the default height of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultHeight = this.value(64);
-		@Comment("This sets the default length of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultLength = this.value(256);
-		@Comment("This sets the default width of a classic world if it can't be found in the save.")
-		public final TrackedValue<Integer> convertClassicDefaultWidth = this.value(256);
+		@Comment("This sets the default spawnX of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> spawnX = this.value(128);
+		@Comment("This sets the default spawnY of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> spawnY = this.value(36);
+		@Comment("This sets the default spawnZ of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> spawnZ = this.value(128);
+		@Comment("This sets the default time of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> time = this.value(128);
+		@Comment("This sets the default height of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> height = this.value(64);
+		@Comment("This sets the default length of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> length = this.value(256);
+		@Comment("This sets the default width of a classic/indev world if it can't be found in the save.")
+		public final TrackedValue<Integer> width = this.value(256);
 	}
 }
