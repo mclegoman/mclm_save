@@ -46,9 +46,11 @@ public class Convert {
 		}
 	}
 	private static void select(C_5664496 minecraft, Screen parent, String worldName, File input) {
-		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(parent, "Converting world...", worldName, input), "Converting world...", "What level format are you converting from?", 0, true, "Classic", true, "Indev"));
+		// This function is run when we can't work out what level format we're converting.
+		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(parent, "Converting world...", worldName, input), "Converting world...", "What level format are you converting from?", 0, "Classic", "Indev"));
 	}
 	private static void convert(C_5664496 minecraft, Version version, Screen parent, String worldName, File input) {
+		// This function starts the conversion process by asking the user whether they want player data to be converted.
 		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(version, parent, "Converting " + version.getName() + " world...", worldName, input), "Do you want to keep your player data?", "This includes your inventory, and location!", 1));
 	}
 	protected static void result(C_5664496 minecraft, Version version, Screen parent, String worldName, File input, int id, boolean value) {
@@ -212,24 +214,26 @@ public class Convert {
 			// TODO: Recalculate sizeOnDisk after converting.
 			long sizeOnDisk = input.length();
 			NbtCompound player = null;
-			for (int i = 0; i < nbtCompound.getList("Entities").size(); i++) {
-				NbtCompound entity = (NbtCompound) nbtCompound.getList("Entities").get(i);
-				if (entity.containsKey("id") && entity.getString("id").equals("LocalPlayer")) {
-					player = entity;
-					break;
+			if (convertPlayerData) {
+				for (int i = 0; i < nbtCompound.getList("Entities").size(); i++) {
+					NbtCompound entity = (NbtCompound) nbtCompound.getList("Entities").get(i);
+					if (entity.containsKey("id") && entity.getString("id").equals("LocalPlayer")) {
+						player = entity;
+						break;
+					}
 				}
-			}
-			// The only difference between indev player data and infdev player data is
-			// that infdev uses double instead of float for motion and pos.
-			if (player != null) {
-				NbtList motion = player.getList("Motion");
-				NbtList newMotion = new NbtList();
-				for (int i = 0; i < motion.size(); i++) newMotion.add(new NbtDouble(((NbtFloat)motion.get(i)).value));
-				player.put("Motion", newMotion);
-				NbtList pos = player.getList("Pos");
-				NbtList newPos = new NbtList();
-				for (int i = 0; i < pos.size(); i++) newPos.add(new NbtDouble(((NbtFloat)pos.get(i)).value));
-				player.put("Pos", newPos);
+				// The only difference between indev player data and infdev player data is
+				// that infdev uses double instead of float for motion and pos.
+				if (player != null) {
+					NbtList motion = player.getList("Motion");
+					NbtList newMotion = new NbtList();
+					for (int i = 0; i < motion.size(); i++) newMotion.add(new NbtDouble(((NbtFloat)motion.get(i)).value));
+					player.put("Motion", newMotion);
+					NbtList pos = player.getList("Pos");
+					NbtList newPos = new NbtList();
+					for (int i = 0; i < pos.size(); i++) newPos.add(new NbtDouble(((NbtFloat)pos.get(i)).value));
+					player.put("Pos", newPos);
+				}
 			}
 			createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, player);
 			done(minecraft, parent, worldName);
