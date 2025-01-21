@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.util;
 
-import com.mclegoman.save.gui.InfoOverlay;
+import com.mclegoman.save.gui.SaveInfoOverlay;
 import com.mclegoman.save.nbt.NbtDouble;
 import com.mclegoman.save.nbt.NbtFloat;
 import com.mclegoman.save.nbt.NbtList;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SaveHelper {
-	public static InfoOverlay infoOverlay = new InfoOverlay();
+	public static SaveInfoOverlay infoOverlay = new SaveInfoOverlay();
 	private static final Map<String, Class<?>> blockEntityIdToType = new HashMap<>();
 	private static final Map<Class<?>, String> blockEntityTypeToId = new HashMap<>();
 	public static File getMinecraftDir() {

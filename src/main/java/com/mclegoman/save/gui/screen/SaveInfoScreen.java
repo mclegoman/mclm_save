@@ -46,13 +46,11 @@ public class SaveInfoScreen extends InfoScreen {
 			if (Data.getVersion().isDevelopmentBuild()) textRenderer.drawWithShadow(StringHelper.getFormattedString("Development Build"), 2, this.height - 12, 0xFFAA00);
 		}
 	}
-
 	@Override
 	public void renderLogo() {
 		GL11.glBindTexture(3553, this.minecraft.f_9413506.load("/assets/save/logo.png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.drawTexture((this.width - 256) / 2, 22, 0, 0, 256, 64);
-
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)(this.width / 2 + 32), 70.0F, 0.0F);
 		GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);

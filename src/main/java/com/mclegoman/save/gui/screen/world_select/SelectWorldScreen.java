@@ -49,7 +49,7 @@ public class SelectWorldScreen extends Screen {
 		return true;
 	}
 	public boolean isLoadedWorldActive() {
-		return true;
+		return false;
 	}
 	public String getWorldName(int i) {
 		return SaveModWorld.get(SaveHelper.getMinecraftDir(), "World" + i) != null ? "World" + i : null;

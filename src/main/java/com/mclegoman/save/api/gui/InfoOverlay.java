@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.gui;
+package com.mclegoman.save.api.gui;
 
 import com.mclegoman.save.data.Data;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -13,8 +13,6 @@ import net.minecraft.client.C_4434943;
 import net.minecraft.client.render.Window;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 
 public class InfoOverlay {
 	private String title;
@@ -88,7 +86,7 @@ public class InfoOverlay {
 					bufferBuilder.vertex(x + 100, y + 2, 0.0);
 					bufferBuilder.vertex(x + 100, y, 0.0);
 					for (int v = 0; v < value; v++) {
-						bufferBuilder.color(Color.getHSBColor(v / 100.0F, 1.0f, 1.0f).getRGB());
+						bufferBuilder.color(getProgressBarColor(v));
 						bufferBuilder.vertex(x + v, y, 0.0);
 						bufferBuilder.vertex(x + v, y + 2, 0.0);
 						bufferBuilder.vertex(x + v + 1, y + 2, 0.0);
@@ -99,9 +97,15 @@ public class InfoOverlay {
 				}
 				Data.Resources.minecraft.f_0426313.drawWithShadow(this.title, (width - Data.Resources.minecraft.f_0426313.getWidth(this.title)) / 2, height / 2 - 4 - 16, 16777215);
 				Data.Resources.minecraft.f_0426313.drawWithShadow(this.description, (width - Data.Resources.minecraft.f_0426313.getWidth(this.description)) / 2, height / 2 - 4 + 8, 16777215);
+				renderModInfo(width, height);
 				Display.update();
 				Thread.yield();
 			}
 		}
+	}
+	public int getProgressBarColor(int v) {
+		return 9895830;
+	}
+	public void renderModInfo(int width, int height) {
 	}
 }

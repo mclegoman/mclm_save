@@ -7,8 +7,10 @@
 
 package com.mclegoman.save.convert;
 
+import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.data.Data;
 import com.mclegoman.save.gui.screen.SaveInfoScreen;
+import com.mclegoman.save.util.StringHelper;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.io.File;
@@ -45,6 +47,13 @@ public class ConvertWorldInfoScreen extends SaveInfoScreen {
 	}
 	public void render(int i, int j, float f) {
 		super.render(i, j, f);
+		renderModInfo(this.width, this.height);
 		this.render = true;
+	}
+	public void renderModInfo(int width, int height) {
+		if (Data.getVersion().isDevelopmentBuild() || SaveConfig.instance.debug.value()) {
+			Data.Resources.minecraft.f_0426313.drawWithShadow(StringHelper.getFormattedString("[save] [save_version] ([minecraft_version])"), 2, height - (Data.getVersion().isDevelopmentBuild() ? 23 : 12), 16777215);
+			if (Data.getVersion().isDevelopmentBuild()) Data.Resources.minecraft.f_0426313.drawWithShadow(StringHelper.getFormattedString("Development Build"), 2, height - 12, 0xFFAA00);
+		}
 	}
 }

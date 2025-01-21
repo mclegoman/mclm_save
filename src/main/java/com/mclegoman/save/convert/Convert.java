@@ -38,6 +38,7 @@ public class Convert {
 		Data.getVersion().sendToLog(LogType.INFO, "Converting '" + input.getName() + "' to Alpha save format!");
 		try {
 			String worldName = "World" + slot;
+			// TODO: Make this automatic.
 			select(minecraft, parent, worldName, input);
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
