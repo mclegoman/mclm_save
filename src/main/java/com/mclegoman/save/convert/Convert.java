@@ -38,14 +38,15 @@ public class Convert {
 		Data.getVersion().sendToLog(LogType.INFO, "Converting '" + input.getName() + "' to Alpha save format!");
 		try {
 			String worldName = "World" + slot;
-			// TODO: Make this automatic.
-			select(minecraft, parent, worldName, input);
+			Version version = (input.getName().endsWith(".mine") || input.getName().endsWith(".dat")) ? Version.classic : (input.getName().endsWith(".mclevel") ? Version.indev : null);
+			if (version != null) convert(minecraft, version, parent, worldName, input);
+			else select(minecraft, parent, worldName, input);
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
 	private static void select(C_5664496 minecraft, Screen parent, String worldName, File input) {
-		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(parent, "Converting world...", worldName, input), "Converting world...", "What level format are you converting from?", 0, true, "Classic", false, "Indev"));
+		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(parent, "Converting world...", worldName, input), "Converting world...", "What level format are you converting from?", 0, true, "Classic", true, "Indev"));
 	}
 	private static void convert(C_5664496 minecraft, Version version, Screen parent, String worldName, File input) {
 		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(version, parent, "Converting " + version.getName() + " world...", worldName, input), "Do you want to keep your player data?", "This includes your inventory, and location!", 1));
@@ -174,8 +175,9 @@ public class Convert {
 						}
 					}
 				} else error(minecraft, parent, "Invalid block amount!");
-				// TODO: Convert and save chunks, and calculate sizeOnDisk.
-				createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, 0, playerData[0]);
+				// TODO: Convert and save chunks, and recalculate sizeOnDisk after converting.
+				long sizeOnDisk = input.length();
+				createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, playerData[0]);
 				done(minecraft, parent, worldName);
 			}
 		} catch (Exception error) {
@@ -199,7 +201,41 @@ public class Convert {
 	}
 	private static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		// TODO: Actually Convert.
-		error(minecraft, parent, "Indev conversion is not yet ready!");
+		try {
+			NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(input.toPath()));
+			long seed = nbtCompound.getCompound("About").getLong("CreatedOn");
+			NbtCompound map = nbtCompound.getCompound("Map");
+			short spawnX = ((NbtShort) map.getList("Spawn").get(0)).value;
+			short spawnY = ((NbtShort) map.getList("Spawn").get(1)).value;
+			short spawnZ = ((NbtShort) map.getList("Spawn").get(2)).value;
+			long time = nbtCompound.getCompound("Map").getShort("TimeOfDay");
+			// TODO: Recalculate sizeOnDisk after converting.
+			long sizeOnDisk = input.length();
+			NbtCompound player = null;
+			for (int i = 0; i < nbtCompound.getList("Entities").size(); i++) {
+				NbtCompound entity = (NbtCompound) nbtCompound.getList("Entities").get(i);
+				if (entity.containsKey("id") && entity.getString("id").equals("LocalPlayer")) {
+					player = entity;
+					break;
+				}
+			}
+			// The only difference between indev player data and infdev player data is
+			// that infdev uses double instead of float for motion and pos.
+			if (player != null) {
+				NbtList motion = player.getList("Motion");
+				NbtList newMotion = new NbtList();
+				for (int i = 0; i < motion.size(); i++) newMotion.add(new NbtDouble(((NbtFloat)motion.get(i)).value));
+				player.put("Motion", newMotion);
+				NbtList pos = player.getList("Pos");
+				NbtList newPos = new NbtList();
+				for (int i = 0; i < pos.size(); i++) newPos.add(new NbtDouble(((NbtFloat)pos.get(i)).value));
+				player.put("Pos", newPos);
+			}
+			createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, player);
+			done(minecraft, parent, worldName);
+		} catch (Exception error) {
+			error(minecraft, parent, error.getLocalizedMessage());
+		}
 	}
 	private static void createLevel(C_5664496 minecraft, Screen parent, File dir, long seed, int spawnX, int spawnY, int spawnZ, long time, long sizeOnDisk, @Nullable NbtCompound player) {
 		try {
