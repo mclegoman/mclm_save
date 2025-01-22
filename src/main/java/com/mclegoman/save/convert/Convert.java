@@ -252,8 +252,8 @@ public class Convert {
 					// https://minecraft.wiki/w/Java_Edition_Indev_level_format
 					// TODO: These should be the x,y,z, but they don't seem to be lining up with the in-game block.
 					int x = pos % 1024;
-					int z = (pos >> 10) % 1024;
-					int y = (pos >> 20) % 1024;
+					int y = (pos >> 10) % 1024;
+					int z = (pos >> 20) % 1024;
 					output.putInt("x", x);
 					output.putInt("y", y);
 					output.putInt("z", z);
