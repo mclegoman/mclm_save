@@ -242,11 +242,15 @@ public class Convert {
 			NbtCompound output = new NbtCompound();
 			if (tileEntity.getType() == 10) {
 				NbtCompound tile = (NbtCompound)tileEntity;
-				if (tile.containsKey("id")) output.putString("id", tile.getString("id"));
-				if (tile.containsKey("Items")) output.put("Items", tile.getList("Items"));
+				// We add all data except Pos, since it hasn't changed.
+				tile.get().forEach((id, element) -> {
+					if (!id.equals("Pos")) output.put(id, element);
+				});
+				// We need to update Pos, to x, y, and z, and output it to the correct chunk.
 				if (tile.containsKey("Pos")) {
 					int pos = tile.getInt("Pos");
 					// https://minecraft.wiki/w/Java_Edition_Indev_level_format
+					// TODO: These should be the x,y,z, but they don't seem to be lining up with the in-game block.
 					int x = pos % 1024;
 					int z = (pos >> 10) % 1024;
 					int y = (pos >> 20) % 1024;
@@ -256,15 +260,13 @@ public class Convert {
 					int chunkX = x / 16;
 					int chunkZ = z / 16;
 					if (x >= chunkX * 16 && x < (chunkX + 1) * 16 && z >= chunkZ * 16 && z < (chunkZ + 1) * 16) {
-						if (tile.getString("id").equals("Chest")) {
-							File file = SaveHelper.getChunkFile(dir, chunkX, chunkZ);
-							NbtCompound chunk = SaveModLevel.load(Files.newInputStream(file.toPath())).getCompound("Level");
-							NbtList chunkTileEntities = chunk.getList("TileEntities");
-							chunkTileEntities.add(output);
-							NbtCompound level = new NbtCompound();
-							level.put("Level", chunk);
-							SaveModLevel.save(level, Files.newOutputStream(file.toPath()));
-						}
+						File file = SaveHelper.getChunkFile(dir, chunkX, chunkZ);
+						NbtCompound chunk = SaveModLevel.load(Files.newInputStream(file.toPath())).getCompound("Level");
+						NbtList chunkTileEntities = chunk.getList("TileEntities");
+						chunkTileEntities.add(output);
+						NbtCompound level = new NbtCompound();
+						level.put("Level", chunk);
+						SaveModLevel.save(level, Files.newOutputStream(file.toPath()));
 					}
 				}
 			}
@@ -312,9 +314,6 @@ public class Convert {
 			for (int zChunk = 0; zChunk < 16; zChunk++) {
 				for (int y = 0; y < height; y++) {
 					byte blockId = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
-					// TODO: Furnaces & Chest.
-					if (blockId == (byte) 61 || blockId == (byte) 62) blockId = (byte) 0;
-					// || blockId == (byte) 54)
 					chunk[index] = blockId;
 					index++;
 				}
