@@ -11,6 +11,7 @@ import com.mclegoman.save.nbt.NbtCompound;
 import com.mclegoman.save.nbt.NbtList;
 import com.mclegoman.save.data.Data;
 import com.mclegoman.save.rtu.util.LogType;
+import com.mclegoman.save.util.SaveHelper;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkNibbleStorage;
@@ -80,23 +81,9 @@ public class SaveModChunkCache implements ChunkSource {
 
 		return this.chunks[var3];
 	}
-	private static String toBase36(int i, boolean folder) {
-		int value = getUnsignedValue((byte) i);
-		return folder ? Integer.toString(value % 64, 36) : (i < 0 ? "-" : "") + Integer.toString(value, 36);
-	}
-
-	private static int getUnsignedValue(byte value) {
-		return value & 0xFF;
-	}
-
 	private File getChunkFile(int x, int y) {
-		int convertedX = SaveModWorld.convertChunkCoord(x, true);
-		int convertedY = SaveModWorld.convertChunkCoord(y, true);
-		File folder = new File(new File(this.file, toBase36(convertedX, true)), toBase36(convertedY, true));
-		folder.mkdirs();
-		return new File(folder, "c." + ((convertedX < 0) ? "-" : "") + toBase36((convertedX < 0) ? (convertedX * -1) : convertedX, false) + "."  + ((convertedY < 0) ? "-" : "") + toBase36((convertedY < 0) ? (convertedY * -1) : convertedY, false) + ".dat");
+		return SaveHelper.getChunkFile(this.file, x, y);
 	}
-
 	private WorldChunk loadChunk(int i, int j) {
 		if (this.getChunkFile(i, j).exists()) {
 			try {

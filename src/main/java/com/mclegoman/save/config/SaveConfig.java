@@ -43,6 +43,8 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<String> proxyUrl = this.value("betacraft.uk");
 	@Comment("Sets the proxy server port.")
 	public final TrackedValue<Integer> proxyPort = this.value(0);
+	@Comment("When enabled, a converted world will load after conversion.")
+	public final TrackedValue<Boolean> shouldLoadAfterConvert = this.value(true);
 	@Comment("Settings for Classic/Indev world conversion. These are considered to be advanced settings. Only adjust if you know what you're doing, doing so is at your own risk.")
 	public final ConvertSettings conversionSettings = new ConvertSettings();
 	public static class ConvertSettings extends Section {

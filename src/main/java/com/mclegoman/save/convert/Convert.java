@@ -16,15 +16,16 @@ import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.data.Data;
 import com.mclegoman.save.gui.screen.SaveInfoScreen;
 import com.mclegoman.save.level.SaveModLevel;
+import com.mclegoman.save.level.SaveModMinecraft;
 import com.mclegoman.save.nbt.*;
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.util.SaveHelper;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.gui.screen.Screen;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Random;
@@ -178,8 +179,9 @@ public class Convert {
 						}
 					}
 				} else throw new ConvertFailException("Invalid block amount!");
-				long sizeOnDisk = convertBlocks(width, height, length, blocks);
-				createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, playerData[0]);
+				File file = new File(SaveHelper.getSavesDir(), worldName);
+				convertBlocks(file, width, height, length, blocks, null, time);
+				createLevel(minecraft, parent, file, seed, spawnX, spawnY, spawnZ, time, calculateSizeOnDisk(file, width, length), playerData[0]);
 				done(minecraft, parent, worldName);
 			}
 		} catch (Exception error) {
@@ -217,18 +219,117 @@ public class Convert {
 					player.put("Pos", newPos);
 				}
 			}
-			long sizeOnDisk = convertBlocks(map.getShort("Width"), map.getShort("Height"), map.getShort("Length"), map.getByteArray("Blocks"));
-			createLevel(minecraft, parent, new File(SaveHelper.getSavesDir(), worldName), seed, spawnX, spawnY, spawnZ, time, sizeOnDisk, player);
+			short width = map.getShort("Width");
+			short height = map.getShort("Height");
+			short length = map.getShort("Length");
+
+			File file = new File(SaveHelper.getSavesDir(), worldName);
+			convertBlocks(file, width, height, length, map.getByteArray("Blocks"), map.containsKey("Data") ? map.getByteArray("Data") : null, time);
+			// If we were to convert entities, they would be converted here.
+			// Note: we don't convert currently, as the next version of infdev, doesn't save/load entities.
+			convertTileEntities(file, nbtCompound.getList("TileEntities"));
+			createLevel(minecraft, parent, file, seed, spawnX, spawnY, spawnZ, time, calculateSizeOnDisk(file, width, length), player);
 			done(minecraft, parent, worldName);
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static long convertBlocks(short width, short height, short length, byte[] blocks) throws ConvertFailException {
+	private static void convertTileEntities(File dir, NbtList tileEntities) throws IOException {
+		int i = 0;
+		for (NbtElement tileEntity : tileEntities.get()) {
+			setOverlay("Converting level", "Converting tile entities... (" + i + "/" + tileEntities.size() + ")");
+			i++;
+			NbtCompound output = new NbtCompound();
+			if (tileEntity.getType() == 10) {
+				NbtCompound tile = (NbtCompound)tileEntity;
+				if (tile.containsKey("id")) output.putString("id", tile.getString("id"));
+				if (tile.containsKey("Items")) output.put("Items", tile.getList("Items"));
+				if (tile.containsKey("Pos")) {
+					int pos = tile.getInt("Pos");
+					// https://minecraft.wiki/w/Java_Edition_Indev_level_format
+					int x = pos % 1024;
+					int z = (pos >> 10) % 1024;
+					int y = (pos >> 20) % 1024;
+					output.putInt("x", x);
+					output.putInt("y", y);
+					output.putInt("z", z);
+					int chunkX = x / 16;
+					int chunkZ = z / 16;
+					if (x >= chunkX * 16 && x < (chunkX + 1) * 16 && z >= chunkZ * 16 && z < (chunkZ + 1) * 16) {
+						if (tile.getString("id").equals("Chest")) {
+							File file = SaveHelper.getChunkFile(dir, chunkX, chunkZ);
+							NbtCompound chunk = SaveModLevel.load(Files.newInputStream(file.toPath())).getCompound("Level");
+							NbtList chunkTileEntities = chunk.getList("TileEntities");
+							chunkTileEntities.add(output);
+							NbtCompound level = new NbtCompound();
+							level.put("Level", chunk);
+							SaveModLevel.save(level, Files.newOutputStream(file.toPath()));
+						}
+					}
+				}
+			}
+		}
+	}
+	private static long calculateSizeOnDisk(File dir, short width, short length) {
+		long sizeOnDisk = 0L;
+		int total = ((width / 16) * (length / 16));
+		for (int chunk = 0; chunk < total; chunk++) sizeOnDisk += SaveHelper.getChunkFile(dir, chunk % (width / 16), chunk / (width / 16)).length();
+		return sizeOnDisk;
+	}
+	private static void convertBlocks(File dir, short width, short height, short length, byte[] blocks, byte[] blocksData, long ticks) throws ConvertFailException, IOException {
+		// TODO: In this version, the height of the world is actually 256.
+		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
+		if (height <= 0 || height > 128) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 128!");
+		if (length % 16 != 0) throw new ConvertFailException("Length was " + length + ", expecting value divisible by 16!");
 		if (blocks.length == width * height * length) {
-			// TODO: Convert and save chunks. Add each chunk file's length together and return that.
-			return blocks.length;
+			int total = ((width / 16) * (length / 16));
+			for (int chunk = 0; chunk < total; chunk++) {
+				setOverlay("Converting level", "Writing chunk data... (" + chunk + "/" + total + ")");
+				int x = chunk % (width / 16);
+				int z = chunk / (width / 16);
+				File chunkFile = SaveHelper.getChunkFile(dir, x, z);
+				NbtCompound chunkData = new NbtCompound();
+				NbtCompound level = new NbtCompound();
+				level.putInt("xPos", x);
+				level.putInt("zPos", z);
+				level.putLong("LastUpdate", ticks);
+				level.putByteArray("Blocks", getBlocksForChunk(x, z, width, height, length, blocks));
+				level.putByteArray("Data", getBlockDataForChunk(x, z, width, height, length, blocksData, false));
+				level.putByteArray("SkyLight", new byte[16 * 16 * 128]);
+				level.putByteArray("BlockLight", getBlockDataForChunk(x, z, width, height, length, blocksData, true));
+				// TODO: Calculate HeightMap.
+				level.putByteArray("HeightMap", new byte[16 * 16 * 64]);
+				level.put("TileEntities", new NbtList());
+				chunkData.put("Level", level);
+				SaveModLevel.save(chunkData, Files.newOutputStream(chunkFile.toPath()));
+			}
 		} else throw new ConvertFailException("Invalid block amount!");
+	}
+	private static byte[] getBlocksForChunk(int x, int z, int width, short height, int length, byte[] blocks) {
+		byte[] chunk = new byte[16 * 16 * 128];
+		int index = 0;
+		for (int xChunk = 0; xChunk < 16; xChunk++) {
+			for (int zChunk = 0; zChunk < 16; zChunk++) {
+				for (int y = 0; y < height; y++) {
+					byte blockId = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
+					// TODO: Furnaces & Chest.
+					if (blockId == (byte) 61 || blockId == (byte) 62) blockId = (byte) 0;
+					// || blockId == (byte) 54)
+					chunk[index] = blockId;
+					index++;
+				}
+				index += (128 - height);
+			}
+		}
+		return chunk;
+	}
+	private static byte[] getBlockDataForChunk(int x, int z, int width, short height, int length, byte[] blockData, boolean isLight) {
+		byte[] data = new byte[16 * 16 * 64];
+		byte[] light = new byte[16 * 16 * 64];
+
+		// TODO: Process block data, and block light.
+
+		return isLight ? light : data;
 	}
 	private static void createLevel(C_5664496 minecraft, Screen parent, File dir, long seed, int spawnX, int spawnY, int spawnZ, long time, long sizeOnDisk, @Nullable NbtCompound player) {
 		try {
@@ -252,7 +353,10 @@ public class Convert {
 		}
 	}
 	private static void done(C_5664496 minecraft, Screen parent, String worldName) {
-		minecraft.m_6408915(new SaveInfoScreen(parent, "Convert World", "Successfully converted world to '" + worldName + "'!", InfoScreen.Type.DIRT, true));
+		if (SaveConfig.instance.shouldLoadAfterConvert.value()) {
+			((SaveModMinecraft)minecraft).save$set(worldName);
+			minecraft.m_6408915(null);
+		} else minecraft.m_6408915(new SaveInfoScreen(parent, "Convert World", "Successfully converted world to '" + worldName + "'!", InfoScreen.Type.DIRT, true));
 	}
 	private static void error(C_5664496 minecraft, Screen parent, String error) {
 		minecraft.m_6408915(new SaveInfoScreen(parent, "Error!", ((error == null || error.isEmpty()) ? "Failed to convert world!" : error), InfoScreen.Type.ERROR, true));
@@ -268,40 +372,12 @@ public class Convert {
 			return this.name;
 		}
 	}
-	public static class ItemData {
-		private byte count;
-		private int id;
-		private int slot;
-		public ItemData(byte count, int id, int slot) {
-			this.count = count;
-			this.id = id;
-			this.slot = slot;
-		}
-		public void setCount(byte count) {
-			this.count = count;
-		}
-		public void setId(int id) {
-			this.id = id;
-		}
-		public void setSlot(int slot) {
-			this.slot = slot;
-		}
-	}
-	public static ItemData setItemData(ItemData itemData, ItemDataType type, int value) {
-		if (itemData == null) itemData = new ItemData((byte) 0, 0, 0);
-		if (type == ItemDataType.count) itemData.setCount((byte) value);
-		else if (type == ItemDataType.id) itemData.setId(value);
-		else if (type == ItemDataType.slot) itemData.setSlot(value);
-		return itemData;
-	}
-	public enum ItemDataType {
-		count,
-		id,
-		slot
-	}
 	private static void setOverlay(String title, String message) {
+		setOverlay(title, message, -1);
+	}
+	private static void setOverlay(String title, String message, int value) {
 		SaveHelper.infoOverlay.setTitle(title);
 		SaveHelper.infoOverlay.setDescription(message);
-		SaveHelper.infoOverlay.setLoading(-1);
+		SaveHelper.infoOverlay.setLoading(value);
 	}
 }

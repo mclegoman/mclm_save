@@ -8,6 +8,7 @@
 package com.mclegoman.save.util;
 
 import com.mclegoman.save.gui.SaveInfoOverlay;
+import com.mclegoman.save.level.SaveModWorld;
 import com.mclegoman.save.nbt.NbtDouble;
 import com.mclegoman.save.nbt.NbtFloat;
 import com.mclegoman.save.nbt.NbtList;
@@ -47,9 +48,24 @@ public class SaveHelper {
 		NbtList nbtList = new NbtList();
 		for (double value : ds) nbtList.add(new NbtDouble(value));
 		return nbtList;
-	}public static NbtList toNbtList(float... fs) {
+	}
+	public static NbtList toNbtList(float... fs) {
 		NbtList nbtList = new NbtList();
 		for (float value : fs) nbtList.add(new NbtFloat(value));
 		return nbtList;
+	}
+	public static String toBase36(int i, boolean folder) {
+		int value = getUnsignedValue((byte) i);
+		return folder ? Integer.toString(value % 64, 36) : (i < 0 ? "-" : "") + Integer.toString(value, 36);
+	}
+	public static int getUnsignedValue(byte value) {
+		return value & 0xFF;
+	}
+	public static File getChunkFile(File file, int x, int z) {
+		int convertedX = SaveModWorld.convertChunkCoord(x, true);
+		int convertedY = SaveModWorld.convertChunkCoord(z, true);
+		File folder = new File(new File(file, toBase36(convertedX, true)), toBase36(convertedY, true));
+		folder.mkdirs();
+		return new File(folder, "c." + ((convertedX < 0) ? "-" : "") + toBase36((convertedX < 0) ? (convertedX * -1) : convertedX, false) + "."  + ((convertedY < 0) ? "-" : "") + toBase36((convertedY < 0) ? (convertedY * -1) : convertedY, false) + ".dat");
 	}
 }

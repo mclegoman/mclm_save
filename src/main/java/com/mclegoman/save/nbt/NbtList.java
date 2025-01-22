@@ -14,39 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NbtList extends NbtElement {
-	private List elements = new ArrayList();
+	private List<NbtElement> elements = new ArrayList<>();
 	private byte type;
 
 	public NbtList() {
 	}
 
 	final void write(DataOutput dataOutput) throws IOException {
-		if (this.elements.size() > 0) {
-			this.type = ((NbtElement)this.elements.get(0)).getType();
-		} else {
-			this.type = 1;
-		}
-
+		if (!this.elements.isEmpty()) this.type = (this.elements.get(0)).getType();
+		else this.type = 1;
 		dataOutput.writeByte(this.type);
 		dataOutput.writeInt(this.elements.size());
-
-		for(int var2 = 0; var2 < this.elements.size(); ++var2) {
-			((NbtElement)this.elements.get(var2)).write(dataOutput);
-		}
-
+		for (NbtElement element : this.elements) element.write(dataOutput);
 	}
 
 	final void read(DataInput dataInput) throws IOException {
 		this.type = dataInput.readByte();
-		int var2 = dataInput.readInt();
-		this.elements = new ArrayList();
-
-		for(int var3 = 0; var3 < var2; ++var3) {
-			NbtElement var4;
-			(var4 = NbtElement.create(this.type)).read(dataInput);
-			this.elements.add(var4);
+		int total = dataInput.readInt();
+		this.elements = new ArrayList<>();
+		for (int index = 0; index < total; ++index) {
+			NbtElement element = NbtElement.create(this.type);
+			if (element != null) element.read(dataInput);
+			this.elements.add(element);
 		}
-
 	}
 
 	public final byte getType() {
@@ -54,47 +44,46 @@ public class NbtList extends NbtElement {
 	}
 
 	public final String toString() {
-		StringBuilder var10000 = (new StringBuilder()).append("").append(this.elements.size()).append(" entries of type ");
-		String var10001;
+		StringBuilder stringBuilder = new StringBuilder().append(this.elements.size()).append(" entries of type ");
+		String type;
 		switch (this.type) {
 			case 0:
-				var10001 = "TAG_End";
+				type = "TAG_End";
 				break;
 			case 1:
-				var10001 = "TAG_Byte";
+				type = "TAG_Byte";
 				break;
 			case 2:
-				var10001 = "TAG_Short";
+				type = "TAG_Short";
 				break;
 			case 3:
-				var10001 = "TAG_Int";
+				type = "TAG_Int";
 				break;
 			case 4:
-				var10001 = "TAG_Long";
+				type = "TAG_Long";
 				break;
 			case 5:
-				var10001 = "TAG_Float";
+				type = "TAG_Float";
 				break;
 			case 6:
-				var10001 = "TAG_Double";
+				type = "TAG_Double";
 				break;
 			case 7:
-				var10001 = "TAG_Byte_Array";
+				type = "TAG_Byte_Array";
 				break;
 			case 8:
-				var10001 = "TAG_String";
+				type = "TAG_String";
 				break;
 			case 9:
-				var10001 = "TAG_List";
+				type = "TAG_List";
 				break;
 			case 10:
-				var10001 = "TAG_Compound";
+				type = "TAG_Compound";
 				break;
 			default:
-				var10001 = "UNKNOWN";
+				type = "UNKNOWN";
 		}
-
-		return var10000.append(var10001).toString();
+		return stringBuilder.append(type).toString();
 	}
 
 	public final void add(NbtElement nbtElement) {
@@ -103,7 +92,11 @@ public class NbtList extends NbtElement {
 	}
 
 	public final NbtElement get(int i) {
-		return (NbtElement)this.elements.get(i);
+		return this.elements.get(i);
+	}
+
+	public final List<NbtElement> get() {
+		return this.elements;
 	}
 
 	public final int size() {
