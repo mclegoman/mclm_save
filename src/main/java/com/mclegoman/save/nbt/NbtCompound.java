@@ -26,12 +26,18 @@ public class NbtCompound extends NbtElement {
 
 	final void read(DataInput dataInput) throws IOException {
 		this.elements.clear();
-		NbtElement element = NbtElement.deserialize(dataInput);
-		while (element.getType() != 0) this.elements.put(element.getName(), element);
+		NbtElement var2;
+		while ((var2 = NbtElement.deserialize(dataInput)).getType() != 0) {
+			this.elements.put(var2.getName(), var2);
+		}
 	}
 
 	public final byte getType() {
 		return 10;
+	}
+
+	public final void remove(String string) {
+		this.elements.remove(string);
 	}
 
 	public final void put(String string, NbtElement nbtElement) {
@@ -120,8 +126,5 @@ public class NbtCompound extends NbtElement {
 
 	public final String toString() {
 		return "" + this.elements.size() + " entries";
-	}
-	public final Map<String, NbtElement> get() {
-		return this.elements;
 	}
 }

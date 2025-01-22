@@ -235,38 +235,33 @@ public class Convert {
 		}
 	}
 	private static void convertTileEntities(File dir, NbtList tileEntities) throws IOException {
-		int i = 0;
-		for (NbtElement tileEntity : tileEntities.get()) {
+		for (int i = 0; i < tileEntities.size(); i++) {
 			setOverlay("Converting level", "Converting tile entities... (" + i + "/" + tileEntities.size() + ")");
-			i++;
-			NbtCompound output = new NbtCompound();
+			NbtElement tileEntity = tileEntities.get(i);
 			if (tileEntity.getType() == 10) {
 				NbtCompound tile = (NbtCompound)tileEntity;
-				// We add all data except Pos, since it hasn't changed.
-				tile.get().forEach((id, element) -> {
-					if (!id.equals("Pos")) output.put(id, element);
-				});
-				// We need to update Pos, to x, y, and z, and output it to the correct chunk.
 				if (tile.containsKey("Pos")) {
 					int pos = tile.getInt("Pos");
 					// https://minecraft.wiki/w/Java_Edition_Indev_level_format
-					// TODO: These should be the x,y,z, but they don't seem to be lining up with the in-game block.
 					int x = pos % 1024;
 					int y = (pos >> 10) % 1024;
 					int z = (pos >> 20) % 1024;
-					output.putInt("x", x);
-					output.putInt("y", y);
-					output.putInt("z", z);
+					tile.remove("Pos");
+					tile.putInt("x", x);
+					tile.putInt("y", y);
+					tile.putInt("z", z);
 					int chunkX = x / 16;
 					int chunkZ = z / 16;
 					if (x >= chunkX * 16 && x < (chunkX + 1) * 16 && z >= chunkZ * 16 && z < (chunkZ + 1) * 16) {
-						File file = SaveHelper.getChunkFile(dir, chunkX, chunkZ);
-						NbtCompound chunk = SaveModLevel.load(Files.newInputStream(file.toPath())).getCompound("Level");
-						NbtList chunkTileEntities = chunk.getList("TileEntities");
-						chunkTileEntities.add(output);
-						NbtCompound level = new NbtCompound();
-						level.put("Level", chunk);
-						SaveModLevel.save(level, Files.newOutputStream(file.toPath()));
+						if (tile.getString("id").equals("Chest")) {
+							File file = SaveHelper.getChunkFile(dir, chunkX, chunkZ);
+							NbtCompound chunk = SaveModLevel.load(Files.newInputStream(file.toPath())).getCompound("Level");
+							NbtList chunkTileEntities = chunk.getList("TileEntities");
+							chunkTileEntities.add(tile);
+							NbtCompound level = new NbtCompound();
+							level.put("Level", chunk);
+							SaveModLevel.save(level, Files.newOutputStream(file.toPath()));
+						}
 					}
 				}
 			}
@@ -313,8 +308,7 @@ public class Convert {
 		for (int xChunk = 0; xChunk < 16; xChunk++) {
 			for (int zChunk = 0; zChunk < 16; zChunk++) {
 				for (int y = 0; y < height; y++) {
-					byte blockId = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
-					chunk[index] = blockId;
+					chunk[index] = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
 					index++;
 				}
 				index += (128 - height);
