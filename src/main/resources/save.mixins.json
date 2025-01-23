@@ -25,12 +25,13 @@
 		"gui.OptionsScreenMixin",
 		"gui.ScreenMixin",
 		"gui.TitleScreenMixin",
-		"level.MinecraftClientMixin"
+		"level.MinecraftClientMixin",
+		"level.OverworldChunkGeneratorMixin",
+		"level.WorldChunkMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"level.WorldChunkMixin"
 	]
 }

@@ -16,7 +16,7 @@ loom {
 	customMinecraftManifest.set("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
 	clientOnlyMinecraftJar()
 	mods {
-		"mclm_save" {
+		"save" {
 			sourceSet("main")
 		}
 	}

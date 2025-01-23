@@ -33,6 +33,8 @@ public class SaveConfig extends ReflectiveConfig {
 	@Comment("Disables ItemEntity with flower item stack. (This is meant as an alternative to fixFlowerGen)")
 	public final TrackedValue<Boolean> shouldDisableFlowerItems = this.value(false);
 	public final TrackedValue<ValueList<String>> flowerItems = this.list("", "37", "38");
+	@Comment("When enabled, replaces populateChunk with inf-327's populateChunk which removes caves.")
+	public final TrackedValue<Boolean> disableCaves = this.value(true);
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);
 	@Comment("This sets where the save/load dialog opens")
