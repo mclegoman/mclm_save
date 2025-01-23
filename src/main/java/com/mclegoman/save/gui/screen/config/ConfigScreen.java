@@ -81,12 +81,18 @@ public class ConfigScreen extends Screen {
 	public final void render(int i, int j, float f) {
 		this.drawBackgroundTexture();
 		drawCenteredString(this.textRenderer, StringHelper.getFormattedString("[save] Config"), this.width / 2, 20, 16777215);
+		int warningY = 2;
 		if (SaveConfig.instance.fixFlowerGen.value()) {
-			if (SaveConfig.instance.shouldDisableFlowerItems.value()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString("Note: Prevent Flower Drop is not required with Fix Flower Generation."), this.width / 2, 2, 0xFF5555);
+			if (SaveConfig.instance.shouldDisableFlowerItems.value()) {
+				drawCenteredString(this.textRenderer, StringHelper.getFormattedString("Note: Prevent Flower Drop is not required with Fix Flower Generation."), this.width / 2, warningY, 0xFF5555);
+				warningY += 11;
+			}
 		} else {
-			if (SaveConfig.instance.shouldDisableFlowerItems.value()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString("Note: We recommend using Fix Flower Generation instead of Prevent Flower Drop."), this.width / 2, 2, 0xFF5555);
-			else drawCenteredString(this.textRenderer, StringHelper.getFormattedString("WARNING: Fix Flower Generation is recommended for performance purposes."), this.width / 2, 2, 0xFF5555);
+			if (SaveConfig.instance.shouldDisableFlowerItems.value()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString("Note: We recommend using Fix Flower Generation instead of Prevent Flower Drop."), this.width / 2, warningY, 0xFF5555);
+			else drawCenteredString(this.textRenderer, StringHelper.getFormattedString("WARNING: Fix Flower Generation is recommended for performance purposes."), this.width / 2, warningY, 0xFF5555);
+			warningY += 11;
 		}
+		if (!SaveConfig.instance.disableCaves.value()) drawCenteredString(this.textRenderer, StringHelper.getFormattedString("WARNING: Caves will regenerate everytime the chunk is loaded."), this.width / 2, warningY, 0xFF5555);
 		super.render(i, j, f);
 	}
 	public void keyPressed(char chr, int key) {
