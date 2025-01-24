@@ -78,4 +78,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements SaveModE
 			this.world.addEntity(itemEntity);
 		}
 	}
+	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/living/player/PlayerEntity;refreshPositionAndAngles(DDDFF)V"))
+	public void save$fixRespawn(PlayerEntity player, double d, double e, double f, float g, float h) {
+		player.refreshPositionAndAngles(world.spawnpointX, world.spawnpointY, world.spawnpointZ, g, h);
+	}
 }

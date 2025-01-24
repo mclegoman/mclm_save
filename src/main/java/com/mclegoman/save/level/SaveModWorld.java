@@ -39,7 +39,7 @@ public class SaveModWorld extends World {
 		this.dir = new File(file, string);
 		this.dir.mkdirs();
 		File levelFile = new File(this.dir, "level.dat");
-		this.isNewWorld = !levelFile.exists() && SaveConfig.instance.starterItems.value();
+		this.isNewWorld = !levelFile.exists();
 		if (levelFile.exists()) {
 			try {
 				NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(levelFile.toPath())).getCompound("Data");
@@ -96,23 +96,7 @@ public class SaveModWorld extends World {
 			this.f_4300305 = null;
 		}
 		if (this.isNewWorld) {
-			// When generating a world using vanilla, these items would be added to your hotbar. I couldn't find the function that added them, so i made it myself.
-			Integer[] itemIds = new Integer[]{
-					Item.DIAMOND_AXE.id,
-					Item.DIAMOND_SHOVEL.id,
-					Item.DIAMOND_PICKAXE.id,
-					Block.TORCH.id,
-					Item.FLINT_AND_STEEL.id,
-					Block.TNT.id,
-					Block.GLASS.id,
-					Item.BOW.id,
-					Item.ARROW.id
-			};
-			int index = 0;
-			for (Integer id : itemIds) {
-				((PlayerEntity) this.f_6053391).inventory.inventorySlots[index] = new ItemStack(id, 64);
-				index++;
-			}
+			if (SaveConfig.instance.starterItems.value()) Data.Resources.minecraft.f_1273243.m_9083158();
 			this.isNewWorld = false;
 		}
 	}

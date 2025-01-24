@@ -36,7 +36,6 @@ public abstract class MinecraftClientMixin implements SaveModMinecraft {
 	@Shadow public ClientPlayerInteractionManager f_1273243;
 	@Shadow public WorldRenderer f_4021716;
 	@Shadow public ParticleManager f_9322491;
-	@Shadow public C_0877775 f_7424826;
 	@Shadow public C_1331819 f_9967940;
 	@Shadow public C_8730536 f_2424468;
 	public C_5664496 save$getInstance() {

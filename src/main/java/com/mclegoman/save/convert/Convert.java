@@ -295,13 +295,25 @@ public class Convert {
 				level.putByteArray("Data", getBlockDataForChunk(x, z, width, height, length, blocksData, false));
 				level.putByteArray("SkyLight", new byte[16 * 16 * 128]);
 				level.putByteArray("BlockLight", getBlockDataForChunk(x, z, width, height, length, blocksData, true));
-				// TODO: Calculate HeightMap.
-				level.putByteArray("HeightMap", new byte[16 * 16 * 64]);
+				level.putByteArray("HeightMap", calcHeightMap());
 				level.put("TileEntities", new NbtList());
 				chunkData.put("Level", level);
 				SaveModLevel.save(chunkData, Files.newOutputStream(chunkFile.toPath()));
 			}
 		} else throw new ConvertFailException("Invalid block amount!");
+	}
+	private static byte[] calcHeightMap() {
+		// It's not perfect (e.g transparent blocks probably wouldn't be counted), but the game should fix this when saving anyway.
+		byte[] heightMap = new byte[16 * 16];
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				for (int y = 0; y < 128; y++) {
+					int currentHeight = 127 - y;
+					heightMap[x * 16 + z] = (byte) (currentHeight + 1);
+				}
+			}
+		}
+		return heightMap;
 	}
 	private static byte[] getBlocksForChunk(int x, int z, int width, short height, int length, byte[] blocks) {
 		byte[] chunk = new byte[16 * 16 * 128];
@@ -318,12 +330,28 @@ public class Convert {
 		return chunk;
 	}
 	private static byte[] getBlockDataForChunk(int x, int z, int width, short height, int length, byte[] blockData, boolean isLight) {
-		byte[] data = new byte[16 * 16 * 64];
-		byte[] light = new byte[16 * 16 * 64];
-
-		// TODO: Process block data, and block light.
-
-		return isLight ? light : data;
+		byte[] output = new byte[16 * 16 * 64];
+		int i = 0;
+		for (int xIndex = x * 16; xIndex < x * 16 + 16; xIndex++) {
+			for (int zIndex = z * 16; zIndex < z * 16 + 16; zIndex++) {
+				for (int yIndex = 0; yIndex < height; yIndex += 2) {
+					byte a = blockData[(yIndex * length + zIndex) * width + xIndex];
+					byte b = blockData[((yIndex + 1) * length + zIndex) * width + xIndex];
+					if (isLight) {
+						byte lightByte = (byte) ((a & 15) * 16 + b & 15);
+						if (lightByte > 127) lightByte -= 256;
+						output[i] = lightByte;
+					} else {
+						byte dataByte = (byte) ((a >> 4) * 16 + b >> 4);
+						if (dataByte > 127) dataByte -= 256;
+						output[i] = dataByte;
+					}
+					i += 1;
+				}
+				i += ((128 - height) / 2);
+			}
+		}
+		return output;
 	}
 	private static void createLevel(C_5664496 minecraft, Screen parent, File dir, long seed, int spawnX, int spawnY, int spawnZ, long time, long sizeOnDisk, @Nullable NbtCompound player) {
 		try {
