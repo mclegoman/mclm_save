@@ -274,9 +274,10 @@ public class Convert {
 		return sizeOnDisk;
 	}
 	private static void convertBlocks(File dir, short width, short height, short length, byte[] blocks, byte[] blocksData, long ticks) throws ConvertFailException, IOException {
-		// TODO: In this version, the height of the world is actually 256.
+		// inf-20100227 changed the world height from 256, to 127.
+		// https://minecraft.wiki/w/Java_Edition_Infdev_20100227-1414
 		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
-		if (height <= 0 || height > 128) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 128!");
+		if (height <= 0 || height > 128) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 127!");
 		if (length % 16 != 0) throw new ConvertFailException("Length was " + length + ", expecting value divisible by 16!");
 		if (blocks.length == width * height * length) {
 			int total = ((width / 16) * (length / 16));
