@@ -354,7 +354,9 @@ public class Convert {
 					index += 1;
 				}
 				for (int y = 0; y < height; y++) {
-					chunk[index] = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
+					byte block = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
+					if (SaveConfig.instance.conversionSettings.replaceBedrock.value() && block == (byte) 7) block = SaveConfig.instance.conversionSettings.offsetBlockId.value().byteValue();
+					chunk[index] = block;
 					index++;
 				}
 				index += (128 - height - yOffset);
