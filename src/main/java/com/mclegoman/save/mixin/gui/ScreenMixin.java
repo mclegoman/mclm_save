@@ -17,4 +17,6 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class ScreenMixin implements SaveModScreen {
 	public void save$confirmResult(boolean value, int id) {
 	}
+	public void save$confirmResult(int value, int id) {
+	}
 }

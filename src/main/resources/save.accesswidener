@@ -31,3 +31,9 @@ accessible field net/minecraft/world/World entities Ljava/util/List;
 extendable method net/minecraft/world/World tick ()V
 extendable method net/minecraft/world/gen/chunk/OverworldChunkGenerator getChunk (II)Lnet/minecraft/world/chunk/WorldChunk;
 accessible field net/minecraft/client/C_5664496 f_4309051 Z
+accessible method net/minecraft/client/gui/widget/ButtonWidget <init> (IIIIILjava/lang/String;)V
+accessible field net/minecraft/client/gui/widget/ButtonWidget x I
+accessible field net/minecraft/client/gui/widget/ButtonWidget y I
+accessible field net/minecraft/client/gui/widget/ButtonWidget width I
+accessible field net/minecraft/client/gui/widget/ButtonWidget height I
+extendable method net/minecraft/client/gui/widget/ButtonWidget m_9498802 (Lnet/minecraft/client/C_5664496;II)V

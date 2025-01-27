@@ -55,11 +55,11 @@ public class SelectWorldScreen extends Screen {
 		return SaveModWorld.get(SaveHelper.getMinecraftDir(), "World" + i) != null ? "World" + i : null;
 	}
 	public void m_7555169() {
-		this.buttons.add(new com.mclegoman.save.api.gui.widget.ButtonWidget(5, this.width / 2 - 100, this.height / 6 + 120 + 12, 98, 20, "Delete world..."));
-		ButtonWidget convert = new com.mclegoman.save.api.gui.widget.ButtonWidget(6, this.width / 2 + 2, this.height / 6 + 120 + 12, 98, 20, "Convert...");
+		this.buttons.add(new ButtonWidget(5, this.width / 2 - 100, this.height / 6 + 120 + 12, 98, 20, "Delete world..."));
+		ButtonWidget convert = new ButtonWidget(6, this.width / 2 + 2, this.height / 6 + 120 + 12, 98, 20, "Convert...");
 		//convert.active = false;
 		this.buttons.add(convert);
-		this.buttons.add(new com.mclegoman.save.api.gui.widget.ButtonWidget(7, this.width / 2 + 102, this.height / 6 + 120 + 12, 20, 20, "..."));
+		this.buttons.add(new ButtonWidget(7, this.width / 2 + 102, this.height / 6 + 120 + 12, 20, 20, "..."));
 		this.buttons.add(new ButtonWidget(8, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
 	}
 	public void buttonClicked(ButtonWidget buttonWidget) {

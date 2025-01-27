@@ -59,13 +59,19 @@ public class Convert {
 		// 0: Version Type
 		if (id == 0) convert(minecraft, version, parent, worldName, input);
 		// 1: Convert Player Data
-		if (id == 1) {
+		else if (id == 1) {
 			setOverlay("Converting level", "Converting from " + version.getName() + " to alpha format!");
 			if (version == Version.classic) convertClassic(minecraft, parent, worldName, value, input);
 			else if (version == Version.indev) convertIndev(minecraft, parent, worldName, value, input);
 				// This won't be executed unless the Version enum has been modified.
 			else error(minecraft, parent, "Invalid version type!");
 		}
+	}
+	protected static void result(C_5664496 minecraft, Screen parent, String worldName, int id, int value, short width, short height, short length, NbtCompound nbtCompound, NbtCompound player, WorldData worldData) {
+		// 0: Classic Y Offset
+		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, 0);
+		// 1: Indev Y Offset
+		if (id == 1) convertIndevFinish(minecraft, parent, worldName, width, height, length, nbtCompound, player, value);
 	}
 	private static void convertClassic(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		try {
@@ -179,10 +185,9 @@ public class Convert {
 						}
 					}
 				} else throw new ConvertFailException("Invalid block amount!");
-				File file = new File(SaveHelper.getSavesDir(), worldName);
-				convertBlocks(file, width, height, length, blocks, null, time);
-				createLevel(minecraft, parent, file, seed, spawnX, spawnY, spawnZ, time, calculateSizeOnDisk(file, width, length), playerData[0]);
-				done(minecraft, parent, worldName);
+				int maxYOffset = 128 - height;
+				if (maxYOffset > 0) minecraft.m_6408915(new SliderConfirmScreen(new ConvertWorldInfoScreen(parent, "Setting y offset...", worldName, input, width, length, height, null, playerData[0], new WorldData(blocks, time, seed, (short) spawnX, (short) spawnY, (short) spawnZ)), "Do you want to offset your world vertically?", "Select how many blocks upwards you want to shift your world", 0, "Y Offset", maxYOffset, "Confirm"));
+				else convertClassicFinish(minecraft, parent, worldName, width, height, length, blocks, playerData[0], time, seed, (short) spawnX, (short) spawnY, (short) spawnZ, 0);
 			}
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
@@ -191,12 +196,7 @@ public class Convert {
 	private static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
 		try {
 			NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(input.toPath()));
-			long seed = nbtCompound.getCompound("About").getLong("CreatedOn");
 			NbtCompound map = nbtCompound.getCompound("Map");
-			short spawnX = ((NbtShort) map.getList("Spawn").get(0)).value;
-			short spawnY = ((NbtShort) map.getList("Spawn").get(1)).value;
-			short spawnZ = ((NbtShort) map.getList("Spawn").get(2)).value;
-			long time = nbtCompound.getCompound("Map").getShort("TimeOfDay");
 			NbtCompound player = null;
 			if (convertPlayerData) {
 				for (int i = 0; i < nbtCompound.getList("Entities").size(); i++) {
@@ -220,21 +220,50 @@ public class Convert {
 				}
 			}
 			short width = map.getShort("Width");
-			short height = map.getShort("Height");
 			short length = map.getShort("Length");
-
+			short height = map.getShort("Height");
+			int maxYOffset = 128 - height;
+			if (maxYOffset > 0) minecraft.m_6408915(new SliderConfirmScreen(new ConvertWorldInfoScreen(parent, "Setting y offset...", worldName, input, width, length, height, nbtCompound, player, null), "Do you want to offset your world vertically?", "Select how many blocks upwards you want to shift your world", 1, "Y Offset", maxYOffset, "Confirm"));
+			else convertIndevFinish(minecraft, new ConvertWorldInfoScreen(parent, "Setting y offset..."), worldName, width, height, length, nbtCompound, player, 0);
+		} catch (Exception error) {
+			error(minecraft, parent, error.getLocalizedMessage());
+		}
+	}
+	private static void convertClassicFinish(C_5664496 minecraft, Screen parent, String worldName, short width, short height, short length, byte[] blocks, NbtCompound player, long time, long seed, short spawnX, short spawnY, short spawnZ, int yOffset) {
+		try {
 			File file = new File(SaveHelper.getSavesDir(), worldName);
-			convertBlocks(file, width, height, length, map.getByteArray("Blocks"), map.containsKey("Data") ? map.getByteArray("Data") : null, time);
-			// If we were to convert entities, they would be converted here.
-			// Note: we don't convert currently, as the next version of infdev, doesn't save/load entities.
-			convertTileEntities(file, nbtCompound.getList("TileEntities"));
-			createLevel(minecraft, parent, file, seed, spawnX, spawnY, spawnZ, time, calculateSizeOnDisk(file, width, length), player);
+			convertBlocks(file, width, height, length, blocks, null, time, yOffset);
+			createLevel(minecraft, parent, file, seed, spawnX, spawnY + yOffset, spawnZ, time, calculateSizeOnDisk(file, width, length), player);
 			done(minecraft, parent, worldName);
 		} catch (Exception error) {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static void convertTileEntities(File dir, NbtList tileEntities) throws IOException {
+	private static void convertIndevFinish(C_5664496 minecraft, Screen parent, String worldName, short width, short height, short length, NbtCompound nbtCompound, NbtCompound player, int yOffset) {
+		try {
+			NbtCompound map = nbtCompound.getCompound("Map");
+			long seed = nbtCompound.getCompound("About").getLong("CreatedOn");
+			short spawnX = ((NbtShort) map.getList("Spawn").get(0)).value;
+			short spawnY = ((NbtShort) map.getList("Spawn").get(1)).value;
+			short spawnZ = ((NbtShort) map.getList("Spawn").get(2)).value;
+			long time = nbtCompound.getCompound("Map").getShort("TimeOfDay");
+			File file = new File(SaveHelper.getSavesDir(), worldName);
+			convertBlocks(file, width, height, length, map.getByteArray("Blocks"), map.containsKey("Data") ? map.getByteArray("Data") : null, time, yOffset);
+			// If we were to convert entities, they would be converted here.
+			// Note: we don't convert currently, as the next version of infdev, doesn't save/load entities.
+			convertTileEntities(file, nbtCompound.getList("TileEntities"), yOffset);
+			if (player != null) {
+				NbtList pos = player.getList("Pos");
+				pos.replace(1, new NbtDouble((((NbtDouble)pos.get(1)).value) + yOffset));
+				player.put("Pos", pos);
+			}
+			createLevel(minecraft, parent, file, seed, spawnX, spawnY + yOffset, spawnZ, time, calculateSizeOnDisk(file, width, length), player);
+			done(minecraft, parent, worldName);
+		} catch (Exception error) {
+			error(minecraft, parent, error.getLocalizedMessage());
+		}
+	}
+	private static void convertTileEntities(File dir, NbtList tileEntities, int yOffset) throws IOException {
 		for (int i = 0; i < tileEntities.size(); i++) {
 			setOverlay("Converting level", "Converting tile entities... (" + i + "/" + tileEntities.size() + ")");
 			NbtElement tileEntity = tileEntities.get(i);
@@ -244,7 +273,7 @@ public class Convert {
 					int pos = tile.getInt("Pos");
 					// https://minecraft.wiki/w/Java_Edition_Indev_level_format
 					int x = pos % 1024;
-					int y = (pos >> 10) % 1024;
+					int y = ((pos >> 10) % 1024) + yOffset;
 					int z = (pos >> 20) % 1024;
 					tile.remove("Pos");
 					tile.putInt("x", x);
@@ -273,11 +302,11 @@ public class Convert {
 		for (int chunk = 0; chunk < total; chunk++) sizeOnDisk += SaveHelper.getChunkFile(dir, chunk % (width / 16), chunk / (width / 16)).length();
 		return sizeOnDisk;
 	}
-	private static void convertBlocks(File dir, short width, short height, short length, byte[] blocks, byte[] blocksData, long ticks) throws ConvertFailException, IOException {
+	private static void convertBlocks(File dir, short width, short height, short length, byte[] blocks, byte[] blocksData, long ticks, int yOffset) throws ConvertFailException, IOException {
 		// inf-20100227 changed the world height from 256, to 127.
 		// https://minecraft.wiki/w/Java_Edition_Infdev_20100227-1414
 		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
-		if (height <= 0 || height > 128) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 127!");
+		if (height <= 0 || height > 127) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 127!");
 		if (length % 16 != 0) throw new ConvertFailException("Length was " + length + ", expecting value divisible by 16!");
 		if (blocks.length == width * height * length) {
 			int total = ((width / 16) * (length / 16));
@@ -291,10 +320,10 @@ public class Convert {
 				level.putInt("xPos", x);
 				level.putInt("zPos", z);
 				level.putLong("LastUpdate", ticks);
-				level.putByteArray("Blocks", getBlocksForChunk(x, z, width, height, length, blocks));
-				level.putByteArray("Data", getBlockDataForChunk(x, z, width, height, length, blocksData, false));
+				level.putByteArray("Blocks", getBlocksForChunk(x, z, width, height, length, blocks, yOffset));
+				level.putByteArray("Data", blocksData != null ? getBlockDataForChunk(x, z, width, height, length, blocksData, yOffset, false) : new byte[16 * 16 * 64]);
 				level.putByteArray("SkyLight", new byte[16 * 16 * 128]);
-				level.putByteArray("BlockLight", getBlockDataForChunk(x, z, width, height, length, blocksData, true));
+				level.putByteArray("BlockLight", blocksData != null ? getBlockDataForChunk(x, z, width, height, length, blocksData, yOffset, true) : new byte[16 * 16 * 64]);
 				level.putByteArray("HeightMap", calcHeightMap());
 				level.put("TileEntities", new NbtList());
 				chunkData.put("Level", level);
@@ -315,40 +344,47 @@ public class Convert {
 		}
 		return heightMap;
 	}
-	private static byte[] getBlocksForChunk(int x, int z, int width, short height, int length, byte[] blocks) {
+	private static byte[] getBlocksForChunk(int x, int z, int width, short height, int length, byte[] blocks, int yOffset) {
 		byte[] chunk = new byte[16 * 16 * 128];
 		int index = 0;
 		for (int xChunk = 0; xChunk < 16; xChunk++) {
 			for (int zChunk = 0; zChunk < 16; zChunk++) {
+				for (int y = 0; y < yOffset; y++) {
+					chunk[index] = SaveConfig.instance.conversionSettings.offsetBlockId.value().byteValue();
+					index += 1;
+				}
 				for (int y = 0; y < height; y++) {
 					chunk[index] = blocks[(((y * length + (z * 16 + zChunk)) * width) + (x * 16 + xChunk))];
 					index++;
 				}
-				index += (128 - height);
+				index += (128 - height - yOffset);
 			}
 		}
 		return chunk;
 	}
-	private static byte[] getBlockDataForChunk(int x, int z, int width, short height, int length, byte[] blockData, boolean isLight) {
+	private static byte[] getBlockDataForChunk(int x, int z, int width, short height, int length, byte[] blockData, int yOffset, boolean isLight) {
 		byte[] output = new byte[16 * 16 * 64];
-		int i = 0;
+		int index = 0;
 		for (int xIndex = x * 16; xIndex < x * 16 + 16; xIndex++) {
 			for (int zIndex = z * 16; zIndex < z * 16 + 16; zIndex++) {
+				for (int y = 0; y < yOffset; y += 2) {
+					index += 1;
+				}
 				for (int yIndex = 0; yIndex < height; yIndex += 2) {
 					byte a = blockData[(yIndex * length + zIndex) * width + xIndex];
 					byte b = blockData[((yIndex + 1) * length + zIndex) * width + xIndex];
 					if (isLight) {
 						byte lightByte = (byte) ((a & 15) * 16 + b & 15);
 						if (lightByte > 127) lightByte -= 256;
-						output[i] = lightByte;
+						output[index] = lightByte;
 					} else {
 						byte dataByte = (byte) ((a >> 4) * 16 + b >> 4);
 						if (dataByte > 127) dataByte -= 256;
-						output[i] = dataByte;
+						output[index] = dataByte;
 					}
-					i += 1;
+					index += 1;
 				}
-				i += ((128 - height) / 2);
+				index += ((128 - height - yOffset) / 2);
 			}
 		}
 		return output;
@@ -401,5 +437,21 @@ public class Convert {
 		SaveHelper.infoOverlay.setTitle(title);
 		SaveHelper.infoOverlay.setDescription(message);
 		SaveHelper.infoOverlay.setLoading(value);
+	}
+	public static class WorldData {
+		public byte[] blocks;
+		public long time;
+		public long seed;
+		public short spawnX;
+		public short spawnY;
+		public short spawnZ;
+		public WorldData(byte[] blocks, long time, long seed, short spawnX, short spawnY, short spawnZ) {
+			this.blocks = blocks;
+			this.time = time;
+			this.seed = seed;
+			this.spawnX = spawnX;
+			this.spawnY = spawnY;
+			this.spawnZ = spawnZ;
+		}
 	}
 }

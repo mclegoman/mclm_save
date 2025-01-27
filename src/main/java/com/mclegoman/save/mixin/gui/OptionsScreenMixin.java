@@ -7,10 +7,10 @@
 
 package com.mclegoman.save.mixin.gui;
 
-import com.mclegoman.save.api.gui.widget.ButtonWidget;
 import com.mclegoman.save.gui.screen.config.ConfigScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.options.OptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +20,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(OptionsScreen.class)
 public abstract class OptionsScreenMixin extends Screen {
 	@Shadow private Screen parent;
+	@Inject(method = "init", at = @At(value = "HEAD"))
+	private void save$clearOnInit(CallbackInfo ci) {
+		this.buttons.clear();
+	}
 	@Inject(method = "init", at = @At(value = "TAIL"))
 	private void save$init(CallbackInfo ci) {
 		this.buttons.add(new ButtonWidget(1001, this.width / 2 + 5, this.height / 6 + 96, 150, 20, "[save] Config"));

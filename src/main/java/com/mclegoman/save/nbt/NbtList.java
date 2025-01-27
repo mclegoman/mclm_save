@@ -106,6 +106,10 @@ public class NbtList extends NbtElement {
 		return (NbtElement)this.elements.get(i);
 	}
 
+	public final void replace(int i, NbtElement element) {
+		this.elements.set(i, element);
+	}
+
 	public final int size() {
 		return this.elements.size();
 	}

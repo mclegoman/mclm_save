@@ -9,4 +9,5 @@ package com.mclegoman.save.api.gui.screen;
 
 public interface SaveModScreen {
 	void save$confirmResult(boolean value, int id);
+	void save$confirmResult(int value, int id);
 }

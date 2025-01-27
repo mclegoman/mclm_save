@@ -27,7 +27,8 @@
 		"gui.TitleScreenMixin",
 		"level.MinecraftClientMixin",
 		"level.OverworldChunkGeneratorMixin",
-		"level.WorldChunkMixin"
+		"level.WorldChunkMixin",
+		"gui.ButtonWidgetMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

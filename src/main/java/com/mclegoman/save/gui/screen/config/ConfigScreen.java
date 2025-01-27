@@ -8,11 +8,11 @@
 package com.mclegoman.save.gui.screen.config;
 
 import com.mclegoman.save.data.Data;
-import com.mclegoman.save.api.gui.widget.ButtonWidget;
 import com.mclegoman.save.util.StringHelper;
 import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.config.Theme;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import org.lwjgl.input.Keyboard;
 import org.quiltmc.config.api.values.TrackedValue;
 import org.quiltmc.loader.api.minecraft.ClientOnly;

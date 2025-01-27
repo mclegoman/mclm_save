@@ -64,5 +64,7 @@ public class SaveConfig extends ReflectiveConfig {
 		public final TrackedValue<Integer> length = this.value(256);
 		@Comment("This sets the default width of a classic/indev world if it can't be found in the save.")
 		public final TrackedValue<Integer> width = this.value(256);
+		@Comment("This sets the block id of whats placed below the converted world if a y offset is applied.")
+		public final TrackedValue<Integer> offsetBlockId = this.value(0);
 	}
 }
