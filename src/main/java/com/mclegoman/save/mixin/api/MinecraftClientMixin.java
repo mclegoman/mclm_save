@@ -7,10 +7,8 @@
 
 package com.mclegoman.save.mixin.api;
 
-import com.mclegoman.save.rtu.util.LogType;
+import com.mclegoman.save.api.event.Execute;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
-import com.mclegoman.save.api.event.tick.TickEvents;
-import com.mclegoman.save.data.Data;
 import net.minecraft.client.C_5664496;
 import org.quiltmc.loader.api.entrypoint.EntrypointUtil;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -29,24 +27,10 @@ public abstract class MinecraftClientMixin {
 	}
 	@Inject(method = "m_8832598", at = @At(value = "HEAD"))
 	private void save$tick_start(CallbackInfo ci) {
-		TickEvents.getStartRegistry().forEach((identifier, tickable) -> {
-			try {
-				tickable.run((C_5664496) (Object)this);
-			} catch (Exception error) {
-				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at start tick, removing from registry:" + error.getLocalizedMessage());
-				TickEvents.getStartRegistry().remove(identifier);
-			}
-		});
+		Execute.Tick.start((C_5664496) (Object) this);
 	}
 	@Inject(method = "m_8832598", at = @At(value = "TAIL"))
 	private void save$tick_end(CallbackInfo ci) {
-		TickEvents.getEndRegistry().forEach((identifer, tickable) -> {
-			try {
-				tickable.run((C_5664496) (Object)this);
-			} catch (Exception error) {
-				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at end tick, removing from registry:" + error.getLocalizedMessage());
-				TickEvents.getEndRegistry().remove(identifer);
-			}
-		});
+		Execute.Tick.end((C_5664496) (Object) this);
 	}
 }

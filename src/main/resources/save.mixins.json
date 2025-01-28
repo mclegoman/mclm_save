@@ -6,6 +6,9 @@
 	"client": [
 		"api.MinecraftClientMixin",
 		"api.ResourcesMixin",
+		"block.BlockWithBlockEntityMixin",
+		"block.ChestBlockMixin",
+		"block.FurnaceBlockMixin",
 		"entity.EntityMixin",
 		"entity.InputPlayerEntityMixin",
 		"entity.LivingEntityMixin",
@@ -27,10 +30,7 @@
 		"gui.TitleScreenMixin",
 		"level.MinecraftClientMixin",
 		"level.WorldChunkMixin",
-		"block.BlockWithBlockEntityMixin",
-		"block.ChestBlockMixin",
-		"block.FurnaceBlockMixin",
-		"gui.GameRendererMixin"
+		"api.GameRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
