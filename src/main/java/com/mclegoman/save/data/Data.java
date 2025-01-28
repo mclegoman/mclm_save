@@ -21,21 +21,23 @@ import java.util.Optional;
 
 @ClientOnly
 public class Data {
-	public static String getMcVersion() {
+	public static String getMcVersion(boolean actual) {
 		String mcVersion = "UNKNOWN";
-		Optional<ModContainer> mc = QuiltLoader.getModContainer("minecraft");
-		if (mc.isPresent()) {
-			try {
-				// We add '-' just incase one doesn't exist.
-				String version = mc.get().metadata().version().raw() + "-";
-				version = version.substring(version.indexOf("inf-"));
-				version = version.substring(4);
-				version = version.substring(0, version.indexOf("-"));
-				mcVersion = "inf-" + version;
-			} catch (Exception error) {
-				Data.getVersion().sendToLog(LogType.WARN, "Could not obtain minecraft version: " + error);
+		if (actual) {
+			Optional<ModContainer> mc = QuiltLoader.getModContainer("minecraft");
+			if (mc.isPresent()) {
+				try {
+					// We add '-' just incase one doesn't exist.
+					String version = mc.get().metadata().version().raw() + "-";
+					version = version.substring(version.indexOf("inf-"));
+					version = version.substring(4);
+					version = version.substring(0, version.indexOf("-"));
+					mcVersion = "inf-" + version;
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.WARN, "Could not obtain minecraft version: " + error);
+				}
 			}
-		}
+		} else mcVersion = "inf-20100320";
 		return mcVersion;
 	}
 	private static Version version;
