@@ -25,10 +25,15 @@ public class Data {
 		String mcVersion = "UNKNOWN";
 		Optional<ModContainer> mc = QuiltLoader.getModContainer("minecraft");
 		if (mc.isPresent()) {
-			String version = mc.get().metadata().version().raw();
-			version = version.substring(version.indexOf("inf_"));
-			version = version.substring(0, version.indexOf("."));
-			mcVersion = version.replace("inf_", "inf-");
+			try {
+				String version = mc.get().metadata().version().raw();
+				version = version.substring(version.indexOf("inf-"));
+				version = version.substring(4);
+				version = version.substring(0, version.indexOf("-"));
+				mcVersion = "inf-" + version;
+			} catch (Exception error) {
+				Data.getVersion().sendToLog(LogType.WARN, "Could not obtain minecraft version: " + error);
+			}
 		}
 		return mcVersion;
 	}
