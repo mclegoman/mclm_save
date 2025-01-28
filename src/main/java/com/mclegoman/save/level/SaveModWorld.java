@@ -15,10 +15,7 @@ import com.mclegoman.save.data.Data;
 import com.mclegoman.save.util.SaveHelper;
 import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.rtu.util.LogType;
-import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.living.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
@@ -50,6 +47,7 @@ public class SaveModWorld extends World {
 				this.ticks = (int)nbtCompound.getLong("Time");
 				this.sizeOnDisk = nbtCompound.getLong("SizeOnDisk");
 				if (nbtCompound.containsKey("Player")) this.f_4300305 = nbtCompound.getCompound("Player");
+				else Data.getVersion().sendToLog(LogType.WARN, "No player data found!");
 			} catch (Exception error) {
 				Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 			}
