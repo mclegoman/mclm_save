@@ -13,12 +13,33 @@ import net.minecraft.client.C_5664496;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
+import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
+import java.util.Optional;
+
 @ClientOnly
 public class Data {
-	public static String mcVersion = "inf-20100325-2";
+	public static String getMcVersion(boolean actual) {
+		String mcVersion = "UNKNOWN";
+		if (actual) {
+			Optional<ModContainer> mc = QuiltLoader.getModContainer("minecraft");
+			if (mc.isPresent()) {
+				try {
+					// We add '-' just incase one doesn't exist.
+					String version = mc.get().metadata().version().raw() + "-";
+					version = version.substring(version.indexOf("inf-"));
+					version = version.substring(4);
+					version = version.substring(0, version.indexOf("-"));
+					mcVersion = "inf-" + version;
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.WARN, "Could not obtain minecraft version: " + error);
+				}
+			}
+		} else mcVersion = "inf-20100325";
+		return mcVersion;
+	}
 	private static Version version;
 	public static Version getVersion() {
 		if (version == null) QuiltLoader.getModContainer("save").ifPresent(container -> version = Version.parse(container.metadata()));
