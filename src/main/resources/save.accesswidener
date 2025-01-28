@@ -29,6 +29,7 @@ accessible field net/minecraft/world/chunk/ChunkNibbleStorage data [B
 accessible field net/minecraft/world/World ticks I
 accessible field net/minecraft/world/World entities Ljava/util/List;
 extendable method net/minecraft/world/World tick ()V
+extendable method net/minecraft/world/World render ()V
 extendable method net/minecraft/world/gen/chunk/OverworldChunkGenerator getChunk (II)Lnet/minecraft/world/chunk/WorldChunk;
 accessible field net/minecraft/client/C_5664496 f_4309051 Z
 accessible method net/minecraft/client/gui/widget/ButtonWidget <init> (IIIIILjava/lang/String;)V

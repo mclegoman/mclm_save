@@ -13,7 +13,6 @@ version = String.valueOf(project.mod_version + (project.dirty_build == "true" ? 
 group = project.maven_group
 
 loom {
-	customMinecraftManifest.set("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
 	clientOnlyMinecraftJar()
 	mods {
 		"save" {
@@ -33,10 +32,7 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.layered {
-		mappings "net.ornithemc:feather:${project.minecraft_version}${project.mappings_type}+build.${project.feather_build}"
-		mappings "net.ornithemc:calamus-intermediary:${project.minecraft_version}${project.mappings_type}"
-	}
+	mappings ploceus.featherMappings(feather_build)
 	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
 	include(implementation "com.formdev:flatlaf:3.4.1")
 }
