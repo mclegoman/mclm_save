@@ -40,11 +40,27 @@ public class SliderConfirmScreen extends Screen {
 	protected final void buttonClicked(ButtonWidget buttonWidget) {
 		if (buttonWidget.active) {
 			if (buttonWidget.id == 0) {
+				((SliderWidget)buttonWidget).focused = true;
 				this.value = ((SliderWidget)buttonWidget).getValue(true);
 				((SliderWidget)buttonWidget).setValueFromMouse((double) (Mouse.getEventX() * this.width) / this.minecraft.f_0545414);
-			}
-			else if (buttonWidget.id == 1) ((SaveModScreen)this.parent).save$confirmResult((int)((SliderWidget)this.buttons.get(0)).getValue(false), this.id);
+			} else ((SliderWidget)this.buttons.get(0)).focused = false;
+			if (buttonWidget.id == 1) ((SaveModScreen)this.parent).save$confirmResult((int)((SliderWidget)this.buttons.get(0)).getValue(false), this.id);
 		}
+	}
+	protected void keyPressed(char c, int i) {
+		if (((SliderWidget)this.buttons.get(0)).focused) {
+			double value = (((SliderWidget) this.buttons.get(0)).getValue(false));
+			if (i == 200 || i == 203) {
+				// DOWN
+				value = Math.max(0, value - 1) / ((SliderWidget) this.buttons.get(0)).getValueMultiplier();
+			} else if (i == 205 || i == 208) {
+				// UP
+				value = Math.min(100, value + 1) / ((SliderWidget) this.buttons.get(0)).getValueMultiplier();
+			}
+			((SliderWidget)this.buttons.get(0)).setValue(value);
+			this.value = ((SliderWidget)this.buttons.get(0)).getValue(true);
+		}
+		super.keyPressed(c, i);
 	}
 	public final void render(int i, int j, float f) {
 		this.drawBackgroundTexture();

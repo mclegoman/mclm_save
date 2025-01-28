@@ -7,6 +7,7 @@
 
 package com.mclegoman.save.util;
 
+import com.mclegoman.save.config.SaveConfig;
 import com.mclegoman.save.gui.SaveInfoOverlay;
 import com.mclegoman.save.level.SaveModWorld;
 import com.mclegoman.save.nbt.NbtDouble;
@@ -14,6 +15,7 @@ import com.mclegoman.save.nbt.NbtFloat;
 import com.mclegoman.save.nbt.NbtList;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.FurnaceBlockEntity;
+import org.lwjgl.input.Keyboard;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.io.File;
@@ -35,6 +37,7 @@ public class SaveHelper {
 		blockEntityTypeToId.put(classObj, id);
 	}
 	public static void init() {
+		if (SaveConfig.instance.allowKeyboardRepeatEvents.value()) Keyboard.enableRepeatEvents(true);
 		register(FurnaceBlockEntity.class, "Furnace");
 		register(ChestBlockEntity.class, "Chest");
 	}

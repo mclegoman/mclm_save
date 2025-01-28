@@ -37,3 +37,4 @@ accessible field net/minecraft/client/gui/widget/ButtonWidget y I
 accessible field net/minecraft/client/gui/widget/ButtonWidget width I
 accessible field net/minecraft/client/gui/widget/ButtonWidget height I
 extendable method net/minecraft/client/gui/widget/ButtonWidget m_9498802 (Lnet/minecraft/client/C_5664496;II)V
+extendable method net/minecraft/client/gui/screen/Screen handleKeyboard ()V

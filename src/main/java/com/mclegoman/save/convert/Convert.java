@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Convert {
-	public static void start(C_5664496 minecraft, Screen parent, int slot) {
+	public static void start(C_5664496 minecraft, Screen parent, final int slot) {
 		Data.Resources.minecraft.m_6408915(new ConvertWorldInfoScreen(parent, "Select world file to convert."));
 		ConvertDialog convertDialog = new ConvertDialog(minecraft, parent, slot);
 		convertDialog.start();
 	}
-	protected static void process(C_5664496 minecraft, Screen parent, int slot, File input) {
+	protected static void process(C_5664496 minecraft, Screen parent, final int slot, final File input) {
 		Data.getVersion().sendToLog(LogType.INFO, "Converting '" + input.getName() + "' to Alpha save format!");
 		try {
 			String worldName = "World" + slot;
@@ -47,18 +47,18 @@ public class Convert {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static void select(C_5664496 minecraft, Screen parent, String worldName, File input) {
+	private static void select(C_5664496 minecraft, Screen parent, final String worldName, final File input) {
 		// This function is run when we can't work out what level format we're converting.
 		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(parent, "Converting world...", worldName, input), "Converting world...", "What level format are you converting from?", 0, "Classic", "Indev"));
 	}
-	private static void convert(C_5664496 minecraft, Version version, Screen parent, String worldName, File input) {
+	private static void convert(C_5664496 minecraft, Version version, Screen parent, final String worldName, final File input) {
 		// This function starts the conversion process by asking the user whether they want player data to be converted.
 		minecraft.m_6408915(new ConfirmScreen(new ConvertWorldInfoScreen(version, parent, "Converting " + version.getName() + " world...", worldName, input), "Do you want to keep your player data?", "This includes your inventory, and location!", 1));
 	}
-	protected static void result(C_5664496 minecraft, Version version, Screen parent, String worldName, File input, int id, boolean value) {
+	protected static void result(C_5664496 minecraft, Version version, Screen parent, final String worldName, final File input, final int id, final boolean value) {
 		// 0: Version Type
 		if (id == 0) convert(minecraft, version, parent, worldName, input);
-		// 1: Convert Player Data
+			// 1: Convert Player Data
 		else if (id == 1) {
 			setOverlay("Converting level", "Converting from " + version.getName() + " to alpha format!");
 			if (version == Version.classic) convertClassic(minecraft, parent, worldName, value, input);
@@ -67,13 +67,13 @@ public class Convert {
 			else error(minecraft, parent, "Invalid version type!");
 		}
 	}
-	protected static void result(C_5664496 minecraft, Screen parent, String worldName, int id, int value, short width, short height, short length, NbtCompound nbtCompound, NbtCompound player, WorldData worldData) {
+	protected static void result(C_5664496 minecraft, Screen parent, final String worldName, final int id, final int value, final short width, final short height, final short length, final NbtCompound nbtCompound, final NbtCompound player, final WorldData worldData) {
 		// 0: Classic Y Offset
 		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, value);
 		// 1: Indev Y Offset
 		if (id == 1) convertIndevFinish(minecraft, parent, worldName, width, height, length, nbtCompound, player, value);
 	}
-	private static void convertClassic(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
+	private static void convertClassic(C_5664496 minecraft, Screen parent, final String worldName, final boolean convertPlayerData, final File input) {
 		try {
 			setOverlay("Converting level", "Reading data...");
 			long seed = new Random().nextLong();
@@ -193,7 +193,7 @@ public class Convert {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static void convertIndev(C_5664496 minecraft, Screen parent, String worldName, boolean convertPlayerData, File input) {
+	private static void convertIndev(C_5664496 minecraft, Screen parent, final String worldName, final boolean convertPlayerData, final File input) {
 		try {
 			NbtCompound nbtCompound = SaveModLevel.load(Files.newInputStream(input.toPath()));
 			NbtCompound map = nbtCompound.getCompound("Map");
@@ -296,13 +296,13 @@ public class Convert {
 			}
 		}
 	}
-	private static long calculateSizeOnDisk(File dir, short width, short length) {
+	private static long calculateSizeOnDisk(final File dir, final short width, final short length) {
 		long sizeOnDisk = 0L;
 		int total = ((width / 16) * (length / 16));
 		for (int chunk = 0; chunk < total; chunk++) sizeOnDisk += SaveHelper.getChunkFile(dir, chunk % (width / 16), chunk / (width / 16)).length();
 		return sizeOnDisk;
 	}
-	private static void convertBlocks(File dir, short width, short height, short length, byte[] blocks, byte[] blocksData, long ticks, int yOffset) throws ConvertFailException, IOException {
+	private static void convertBlocks(final File dir, final short width, final short height, final short length, final byte[] blocks, final byte[] blocksData, final long ticks, final int yOffset) throws ConvertFailException, IOException {
 		// inf-20100227 changed the world height from 256, to 127.
 		// https://minecraft.wiki/w/Java_Edition_Infdev_20100227-1414
 		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
@@ -345,7 +345,7 @@ public class Convert {
 		}
 		return heightMap;
 	}
-	private static byte[] getBlocksForChunk(int x, int z, int width, short height, int length, byte[] blocks, int yOffset) {
+	private static byte[] getBlocksForChunk(final int x, final int z, final int width, final short height, final int length, final byte[] blocks, final int yOffset) {
 		byte[] chunk = new byte[16 * 16 * 128];
 		int index = 0;
 		for (int xChunk = 0; xChunk < 16; xChunk++) {
@@ -365,7 +365,8 @@ public class Convert {
 		}
 		return chunk;
 	}
-	private static byte[] getBlockDataForChunk(int x, int z, int width, short height, int length, byte[] blockData, int yOffset, boolean isLight) {
+	private static byte[] getBlockDataForChunk(final int x, final int z, final int width, final short height, final int length, final byte[] blockData, final int yOffset, final boolean isLight) {
+		// TODO: There is an issue here somewhere me thinks.
 		byte[] output = new byte[16 * 16 * 64];
 		int index = 0;
 		for (int xIndex = x * 16; xIndex < x * 16 + 16; xIndex++) {
@@ -378,11 +379,11 @@ public class Convert {
 					byte b = blockData[((yIndex + 1) * length + zIndex) * width + xIndex];
 					if (isLight) {
 						byte lightByte = (byte) ((a & 15) * 16 + b & 15);
-						if (lightByte > 127) lightByte -= 256;
+						if (lightByte > 127) lightByte -= (byte) 256;
 						output[index] = lightByte;
 					} else {
 						byte dataByte = (byte) ((a >> 4) * 16 + b >> 4);
-						if (dataByte > 127) dataByte -= 256;
+						if (dataByte > 127) dataByte -= (byte) 256;
 						output[index] = dataByte;
 					}
 					index += 1;
@@ -392,7 +393,7 @@ public class Convert {
 		}
 		return output;
 	}
-	private static void createLevel(C_5664496 minecraft, Screen parent, File dir, long seed, int spawnX, int spawnY, int spawnZ, long time, long sizeOnDisk, @Nullable NbtCompound player) {
+	private static void createLevel(C_5664496 minecraft, Screen parent, final File dir, final long seed, final int spawnX, final int spawnY, final int spawnZ, final long time, final long sizeOnDisk, final @Nullable NbtCompound player) {
 		try {
 			setOverlay("Converting level", "Writing level data...");
 			dir.mkdirs();
@@ -413,7 +414,7 @@ public class Convert {
 			error(minecraft, parent, error.getLocalizedMessage());
 		}
 	}
-	private static void done(C_5664496 minecraft, Screen parent, String worldName) {
+	private static void done(C_5664496 minecraft, Screen parent, final String worldName) {
 		if (SaveConfig.instance.shouldLoadAfterConvert.value()) {
 			((SaveModMinecraft)minecraft).save$set(worldName);
 			minecraft.m_6408915(null);
