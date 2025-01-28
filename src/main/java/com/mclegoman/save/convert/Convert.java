@@ -69,7 +69,7 @@ public class Convert {
 	}
 	protected static void result(C_5664496 minecraft, Screen parent, String worldName, int id, int value, short width, short height, short length, NbtCompound nbtCompound, NbtCompound player, WorldData worldData) {
 		// 0: Classic Y Offset
-		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, 0);
+		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, value);
 		// 1: Indev Y Offset
 		if (id == 1) convertIndevFinish(minecraft, parent, worldName, width, height, length, nbtCompound, player, value);
 	}
