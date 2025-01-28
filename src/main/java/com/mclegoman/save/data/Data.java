@@ -26,7 +26,8 @@ public class Data {
 		Optional<ModContainer> mc = QuiltLoader.getModContainer("minecraft");
 		if (mc.isPresent()) {
 			try {
-				String version = mc.get().metadata().version().raw();
+				// We add '-' just incase one doesn't exist.
+				String version = mc.get().metadata().version().raw() + "-";
 				version = version.substring(version.indexOf("inf-"));
 				version = version.substring(4);
 				version = version.substring(0, version.indexOf("-"));
