@@ -69,7 +69,7 @@ public class Convert {
 	}
 	protected static void result(C_5664496 minecraft, Screen parent, String worldName, int id, int value, short width, short height, short length, NbtCompound nbtCompound, NbtCompound player, WorldData worldData) {
 		// 0: Classic Y Offset
-		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, 0);
+		if (id == 0) convertClassicFinish(minecraft, parent, worldName, width, height, length, worldData.blocks, player, worldData.time, worldData.seed, worldData.spawnX, worldData.spawnY, worldData.spawnZ, value);
 		// 1: Indev Y Offset
 		if (id == 1) convertIndevFinish(minecraft, parent, worldName, width, height, length, nbtCompound, player, value);
 	}
@@ -308,6 +308,7 @@ public class Convert {
 		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
 		if (height <= 0 || height > 127) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 127!");
 		if (length % 16 != 0) throw new ConvertFailException("Length was " + length + ", expecting value divisible by 16!");
+		if (blocksData == null) Data.getVersion().sendToLog(LogType.WARN, "No block data present: Block light and metadata will be set to default, you may encounter lag when these update for the first time.");
 		if (blocks.length == width * height * length) {
 			int total = ((width / 16) * (length / 16));
 			for (int chunk = 0; chunk < total; chunk++) {
