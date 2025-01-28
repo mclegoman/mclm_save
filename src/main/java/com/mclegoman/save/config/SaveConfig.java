@@ -23,6 +23,8 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> allowKeyboardRepeatEvents = this.value(true);
 	@Comment("When set to true, the game will think it's always april fools'.")
 	public final TrackedValue<Boolean> forceAprilFools = this.value(false);
+	@Comment("When set to true, and B is held down, an overlay is rendered to the screen.")
+	public final TrackedValue<Boolean> allowBossMode = this.value(true);
 	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")
 	public final TrackedValue<String> aprilFoolsName = this.value("Terraria 3");
 	@Comment("This sets the theme of the save/load dialog")
@@ -30,13 +32,6 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> starterItems = this.value(true);
 	@Comment("Enables development debug.")
 	public final TrackedValue<Boolean> debug = this.value(false);
-	@Comment("Fixes flower generation to prevent flowers from spawning on blocks they can't survive on.")
-	public final TrackedValue<Boolean> fixFlowerGen = this.value(true);
-	@Comment("Disables ItemEntity with flower item stack. (This is meant as an alternative to fixFlowerGen)")
-	public final TrackedValue<Boolean> shouldDisableFlowerItems = this.value(false);
-	public final TrackedValue<ValueList<String>> flowerItems = this.list("", "37", "38");
-	@Comment("When enabled, replaces populateChunk with inf-327's populateChunk which removes caves.")
-	public final TrackedValue<Boolean> disableCaves = this.value(true);
 	@Comment("Sets how often the game is automatically saved in ticks. (20 ticks = 1 second).")
 	public final TrackedValue<Long> autoSaveTicks = this.value(1200L);
 	@Comment("This sets where the save/load dialog opens")

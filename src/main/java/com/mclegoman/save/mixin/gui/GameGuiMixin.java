@@ -7,7 +7,7 @@
 
 package com.mclegoman.save.mixin.gui;
 
-import com.mclegoman.save.april_fools.AprilFools;
+import com.mclegoman.save.fun.AprilFools;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.gui.GameGui;
 import org.quiltmc.loader.api.minecraft.ClientOnly;

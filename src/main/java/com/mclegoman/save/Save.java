@@ -7,12 +7,13 @@
 
 package com.mclegoman.save;
 
+import com.mclegoman.save.fun.BossMode;
 import com.mclegoman.save.util.StringHelper;
 import com.mclegoman.save.util.SaveHelper;
 import com.mclegoman.save.rtu.util.LogType;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
 import com.mclegoman.save.api.gui.screen.InfoScreen;
-import com.mclegoman.save.april_fools.AprilFools;
+import com.mclegoman.save.fun.AprilFools;
 import com.mclegoman.save.gui.screen.SaveInfoScreen;
 import com.mclegoman.save.data.Data;
 import org.quiltmc.loader.api.ModContainer;
@@ -27,6 +28,7 @@ public class Save implements SaveModInit {
 		SaveHelper.init();
 		StringHelper.init();
 		AprilFools.init();
+		BossMode.init();
 		List<String> bootMessages = new ArrayList<>();
 		if (Data.getVersion().isDevelopmentBuild()) bootMessages.add("This is a developer build of [save]. Expect Bugs!");
 		String useLegacyMergeSort = System.getProperty("java.util.Arrays.useLegacyMergeSort");

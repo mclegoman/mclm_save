@@ -17,7 +17,6 @@
 		"entity.block.ChestBlockEntityMixin",
 		"entity.block.FurnaceBlockEntityMixin",
 		"fixes.MinecraftAppletMixin",
-		"fixes.WorldMixin",
 		"fixes.WorldRendererMixin",
 		"gui.ButtonWidgetMixin",
 		"gui.DeathScreenMixin",
@@ -27,14 +26,15 @@
 		"gui.ScreenMixin",
 		"gui.TitleScreenMixin",
 		"level.MinecraftClientMixin",
-		"level.WorldChunkMixin"
+		"level.WorldChunkMixin",
+		"block.BlockWithBlockEntityMixin",
+		"block.ChestBlockMixin",
+		"block.FurnaceBlockMixin",
+		"gui.GameRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"block.BlockWithBlockEntityMixin",
-		"block.ChestBlockMixin",
-		"block.FurnaceBlockMixin"
 	]
 }
