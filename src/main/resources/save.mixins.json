@@ -19,6 +19,7 @@
 		"fixes.MinecraftAppletMixin",
 		"fixes.WorldMixin",
 		"fixes.WorldRendererMixin",
+		"gui.ButtonWidgetMixin",
 		"gui.DeathScreenMixin",
 		"gui.GameGuiMixin",
 		"gui.GameMenuScreenMixin",
@@ -28,7 +29,7 @@
 		"level.MinecraftClientMixin",
 		"level.OverworldChunkGeneratorMixin",
 		"level.WorldChunkMixin",
-		"gui.ButtonWidgetMixin"
+		"gui.GameRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -30,10 +30,11 @@ public class ConfigScreen extends Screen {
 		this.buttons.clear();
 		this.buttons.add(new ButtonWidget(0, this.width / 2 - 150, getY(0), 148, 20, "Force April Fools: " + SaveConfig.instance.forceAprilFools.value()));
 		this.buttons.add(new ButtonWidget(1, this.width / 2 + 2, getY(0), 148, 20, "Dialog Theme: " + SaveConfig.instance.dialogTheme.value().getName()));
-		this.buttons.add(new ButtonWidget(6, this.width / 2 - 150, getY(1), 300, 20, "Disable Cave Generation: " + SaveConfig.instance.disableCaves.value()));
+		this.buttons.add(new ButtonWidget(7, this.width / 2 - 150, getY(1), 148, 20, "Allow Boss Mode: " + SaveConfig.instance.allowBossMode.value()));
+		this.buttons.add(new ButtonWidget(4, this.width / 2 + 2, getY(1), 148, 20, "Starter Items: " + SaveConfig.instance.starterItems.value()));
 		this.buttons.add(new ButtonWidget(2, this.width / 2 - 150, getY(2), 148, 20, "Fix Flower Generation: " + SaveConfig.instance.fixFlowerGen.value()));
 		this.buttons.add(new ButtonWidget(3, this.width / 2 + 2, getY(2), 148, 20, "Prevent Flower Drop: " + SaveConfig.instance.shouldDisableFlowerItems.value()));
-		this.buttons.add(new ButtonWidget(4, this.width / 2 - 150, getY(3), 300, 20, "Starter Items: " + SaveConfig.instance.starterItems.value()));
+		this.buttons.add(new ButtonWidget(6, this.width / 2 - 150, getY(3), 300, 20, "Disable Cave Generation: " + SaveConfig.instance.disableCaves.value()));
 		this.buttons.add(new ButtonWidget(5, this.width / 2 - 150, getY(4), 300, 20, "Load After Convert: " + SaveConfig.instance.shouldLoadAfterConvert.value()));
 		this.buttons.add(new ButtonWidget(10, this.width / 2 - 100, this.height / 6 + 144, 200, 20, "Credits and Attribution"));
 		this.buttons.add(new ButtonWidget(11, this.width / 2 - 100, this.height / 6 + 168, 98, 20, "Reset to Default"));
@@ -68,6 +69,7 @@ public class ConfigScreen extends Screen {
 				if (button.id == 4) SaveConfig.instance.starterItems.setValue(!SaveConfig.instance.starterItems.value());
 				if (button.id == 5) SaveConfig.instance.shouldLoadAfterConvert.setValue(!SaveConfig.instance.shouldLoadAfterConvert.value());
 				if (button.id == 6) SaveConfig.instance.disableCaves.setValue(!SaveConfig.instance.disableCaves.value());
+				if (button.id == 7) SaveConfig.instance.allowBossMode.setValue(!SaveConfig.instance.allowBossMode.value());
 				if (button.id == 10 && Data.Resources.minecraft != null) Data.Resources.minecraft.m_6408915(new CreditsScreen(new ConfigScreen(this.parent)));
 				if (button.id == 11) reset();
 				init();

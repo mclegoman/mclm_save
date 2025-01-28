@@ -23,6 +23,8 @@ public class SaveConfig extends ReflectiveConfig {
 	public final TrackedValue<Boolean> allowKeyboardRepeatEvents = this.value(true);
 	@Comment("When set to true, the game will think it's always april fools'.")
 	public final TrackedValue<Boolean> forceAprilFools = this.value(false);
+	@Comment("When set to true, and B is held down, an overlay is rendered to the screen.")
+	public final TrackedValue<Boolean> allowBossMode = this.value(true);
 	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")
 	public final TrackedValue<String> aprilFoolsName = this.value("Terraria 3");
 	@Comment("This sets the theme of the save/load dialog")

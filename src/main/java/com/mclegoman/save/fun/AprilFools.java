@@ -5,7 +5,7 @@
     Licence: GNU LGPLv3
 */
 
-package com.mclegoman.save.april_fools;
+package com.mclegoman.save.fun;
 
 import com.mclegoman.save.util.StringHelper;
 import com.mclegoman.save.config.SaveConfig;
