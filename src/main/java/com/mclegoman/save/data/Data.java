@@ -18,7 +18,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class Data {
-	public static String mcVersion = "inf-20100325-2";
+	public static String mcVersion = "inf-20100320";
 	private static Version version;
 	public static Version getVersion() {
 		if (version == null) QuiltLoader.getModContainer("save").ifPresent(container -> version = Version.parse(container.metadata()));
