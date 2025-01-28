@@ -15,14 +15,20 @@ import java.util.Map;
 
 @ClientOnly
 public final class RenderEvents {
+	private static final Map<String, Eventable> afterGameGuiRegistry = new HashMap<>();
 	private static final Map<String, Eventable> endRegistry = new HashMap<>();
+	public static Map<String, Eventable> getAfterGameGuiRegistry() {
+		return afterGameGuiRegistry;
+	}
 	public static Map<String, Eventable> getEndRegistry() {
 		return endRegistry;
 	}
 	public static void register(Render render, String identifier, Eventable runnable) {
-		if (render.equals(Render.END)) endRegistry.put(identifier, runnable);
+		if (render.equals(Render.AFTER_GAME_GUI)) afterGameGuiRegistry.put(identifier, runnable);
+		else if (render.equals(Render.END)) endRegistry.put(identifier, runnable);
 	}
 	public enum Render {
+		AFTER_GAME_GUI,
 		END
 	}
 }
