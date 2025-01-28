@@ -24,12 +24,12 @@ import java.net.URL;
 @Mixin(MinecraftApplet.class)
 public abstract class MinecraftAppletMixin {
 	@Redirect(method = "init", at = @At(value = "INVOKE", target = "Ljava/net/URL;getHost()Ljava/lang/String;"))
-	private String save$setProxy(URL instance) {
-		return SaveConfig.instance.proxyUrl.value();
+	private String save$setProxy(URL proxy) {
+		return !proxy.getHost().equals("www.minecraft.net") ? proxy.getHost() : (SaveConfig.instance.proxyUrl.value().isEmpty() ? proxy.getHost() : SaveConfig.instance.proxyUrl.value());
 	}
 	@Redirect(method = "init", at = @At(value = "INVOKE", target = "Ljava/net/URL;getPort()I"))
-	private int save$setProxyPort(URL instance) {
-		return SaveConfig.instance.proxyPort.value();
+	private int save$setProxyPort(URL proxy) {
+		return !proxy.getHost().equals("www.minecraft.net") ? proxy.getPort() : (SaveConfig.instance.proxyUrl.value().isEmpty() ? proxy.getPort() : SaveConfig.instance.proxyPort.value());
 	}
 	@Inject(method = "stop", at = @At(value = "HEAD"))
 	private void save$stop(CallbackInfo ci) {

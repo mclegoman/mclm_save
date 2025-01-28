@@ -57,7 +57,7 @@ public class SaveConfig extends ReflectiveConfig {
 		@Comment("This sets the default spawnZ of a classic/indev world if it can't be found in the save.")
 		public final TrackedValue<Integer> spawnZ = this.value(128);
 		@Comment("This sets the default time of a classic/indev world if it can't be found in the save.")
-		public final TrackedValue<Integer> time = this.value(128);
+		public final TrackedValue<Integer> time = this.value(0);
 		@Comment("This sets the default height of a classic/indev world if it can't be found in the save.")
 		public final TrackedValue<Integer> height = this.value(64);
 		@Comment("This sets the default length of a classic/indev world if it can't be found in the save.")
