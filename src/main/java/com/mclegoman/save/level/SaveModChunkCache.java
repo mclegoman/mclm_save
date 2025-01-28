@@ -7,6 +7,7 @@
 
 package com.mclegoman.save.level;
 
+import com.mclegoman.save.entity.SaveModBlockEntity;
 import com.mclegoman.save.nbt.NbtCompound;
 import com.mclegoman.save.nbt.NbtList;
 import com.mclegoman.save.data.Data;
@@ -47,7 +48,7 @@ public class SaveModChunkCache implements ChunkSource {
 		int var3 = x & 31 | (y & 31) << 5;
 		if (!this.hasChunk(x, y)) {
 			if (this.chunks[var3] != null) {
-				this.chunks[var3].m_1033437();
+				//this.chunks[var3].m_1033437();
 				this.saveChunk(this.chunks[var3]);
 			}
 
@@ -59,7 +60,7 @@ public class SaveModChunkCache implements ChunkSource {
 
 			this.chunks[var3] = var4;
 			if (this.chunks[var3] != null) {
-				this.chunks[var3].m_6736297();
+				//this.chunks[var3].m_6736297();
 			}
 
 			if (this.hasChunk(x + 1, y + 1) && this.hasChunk(x, y + 1) && this.hasChunk(x + 1, y)) {
@@ -121,7 +122,7 @@ public class SaveModChunkCache implements ChunkSource {
 		if (tileEntities != null) {
 			for (int i = 0; i < tileEntities.size(); i++) {
 				BlockEntity blockEntity = SaveModWorld.getBlockEntity((NbtCompound) tileEntities.get(i));
-				if (blockEntity != null) worldChunk.setBlockEntityAt(blockEntity.x - (worldChunk.chunkX << 4), blockEntity.y, blockEntity.z - (worldChunk.chunkZ << 4), blockEntity);
+				if (blockEntity != null) worldChunk.setBlockEntityAt(((SaveModBlockEntity)blockEntity).save$getX() - (worldChunk.chunkX << 4), ((SaveModBlockEntity)blockEntity).save$getY(), ((SaveModBlockEntity)blockEntity).save$getZ() - (worldChunk.chunkZ << 4), blockEntity);
 			}
 		}
 

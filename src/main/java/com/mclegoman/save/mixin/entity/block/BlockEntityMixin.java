@@ -12,22 +12,40 @@ import com.mclegoman.save.nbt.NbtCompound;
 import com.mclegoman.save.util.SaveHelper;
 import net.minecraft.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(BlockEntity.class)
 public abstract class BlockEntityMixin implements SaveModBlockEntity {
-	@Shadow public int x;
-	@Shadow public int y;
-	@Shadow public int z;
+	public int save$getX() {
+		return this.save$x;
+	}
+	public int save$getY() {
+		return this.save$y;
+	}
+	public int save$getZ() {
+		return this.save$z;
+	}
+	public void save$setX(int x) {
+		this.save$x = x;
+	}
+	public void save$setY(int y) {
+		this.save$y = y;
+	}
+	public void save$setZ(int z) {
+		this.save$z = z;
+	}
+	@Unique public int save$x;
+	@Unique public int save$y;
+	@Unique public int save$z;
 	public void save$readNbt(NbtCompound nbtCompound) {
-		this.x = nbtCompound.getInt("x");
-		this.y = nbtCompound.getInt("y");
-		this.z = nbtCompound.getInt("z");
+		save$setX(nbtCompound.getInt("x"));
+		save$setY(nbtCompound.getInt("y"));
+		save$setZ(nbtCompound.getInt("z"));
 	}
 	public void save$writeNbt(NbtCompound nbtCompound) {
 		nbtCompound.putString("id", SaveHelper.getBlockEntityIdFromType(this.getClass()));
-		nbtCompound.putInt("x", this.x);
-		nbtCompound.putInt("y", this.y);
-		nbtCompound.putInt("z", this.z);
+		nbtCompound.putInt("x", save$getX());
+		nbtCompound.putInt("y", save$getY());
+		nbtCompound.putInt("z", save$getZ());
 	}
 }

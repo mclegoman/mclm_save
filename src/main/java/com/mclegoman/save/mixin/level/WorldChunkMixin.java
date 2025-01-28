@@ -50,10 +50,10 @@ public abstract class WorldChunkMixin implements SaveModWorldChunk {
 	private void save$setBlockEntityAt(int j, int k, int blockEntity, BlockEntity par4, CallbackInfo ci) {
 		save$setDirty(true);
 	}
-	@Inject(method = "m_3088960", at = @At("HEAD"))
-	private void save$m_3088960(int j, int k, int par3, CallbackInfo ci) {
-		save$setDirty(true);
-	}
+	//@Inject(method = "m_3088960", at = @At("HEAD"))
+	//private void save$m_3088960(int j, int k, int par3, CallbackInfo ci) {
+	//	save$setDirty(true);
+	//}
 	public boolean save$getDirty() {
 		return this.save$dirty;
 	}

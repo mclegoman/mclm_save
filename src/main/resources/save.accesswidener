@@ -4,6 +4,8 @@ extendable class net/minecraft/world/World
 extendable class net/minecraft/world/chunk/WorldChunk
 extendable class net/minecraft/world/gen/chunk/OverworldChunkGenerator
 extendable class net/minecraft/world/gen/noise/OctaveNoiseGenerator
+extendable class net/minecraft/block/entity/ChestBlockEntity
+extendable class net/minecraft/block/entity/FurnaceBlockEntity
 accessible field net/minecraft/world/World chunkSource Lnet/minecraft/world/chunk/ChunkSource;
 accessible field net/minecraft/world/chunk/WorldChunk chunkX I
 accessible field net/minecraft/world/chunk/WorldChunk chunkZ I

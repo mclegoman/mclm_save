@@ -28,9 +28,9 @@ public abstract class FurnaceBlockEntityMixin extends BlockEntity implements Sav
 	@Shadow private ItemStack[] inventory;
 	@Shadow private int totalFuelTime;
 	public void save$readNbt(NbtCompound nbtCompound) {
-		this.x = nbtCompound.getInt("x");
-		this.y = nbtCompound.getInt("y");
-		this.z = nbtCompound.getInt("z");
+		save$setX(nbtCompound.getInt("x"));
+		save$setY(nbtCompound.getInt("y"));
+		save$setZ(nbtCompound.getInt("z"));
 		NbtList inv = nbtCompound.getList("Items");
 		this.inventory = new ItemStack[this.inventory.length];
 		for (int index = 0; index < inv.size(); ++index)
@@ -41,9 +41,9 @@ public abstract class FurnaceBlockEntityMixin extends BlockEntity implements Sav
 	}
 	public void save$writeNbt(NbtCompound nbtCompound) {
 		nbtCompound.putString("id", "Furnace");
-		nbtCompound.putInt("x", this.x);
-		nbtCompound.putInt("y", this.y);
-		nbtCompound.putInt("z", this.z);
+		nbtCompound.putInt("x", save$getX());
+		nbtCompound.putInt("y", save$getY());
+		nbtCompound.putInt("z", save$getZ());
 		nbtCompound.putShort("BurnTime", (short)this.fuelTime);
 		nbtCompound.putShort("CookTime", (short)this.cookTime);
 		NbtList inv = new NbtList();

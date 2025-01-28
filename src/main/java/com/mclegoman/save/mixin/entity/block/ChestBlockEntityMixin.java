@@ -20,12 +20,10 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ChestBlockEntity.class)
 public abstract class ChestBlockEntityMixin extends BlockEntity implements SaveModBlockEntity {
 	@Shadow private ItemStack[] inventory;
-
 	public void save$readNbt(NbtCompound nbtCompound) {
-		this.x = nbtCompound.getInt("x");
-		this.y = nbtCompound.getInt("y");
-		this.z = nbtCompound.getInt("z");
-
+		save$setX(nbtCompound.getInt("x"));
+		save$setY(nbtCompound.getInt("y"));
+		save$setZ(nbtCompound.getInt("z"));
 		NbtList inv = nbtCompound.getList("Items");
 		this.inventory = new ItemStack[27];
 		for (int index = 0; index < inv.size(); ++index)
@@ -33,9 +31,9 @@ public abstract class ChestBlockEntityMixin extends BlockEntity implements SaveM
 	}
 	public void save$writeNbt(NbtCompound nbtCompound) {
 		nbtCompound.putString("id", "Chest");
-		nbtCompound.putInt("x", this.x);
-		nbtCompound.putInt("y", this.y);
-		nbtCompound.putInt("z", this.z);
+		nbtCompound.putInt("x", save$getX());
+		nbtCompound.putInt("y", save$getY());
+		nbtCompound.putInt("z", save$getZ());
 		NbtList inv = new NbtList();
 		for (int index = 0; index < this.inventory.length; ++index) {
 			if (this.inventory[index] != null) {
