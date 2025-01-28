@@ -50,6 +50,7 @@ public class SaveModWorld extends World {
 				this.ticks = (int)nbtCompound.getLong("Time");
 				this.sizeOnDisk = nbtCompound.getLong("SizeOnDisk");
 				if (nbtCompound.containsKey("Player")) this.f_4300305 = nbtCompound.getCompound("Player");
+				else Data.getVersion().sendToLog(LogType.WARN, "No player data found!");
 			} catch (Exception error) {
 				Data.getVersion().sendToLog(LogType.ERROR, error.getLocalizedMessage());
 			}
