@@ -14,7 +14,7 @@ group = project.maven_group
 
 loom {
 	// I don't think we actually need this anymore.
-	//customMinecraftManifest.set("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
+	setCustomMinecraftManifest("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
 	clientOnlyMinecraftJar()
 	mods {
 		"save" {
