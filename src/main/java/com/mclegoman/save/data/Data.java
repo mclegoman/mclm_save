@@ -37,8 +37,11 @@ public class Data {
 					Data.getVersion().sendToLog(LogType.WARN, "Could not obtain minecraft version: " + error);
 				}
 			}
-		} else mcVersion = "inf-20100320";
+		} else mcVersion = "inf-20100320+inf-20100321";
 		return mcVersion;
+	}
+	public static String getPrettyMcVersion() {
+		return "inf-20100320/1";
 	}
 	private static Version version;
 	public static Version getVersion() {

@@ -40,7 +40,7 @@ public class StringHelper {
     public static void init() {
         addQuiltMods();
         // [save:minecraft]
-        addVariable("save", "minecraft", ((!Data.getMcVersion(true).equals(Data.getMcVersion(false))) ? "Made for: " + Data.getMcVersion(false) + "/Using: " + Data.getMcVersion(true) : Data.getMcVersion(false)));
+        addVariable("save", "minecraft", (!Data.getMcVersion(false).contains((Data.getMcVersion(true))) ? "Made for: " + Data.getMcVersion(false) + "/Using: " + Data.getMcVersion(true) : Data.getPrettyMcVersion()));
         // We need to replace the [minecraft_version] otherwise it becomes UNKNOWN.minecraft-client...
         addUnderscoredSeperatedVariable("minecraft", "version", Data.getMcVersion(true), true);
         // [save:return_to_game]
