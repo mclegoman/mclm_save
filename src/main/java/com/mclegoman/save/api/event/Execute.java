@@ -15,6 +15,16 @@ import net.minecraft.client.C_5664496;
 
 public class Execute {
 	public static class Render {
+		public static void afterGameGui(C_5664496 minecraft) {
+			RenderEvents.getAfterGameGuiRegistry().forEach((identifier, eventable) -> {
+				try {
+					eventable.run(minecraft);
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst rendering " + identifier + " at after game gui render, removing from registry:" + error.getLocalizedMessage());
+					RenderEvents.getAfterGameGuiRegistry().remove(identifier);
+				}
+			});
+		}
 		public static void end(C_5664496 minecraft) {
 			RenderEvents.getEndRegistry().forEach((identifier, eventable) -> {
 				try {
