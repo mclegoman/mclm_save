@@ -29,12 +29,12 @@ public abstract class MinecraftClientMixin {
 	}
 	@Inject(method = "m_8832598", at = @At(value = "HEAD"))
 	private void save$tick_start(CallbackInfo ci) {
-		TickEvents.getStartRegistry().forEach((identifer, tickable) -> {
+		TickEvents.getStartRegistry().forEach((identifier, tickable) -> {
 			try {
 				tickable.run((C_5664496) (Object)this);
 			} catch (Exception error) {
-				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifer + " at start tick, removing from registry:" + error.getLocalizedMessage());
-				TickEvents.getStartRegistry().remove(identifer);
+				Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at start tick, removing from registry:" + error.getLocalizedMessage());
+				TickEvents.getStartRegistry().remove(identifier);
 			}
 		});
 	}

@@ -48,6 +48,7 @@ public class SaveModChunkCache implements ChunkSource {
 		int var3 = x & 31 | (y & 31) << 5;
 		if (!this.hasChunk(x, y)) {
 			if (this.chunks[var3] != null) {
+				// This removes all the entities from the game.
 				//this.chunks[var3].m_1033437();
 				this.saveChunk(this.chunks[var3]);
 			}
@@ -60,6 +61,7 @@ public class SaveModChunkCache implements ChunkSource {
 
 			this.chunks[var3] = var4;
 			if (this.chunks[var3] != null) {
+				// This adds all the entities back to the game.
 				//this.chunks[var3].m_6736297();
 			}
 

@@ -308,6 +308,7 @@ public class Convert {
 		if (width % 16 != 0) throw new ConvertFailException("Width was " + width + ", expecting value divisible by 16!");
 		if (height <= 0 || height > 127) throw new ConvertFailException("Height was " + height + ", expecting value between 1 and 127!");
 		if (length % 16 != 0) throw new ConvertFailException("Length was " + length + ", expecting value divisible by 16!");
+		if (blocksData == null) Data.getVersion().sendToLog(LogType.WARN, "No block data present: Block light and metadata will be set to default, you may encounter lag when these update for the first time.");
 		if (blocks.length == width * height * length) {
 			int total = ((width / 16) * (length / 16));
 			for (int chunk = 0; chunk < total; chunk++) {

@@ -13,7 +13,8 @@ version = String.valueOf(project.mod_version + (project.dirty_build == "true" ? 
 group = project.maven_group
 
 loom {
-	customMinecraftManifest.set("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
+	// I don't think we actually need this anymore.
+	//customMinecraftManifest.set("https://skyrising.github.io/mc-versions/version/manifest/${minecraft_version}.json")
 	clientOnlyMinecraftJar()
 	mods {
 		"save" {
