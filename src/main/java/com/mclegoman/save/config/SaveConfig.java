@@ -19,6 +19,8 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 public class SaveConfig extends ReflectiveConfig {
 	public static final SaveConfig instance = QuiltConfig.create(Data.getVersion().getID(), Data.getVersion().getID(), SaveConfig.class);
+	@Comment("When enabled, holding down a keyboard key will repeat the event.")
+	public final TrackedValue<Boolean> allowKeyboardRepeatEvents = this.value(true);
 	@Comment("When set to true, the game will think it's always april fools'.")
 	public final TrackedValue<Boolean> forceAprilFools = this.value(false);
 	@Comment("When set to true, the Save and Load level buttons will open the dialog directly.")

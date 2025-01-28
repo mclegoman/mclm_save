@@ -15,6 +15,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class SliderWidget extends ButtonWidget {
+	public boolean focused;
 	protected double value;
 	protected double valueMultiplier;
 	protected String string;
@@ -31,11 +32,14 @@ public class SliderWidget extends ButtonWidget {
 	public void setValueFromMouse(double mouseX) {
 		this.setValue((mouseX - (double)(this.x + 4)) / (double)(this.width - 8));
 	}
-	private void setValue(double value) {
+	public void setValue(double value) {
 		this.value = value < 0.0 ? 0.0 : Math.min(value, 1.0);
 	}
 	public double getValue(boolean raw) {
 		return raw ? this.value : (int)(this.value * this.valueMultiplier);
+	}
+	public double getValueMultiplier() {
+		return this.valueMultiplier;
 	}
 	public void m_9498802(C_5664496 minecraft, int i, int j) {
 		this.message = StringHelper.getFormattedString(this.string + ": " + (int)getValue(false));
@@ -46,7 +50,7 @@ public class SliderWidget extends ButtonWidget {
 			this.drawTexture(this.x + this.width / 2, this.y, 200 - this.width / 2, 46, this.width / 2, this.height);
 			GL11.glBindTexture(3553, minecraft.f_9413506.load("/assets/save/gui.png"));
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.drawTexture(Math.min(this.x + (this.width - 8), (int) (this.x + (this.value * this.width))), this.y, 0, i >= this.x && j >= this.y && i < this.x + this.width && j < this.y + this.height ? 20 : 0, this.width / 2, this.height);
+			this.drawTexture(Math.min(this.x + (this.width - 8), (int) (this.x + (this.value * this.width))), this.y, 0, ((i >= this.x && j >= this.y && i < this.x + this.width && j < this.y + this.height) || this.focused) ? 20 : 0, this.width / 2, this.height);
 			drawCenteredString(minecraft.f_0426313, this.message, this.x + this.width / 2, this.y + (this.height - 8) / 2, 14737632);
 		}
 	}
