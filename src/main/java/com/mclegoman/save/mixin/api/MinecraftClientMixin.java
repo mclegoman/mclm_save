@@ -10,9 +10,13 @@ package com.mclegoman.save.mixin.api;
 import com.mclegoman.save.api.entrypoint.SaveModInit;
 import com.mclegoman.save.api.event.Execute;
 import net.minecraft.client.C_5664496;
+import net.minecraft.client.render.GameRenderer;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.quiltmc.loader.api.entrypoint.EntrypointUtil;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @ClientOnly
 @Mixin(C_5664496.class)
 public abstract class MinecraftClientMixin {
+	@Shadow public GameRenderer f_4267957;
 	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GameGui;<init>(Lnet/minecraft/client/C_5664496;II)V"))
 	private void save$init(CallbackInfo ci) {
 		System.getProperties().setProperty("java.util.Arrays.useLegacyMergeSort", "true");

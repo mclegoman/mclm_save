@@ -7,6 +7,10 @@
 		"api.MinecraftClientMixin",
 		"api.ResourcesMixin",
 		"entity.EntityMixin",
+		"fixes.exit.MinecraftAppletMixin",
+		"fixes.resize.GameGuiMixin",
+		"fixes.resize.MinecraftClientMixin",
+		"gui.ButtonWidgetMixin",
 		"gui.GameGuiMixin",
 		"gui.GameMenuScreenMixin",
 		"gui.InventoryMenuScreenMixin",
@@ -14,15 +18,12 @@
 		"gui.OptionsScreenMixin",
 		"gui.SaveScreenMixin",
 		"gui.ScreenMixin",
-		"level.WorldRendererMixin",
-		"fixes.exit.MinecraftAppletMixin",
-		"fixes.resize.GameGuiMixin",
-		"fixes.resize.MinecraftClientMixin",
-		"gui.ButtonWidgetMixin"
+		"level.WorldRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
+		"api.GameRendererMixin"
 	]
 }
