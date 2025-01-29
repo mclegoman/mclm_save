@@ -13,9 +13,9 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public final class RenderEvents {
-	public static class AfterGameGui {
-		private static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
-		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
+	public static class RenderEventType {
+		protected static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
+		protected static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
 		public static EventRegistry<Renderable> getRenderableRegistry() {
 			return renderableRegistry;
 		}
@@ -23,15 +23,9 @@ public final class RenderEvents {
 			return eventableRegistry;
 		}
 	}
-	public static class End {
-		private static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
-		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
-		public static EventRegistry<Renderable> getRenderableRegistry() {
-			return renderableRegistry;
-		}
-		public static EventRegistry<Eventable> getEventableRegistry() {
-			return eventableRegistry;
-		}
+	public static class AfterGameGui extends RenderEventType {
+	}
+	public static class End extends RenderEventType {
 	}
 	public static void register(Render render, String identifier, Renderable renderable) {
 		if (render.equals(Render.AFTER_GAME_GUI)) AfterGameGui.renderableRegistry.register(identifier, renderable);
