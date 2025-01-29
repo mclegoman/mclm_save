@@ -6,23 +6,33 @@ The `save_init` entrypoint executes the `init(ModContainer mod);` function in yo
 ### Tick
 You can use Save to tick by adding a register to your mod initializer.  
 `TickEvents.register(TickEvents.Tick, String, Eventable);`
+`TickEvents.register(TickEvents.Tick, String, Tickable.World);`
 
-TickEvents.Tick has the following options:
-- `TickEvents.Tick.START`
-  - Executes at the start of the tick.
-- `TickEvents.Tick.END`
-  - Executes at the end of the tick.
+TickEvents.Tick has the following options:  
+- `TickEvents.Tick.START`  
+  - Executes at the start of the tick.  
+  - Can be registered with Eventable.  
+- `TickEvents.Tick.END`  
+  - Executes at the end of the tick.  
+  - Can be registered with Eventable.  
+- `TickEvents.Tick.START_WORLD`  
+  - Executes at the start of the world tick.  
+  - Can be registered with Eventable, or Tickable.World.  
+- `TickEvents.Tick.END_WORLD`  
+  - Executes at the end of the world tick.  
+  - Can be registered with Eventable, or Tickable.World.  
 
 String is a unique identifier for your registered event.  
 I suggest something like `modId_descriptionOfEvent`.
 
 Eventable is our own custom runnable for Events (`(client) -> {}`).
+Tickable.World is our own custom runnable for Events (`(client, world) -> {}`).
 
 **Example:**  
-By adding the following to your mod initializer, the first slot of your inventory will be set to 64 bread, when the player exists.
+By adding the following to your mod initializer, the first slot of your inventory will be set to 64 bread, at the start of the world tick.  
 ```
-TickEvents.register(TickEvents.Tick.START, "example_setItem", (client) -> {
-			if (client.f_6058446 != null) client.f_6058446.inventory.inventorySlots[0] = new ItemStack(297, 64);
+TickEvents.register(TickEvents.Tick.START_WORLD, "example_setItem", (client, world) -> {
+			((PlayerEntity)world.f_6053391).inventory.inventorySlots[0] = new ItemStack(297, 64);
 		});
 ```
 

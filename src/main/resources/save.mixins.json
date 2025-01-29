@@ -29,7 +29,8 @@
 		"level.MinecraftClientMixin",
 		"level.OverworldChunkGeneratorMixin",
 		"level.WorldChunkMixin",
-		"api.GameRendererMixin"
+		"api.GameRendererMixin",
+		"api.WorldMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -12,6 +12,7 @@ import com.mclegoman.save.api.event.tick.TickEvents;
 import com.mclegoman.save.data.Data;
 import com.mclegoman.save.rtu.util.LogType;
 import net.minecraft.client.C_5664496;
+import net.minecraft.world.World;
 
 public class Execute {
 	public static class Render {
@@ -42,7 +43,7 @@ public class Execute {
 					renderable.run(minecraft, f);
 				} catch (Exception error) {
 					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst rendering " + identifier + " at end render, removing from renderable registry:" + error.getLocalizedMessage());
-					RenderEvents.AfterGameGui.renderableRegistry.getRegistry().remove(identifier);
+					RenderEvents.End.eventableRegistry.getRegistry().remove(identifier);
 				}
 			});
 			RenderEvents.End.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
@@ -51,29 +52,65 @@ public class Execute {
 					eventable.run(minecraft);
 				} catch (Exception error) {
 					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst rendering " + identifier + " at end render, removing from eventable registry:" + error.getLocalizedMessage());
-					RenderEvents.AfterGameGui.eventableRegistry.getRegistry().remove(identifier);
+					RenderEvents.End.eventableRegistry.getRegistry().remove(identifier);
 				}
 			});
 		}
 	}
 	public static class Tick {
 		public static void start(C_5664496 minecraft) {
-			TickEvents.Start.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
+			TickEvents.StartClient.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
 				try {
 					eventable.run(minecraft);
 				} catch (Exception error) {
 					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at start tick, removing from eventable registry:" + error.getLocalizedMessage());
-					RenderEvents.AfterGameGui.eventableRegistry.getRegistry().remove(identifier);
+					TickEvents.StartClient.eventableRegistry.getRegistry().remove(identifier);
 				}
 			});
 		}
 		public static void end(C_5664496 minecraft) {
-			TickEvents.End.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
+			TickEvents.EndClient.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
 				try {
 					eventable.run(minecraft);
 				} catch (Exception error) {
 					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at end tick, removing from eventable registry:" + error.getLocalizedMessage());
-					RenderEvents.AfterGameGui.eventableRegistry.getRegistry().remove(identifier);
+					TickEvents.EndClient.eventableRegistry.getRegistry().remove(identifier);
+				}
+			});
+		}
+		public static void startWorld(C_5664496 minecraft, World world) {
+			TickEvents.StartWorld.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
+				try {
+					eventable.run(minecraft);
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at start world tick, removing from eventable registry:" + error.getLocalizedMessage());
+					TickEvents.StartWorld.eventableRegistry.getRegistry().remove(identifier);
+				}
+			});
+			TickEvents.StartWorld.tickableRegistry.getRegistry().forEach((identifier, tickable) -> {
+				try {
+					tickable.run(minecraft, world);
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at start world tick, removing from eventable registry:" + error.getLocalizedMessage());
+					TickEvents.StartWorld.tickableRegistry.getRegistry().remove(identifier);
+				}
+			});
+		}
+		public static void endWorld(C_5664496 minecraft, World world) {
+			TickEvents.EndWorld.eventableRegistry.getRegistry().forEach((identifier, eventable) -> {
+				try {
+					eventable.run(minecraft);
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at end world tick, removing from eventable registry:" + error.getLocalizedMessage());
+					TickEvents.EndWorld.eventableRegistry.getRegistry().remove(identifier);
+				}
+			});
+			TickEvents.EndWorld.tickableRegistry.getRegistry().forEach((identifier, tickable) -> {
+				try {
+					tickable.run(minecraft, world);
+				} catch (Exception error) {
+					Data.getVersion().sendToLog(LogType.ERROR, "An error occured whilst ticking " + identifier + " at end world tick, removing from eventable registry:" + error.getLocalizedMessage());
+					TickEvents.EndWorld.tickableRegistry.getRegistry().remove(identifier);
 				}
 			});
 		}
