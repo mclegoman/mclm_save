@@ -12,8 +12,11 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public final class RenderEvents {
-	protected static class RenderEvent {
-		public static RenderEventType eventType = new RenderEventType();
+	public static class RenderEvent {
+		public static RenderEventType eventType;
+		public RenderEvent() {
+			eventType = new RenderEventType();
+		}
 	}
 	public static class AfterGameGui extends RenderEvent {
 	}

@@ -14,7 +14,10 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 public final class TickEvents {
 	public static class TickEvent {
-		public static EventType eventType = new EventType();
+		public static EventType eventType;
+		public TickEvent() {
+			 eventType = new EventType();
+		}
 	}
 	public static class Start extends TickEvent {
 	}
