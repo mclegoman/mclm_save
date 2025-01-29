@@ -13,7 +13,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public final class TickEvents {
-	public static class TickEventType {
+	protected static class TickEventType {
 		protected static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
 		public static EventRegistry<Eventable> getEventableRegistry() {
 			return eventableRegistry;

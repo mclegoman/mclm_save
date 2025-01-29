@@ -13,7 +13,7 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public final class RenderEvents {
-	public static class RenderEventType {
+	protected static class RenderEventType {
 		protected static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
 		protected static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
 		public static EventRegistry<Renderable> getRenderableRegistry() {
