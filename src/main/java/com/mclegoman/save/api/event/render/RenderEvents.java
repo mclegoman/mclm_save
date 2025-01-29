@@ -19,8 +19,14 @@ public final class RenderEvents {
 		}
 	}
 	public static class AfterGameGui extends RenderEvent {
+		public AfterGameGui() {
+			super();
+		}
 	}
 	public static class End extends RenderEvent {
+		public End() {
+			super();
+		}
 	}
 	public static void register(Render render, String identifier, Renderable renderable) {
 		if (render.equals(Render.AFTER_GAME_GUI)) AfterGameGui.eventType.register(identifier, renderable);

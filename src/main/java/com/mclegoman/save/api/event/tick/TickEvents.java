@@ -20,8 +20,14 @@ public final class TickEvents {
 		}
 	}
 	public static class Start extends TickEvent {
+		public Start() {
+			super();
+		}
 	}
 	public static class End extends TickEvent {
+		public End() {
+			super();
+		}
 	}
 	public static void register(Tick tick, String identifier, Eventable eventable) {
 		if (tick.equals(Tick.START)) Start.eventType.register(identifier, eventable);
