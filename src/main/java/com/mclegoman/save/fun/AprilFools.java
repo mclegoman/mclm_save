@@ -8,11 +8,15 @@
 package com.mclegoman.save.fun;
 
 import com.mclegoman.save.config.SaveConfig;
+import com.mclegoman.save.data.Data;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.ModContributor;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class AprilFools {
 	public static List<String> playerNames = new ArrayList<>();
@@ -22,8 +26,9 @@ public class AprilFools {
 	public static int defence;
 	public static int speed;
 	public static void init() {
-		playerNames.add("Phantazap");
-		playerNames.add("MCLegoMan");
+		Optional<ModContainer> modContainer = Data.getVersion().getModContainer();
+		if (modContainer.isPresent()) for (ModContributor contributor : modContainer.get().metadata().contributors()) playerNames.add(contributor.name());
+		else playerNames.add("PLAYER NAME");
 	}
 	public static String getPlayerName() {
 		if (nameChance == 1200) return "Herobrine";
