@@ -8,11 +8,8 @@
 package com.mclegoman.save.api.event;
 
 public class EventType {
-	public final EventRegistry<Eventable> eventableRegistry;
-	public EventType() {
-		eventableRegistry = new EventRegistry<>();
-	}
-	public void register(String identifier, Eventable eventable) {
+	public static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
+	public static void register(String identifier, Eventable eventable) {
 		eventableRegistry.register(identifier, eventable);
 	}
 }
