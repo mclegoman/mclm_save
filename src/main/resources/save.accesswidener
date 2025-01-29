@@ -1,0 +1,14 @@
+accessWidener v2 named
+accessible method net/minecraft/client/gui/widget/ButtonWidget <init> (IIIIILjava/lang/String;)V
+accessible field net/minecraft/client/gui/widget/ButtonWidget x I
+accessible field net/minecraft/client/gui/widget/ButtonWidget y I
+accessible field net/minecraft/client/gui/widget/ButtonWidget width I
+accessible field net/minecraft/client/gui/widget/ButtonWidget height I
+extendable method net/minecraft/client/gui/widget/ButtonWidget m_9498802 (Lnet/minecraft/client/C_5664496;II)V
+accessible method net/minecraft/client/C_5664496 m_8603410 (Lnet/minecraft/world/World;)V
+accessible field net/minecraft/client/C_5664496 f_0769488 Ljava/awt/Canvas;
+accessible field net/minecraft/world/World f_4249554 [B
+accessible field net/minecraft/entity/Entity fallDistance F
+accessible field net/minecraft/entity/living/player/PlayerEntity playerScore I
+accessible field net/minecraft/world/World f_3132715 [B
+accessible field net/minecraft/client/gui/screen/Screen buttons Ljava/util/List;

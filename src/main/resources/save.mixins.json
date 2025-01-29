@@ -1,0 +1,28 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.mclegoman.save.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"client": [
+		"api.MinecraftClientMixin",
+		"api.ResourcesMixin",
+		"entity.EntityMixin",
+		"gui.GameGuiMixin",
+		"gui.GameMenuScreenMixin",
+		"gui.InventoryMenuScreenMixin",
+		"gui.LoadScreenMixin",
+		"gui.OptionsScreenMixin",
+		"gui.SaveScreenMixin",
+		"gui.ScreenMixin",
+		"level.WorldRendererMixin",
+		"fixes.exit.MinecraftAppletMixin",
+		"fixes.resize.GameGuiMixin",
+		"fixes.resize.MinecraftClientMixin",
+		"gui.ButtonWidgetMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"mixins": [
+	]
+}
