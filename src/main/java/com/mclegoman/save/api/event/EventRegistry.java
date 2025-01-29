@@ -20,4 +20,7 @@ public final class EventRegistry<T> {
 	public Map<String, T> getRegistry() {
 		return this.registry;
 	}
+	public void remove(String identifier) {
+		this.registry.remove(identifier);
+	}
 }
