@@ -13,3 +13,4 @@ accessible field net/minecraft/entity/Entity fallDistance F
 accessible field net/minecraft/entity/living/player/PlayerEntity playerScore I
 accessible field net/minecraft/world/World f_3132715 [B
 accessible field net/minecraft/client/gui/screen/Screen buttons Ljava/util/List;
+accessible field net/minecraft/client/C_5664496 f_8077878 Lnet/minecraft/client/C_8739928;

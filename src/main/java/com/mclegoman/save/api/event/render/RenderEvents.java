@@ -7,25 +7,39 @@
 
 package com.mclegoman.save.api.event.render;
 
+import com.mclegoman.save.api.event.EventRegistry;
 import com.mclegoman.save.api.event.Eventable;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ClientOnly
 public final class RenderEvents {
-	private static final Map<String, Eventable> afterGameGuiRegistry = new HashMap<>();
-	private static final Map<String, Eventable> endRegistry = new HashMap<>();
-	public static Map<String, Eventable> getAfterGameGuiRegistry() {
-		return afterGameGuiRegistry;
+	public static class AfterGameGui {
+		private static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
+		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
+		public static EventRegistry<Renderable> getRenderableRegistry() {
+			return renderableRegistry;
+		}
+		public static EventRegistry<Eventable> getEventableRegistry() {
+			return eventableRegistry;
+		}
 	}
-	public static Map<String, Eventable> getEndRegistry() {
-		return endRegistry;
+	public static class End {
+		private static final EventRegistry<Renderable> renderableRegistry = new EventRegistry<>();
+		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
+		public static EventRegistry<Renderable> getRenderableRegistry() {
+			return renderableRegistry;
+		}
+		public static EventRegistry<Eventable> getEventableRegistry() {
+			return eventableRegistry;
+		}
 	}
-	public static void register(Render render, String identifier, Eventable runnable) {
-		if (render.equals(Render.AFTER_GAME_GUI)) afterGameGuiRegistry.put(identifier, runnable);
-		else if (render.equals(Render.END)) endRegistry.put(identifier, runnable);
+	public static void register(Render render, String identifier, Renderable renderable) {
+		if (render.equals(Render.AFTER_GAME_GUI)) AfterGameGui.renderableRegistry.register(identifier, renderable);
+		else if (render.equals(Render.END)) End.renderableRegistry.register(identifier, renderable);
+	}
+	public static void register(Render render, String identifier, Eventable eventable) {
+		if (render.equals(Render.AFTER_GAME_GUI)) AfterGameGui.eventableRegistry.register(identifier, eventable);
+		else if (render.equals(Render.END)) End.eventableRegistry.register(identifier, eventable);
 	}
 	public enum Render {
 		AFTER_GAME_GUI,

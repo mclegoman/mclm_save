@@ -23,10 +23,10 @@ public abstract class GameRendererMixin {
 	@Shadow private C_5664496 minecraft;
 	@Inject(method = "m_5195666", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GameGui;render()V", shift = At.Shift.AFTER))
 	private void save$render_afterGameGui(CallbackInfo ci) {
-		Execute.Render.afterGameGui(this.minecraft);
+		Execute.Render.afterGameGui(this.minecraft, this.minecraft.f_8077878.f_1387123);
 	}
 	@Inject(method = "m_5195666", at = @At(value = "INVOKE", target = "Ljava/lang/Thread;yield()V"))
 	private void save$render_end(CallbackInfo ci) {
-		Execute.Render.end(this.minecraft);
+		Execute.Render.end(this.minecraft, this.minecraft.f_8077878.f_1387123);
 	}
 }

@@ -28,7 +28,8 @@ TickEvents.register(TickEvents.Tick.START, "example_setItem", (client) -> {
 
 ### Rendering
 You can use Save to render by adding a register to your mod initializer.  
-`RenderEvents.register(RenderEvents.Render, String, Eventable);`
+`RenderEvents.register(RenderEvents.Render, String, Renderable);`  
+`RenderEvents.register(RenderEvents.Render, String, Eventable);`  
 
 RenderEvents.Render has the following options:
 - `RenderEvents.Render.AFTER_GAME_GUI`
@@ -39,6 +40,7 @@ RenderEvents.Render has the following options:
 String is a unique identifier for your registered event.  
 I suggest something like `modId_descriptionOfEvent`.
 
+Renderable is our own custom runnable for Events (`(client, tickDelta) -> {}`).
 Eventable is our own custom runnable for Events (`(client) -> {}`).
 
 **Example:**  
