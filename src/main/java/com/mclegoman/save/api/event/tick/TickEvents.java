@@ -13,17 +13,15 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public final class TickEvents {
-	public static class Start {
-		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
+	public static class TickEventType {
+		protected static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
 		public static EventRegistry<Eventable> getEventableRegistry() {
 			return eventableRegistry;
 		}
 	}
-	public static class End {
-		private static final EventRegistry<Eventable> eventableRegistry = new EventRegistry<>();
-		public static EventRegistry<Eventable> getEventableRegistry() {
-			return eventableRegistry;
-		}
+	public static class Start extends TickEventType {
+	}
+	public static class End extends TickEventType {
 	}
 	public static void register(Tick tick, String identifier, Eventable eventable) {
 		if (tick.equals(Tick.START)) Start.eventableRegistry.register(identifier, eventable);
