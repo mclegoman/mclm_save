@@ -1,7 +1,7 @@
 /*
     Save
     Contributor(s): dannytaylor
-    Github: https://github.com/MCLegoMan/mclm_save
+    Github: https://github.com/mclegoman/mclm_save
     Licence: GNU LGPLv3
 */
 
