@@ -1,7 +1,7 @@
 /*
     Save
     Contributor(s): dannytaylor
-    Github: https://github.com/MCLegoMan/mclm_save
+    Github: https://github.com/mclegoman/mclm_save
     Licence: GNU LGPLv3
 */
 
@@ -30,7 +30,9 @@ public class SaveHelper {
 		return QuiltLoader.getGameDir().toFile();
 	}
 	public static File getSavesDir() {
-		return new File(QuiltLoader.getGameDir().toFile(),"saves");
+		File savesDir = new File(QuiltLoader.getGameDir().toFile(),"saves");
+		savesDir.mkdirs();
+		return savesDir;
 	}
 	public static void register(Class<?> classObj, String id) {
 		blockEntityIdToType.put(id, classObj);

@@ -28,13 +28,15 @@ ploceus {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings ploceus.featherMappings(feather_build)
-	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
-	include(implementation "com.formdev:flatlaf:3.4.1")
+	minecraft("com.mojang:minecraft:${project.minecraft_version}")
+	mappings(ploceus.featherMappings(feather_build))
+	modImplementation("org.quiltmc:quilt-loader:${project.loader_version}")
+	include(implementation("com.formdev:flatlaf:3.4.1"))
+	include(implementation("com.github.Dansoftowner:jSystemThemeDetector:3.6"))
 }
 
 project.sourceSets {

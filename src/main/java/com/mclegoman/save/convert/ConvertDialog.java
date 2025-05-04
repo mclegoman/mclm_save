@@ -1,7 +1,7 @@
 /*
     Save
     Contributor(s): dannytaylor
-    Github: https://github.com/MCLegoMan/mclm_save
+    Github: https://github.com/mclegoman/mclm_save
     Licence: GNU LGPLv3
 */
 
@@ -9,6 +9,8 @@ package com.mclegoman.save.convert;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.google.gson.internal.JavaVersion;
+import com.jthemedetecor.OsThemeDetector;
 import com.mclegoman.save.api.gui.screen.InfoScreen;
 import com.mclegoman.save.config.Filter;
 import com.mclegoman.save.config.SaveConfig;
@@ -41,16 +43,13 @@ public class ConvertDialog extends Thread {
 			try {
 				Theme theme = SaveConfig.instance.dialogTheme.value();
 				if (theme.equals(Theme.system)) {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} else if (theme.equals(Theme.light)) {
-					UIManager.setLookAndFeel(new FlatIntelliJLaf());
+					// Java 21 prevents win11's system theme, so we replace it with auto for java 11 and higher.
+					if (JavaVersion.getMajorJavaVersion() >= 11) UIManager.setLookAndFeel(OsThemeDetector.getDetector().isDark() ? new FlatDarculaLaf() : new FlatIntelliJLaf());
+					else UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				}
-				else if (theme.equals(Theme.dark)) {
-					UIManager.setLookAndFeel(new FlatDarculaLaf());
-				}
-				else if (theme.equals(Theme.metal)) {
-					UIManager.setLookAndFeel(new MetalLookAndFeel());
-				}
+				else if (theme.equals(Theme.light)) UIManager.setLookAndFeel(new FlatIntelliJLaf());
+				else if (theme.equals(Theme.dark)) UIManager.setLookAndFeel(new FlatDarculaLaf());
+				else UIManager.setLookAndFeel(new MetalLookAndFeel());
 				fileChooser.updateUI();
 			} catch (Exception error) {
 				Data.getVersion().sendToLog(LogType.WARN, "Error setting convert dialog theme: " + error.getLocalizedMessage());
@@ -67,7 +66,7 @@ public class ConvertDialog extends Thread {
 			} else if (SaveConfig.instance.convertDialogFilter.value() == Filter.classic) {
 				fileChooser.setFileFilter(filters[2]);
 			}
-			int dialog = fileChooser.showOpenDialog(Data.Resources.minecraft.f_0769488);
+			int dialog = fileChooser.showDialog(null, "Convert"); // Data.Resources.minecraft.f_0769488
 			if (dialog == JFileChooser.APPROVE_OPTION) {
 				SaveConfig.instance.dialogDir.setValue(String.valueOf(fileChooser.getSelectedFile().getParent()));
 				if (fileChooser.getFileFilter() == filters[0]) {

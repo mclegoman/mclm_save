@@ -4,8 +4,10 @@
 	"package": "com.mclegoman.save.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
+		"api.GameRendererMixin",
 		"api.MinecraftClientMixin",
 		"api.ResourcesMixin",
+		"api.WorldMixin",
 		"entity.EntityMixin",
 		"entity.InputPlayerEntityMixin",
 		"entity.LivingEntityMixin",
@@ -28,13 +30,9 @@
 		"gui.TitleScreenMixin",
 		"level.MinecraftClientMixin",
 		"level.OverworldChunkGeneratorMixin",
-		"level.WorldChunkMixin",
-		"api.GameRendererMixin",
-		"api.WorldMixin"
+		"level.WorldChunkMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"mixins": [
-	]
+	}
 }
