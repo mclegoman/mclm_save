@@ -4,7 +4,7 @@ Save allows the player to save, load, and convert worlds in older versions that 
 **If you're looking for a download, please consider downloading from [Modrinth](https://modrinth.com/mod/mclm_save).**  
 *If you need a pre-release for some reason, you can find them in the releases tab here on github.*
 
-***If you are after the source, use the branch selector to select the Minecraft version.***  
+***If you are after the source, see [mclegoman/mclm_save](https://github.com/mclegoman/mclm_save).***
 
 ## Dependencies  
 - [Quilt Loader](https://quiltmc.org/).  
