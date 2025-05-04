@@ -10,6 +10,7 @@ package com.mclegoman.save.api.gui.widget;
 import com.mclegoman.save.util.StringHelper;
 import net.minecraft.client.C_5664496;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
@@ -53,5 +54,9 @@ public class SliderWidget extends ButtonWidget {
 			this.drawTexture(Math.min(this.x + (this.width - 8), (int) (this.x + (this.value * this.width))), this.y, 0, ((i >= this.x && j >= this.y && i < this.x + this.width && j < this.y + this.height) || this.focused) ? 20 : 0, this.width / 2, this.height);
 			drawCenteredString(minecraft.f_0426313, this.message, this.x + this.width / 2, this.y + (this.height - 8) / 2, 14737632);
 		}
+	}
+	public double onPressed(C_5664496 minecraft, int width) {
+		this.setValueFromMouse((double) (Mouse.getEventX() * width) / minecraft.f_0545414);
+		return this.getValue(true);
 	}
 }
